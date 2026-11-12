@@ -311,8 +311,9 @@
   .side-pkgs { display: none; }
   @media (min-width: 1101px) {
     .side-pkgs { display: flex; flex-direction: column; gap: 8px; position: fixed; left: 16px; top: 448px; width: 220px; z-index: 40; }
-    .side-pkg { display: flex; align-items: center; justify-content: center; height: 56px; padding: 6px 10px; background: #fff; border: 1px solid var(--gold); color: var(--green-dark); font-weight: 700; font-size: 14px; line-height: 1.25; text-align: center; text-decoration: none; box-shadow: 0 4px 12px rgba(0,0,0,.06); }
+    .side-pkg { display: flex; align-items: center; justify-content: center; height: 56px; padding: 6px 10px; background: #fff; border: 1px solid var(--green); color: var(--green-dark); font-weight: 700; font-size: 14px; line-height: 1.25; text-align: center; text-decoration: none; box-shadow: 0 4px 12px rgba(0,0,0,.06); }
     .side-pkg:hover, .side-pkg:focus-visible { background: var(--gold); color: var(--ink); }
+    .side-pkgs-right { left: auto; right: 16px; }
   }
 </style>
 </head>
@@ -834,6 +835,13 @@
 <a class="side-ad side-ad-left" href="#" aria-label="Advertisement">Advertise here</a>
 <a class="side-ad side-ad-right" href="#" aria-label="Advertisement">Advertise here</a>
 <div class="side-pkgs" aria-label="Sponsorship packages">
+  <a class="side-pkg" href="#goi-tai-tro" style="height:80px;font-size:17px">Diamond sponsor<br>Advertise here</a>
+  <a class="side-pkg" href="#goi-tai-tro" style="height:70px;font-size:16px">Gold sponsor<br>Advertise here</a>
+  <a class="side-pkg" href="#goi-tai-tro" style="height:62px;font-size:15px">Silver sponsor<br>Advertise here</a>
+  <a class="side-pkg" href="#goi-tai-tro" style="height:56px;font-size:14px">Co-sponsor<br>Advertise here</a>
+  <a class="side-pkg" href="#goi-tai-tro" style="height:50px;font-size:13px">Companion sponsor<br>Advertise here</a>
+</div>
+<div class="side-pkgs side-pkgs-right" aria-label="Sponsorship packages">
   <a class="side-pkg" href="#goi-tai-tro" style="height:80px;font-size:17px">Diamond sponsor<br>Advertise here</a>
   <a class="side-pkg" href="#goi-tai-tro" style="height:70px;font-size:16px">Gold sponsor<br>Advertise here</a>
   <a class="side-pkg" href="#goi-tai-tro" style="height:62px;font-size:15px">Silver sponsor<br>Advertise here</a>
