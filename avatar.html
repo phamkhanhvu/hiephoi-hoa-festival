@@ -80,6 +80,10 @@
       <input id="file" type="file" accept="image/jpeg,image/png,image/webp">
       <button class="primary" id="download" disabled>Tải ảnh đại diện</button>
       <p class="msg" id="msg"></p>
+      <div id="savebox" hidden>
+        <p class="msg">Nếu không tải được trong Zalo, nhấn giữ ảnh bên dưới rồi chọn "Lưu ảnh".</p>
+        <img id="result" alt="Ảnh đại diện Festival Hoa 2026" style="width:100%;max-width:420px;display:block;border:1px solid var(--line)">
+      </div>
       <p class="ref">Ảnh được xử lý ngay trên máy của bạn, không tải lên máy chủ.</p>
     </div>
   </div>
@@ -204,6 +208,13 @@
 
   downloadBtn.addEventListener('click', () => {
     if (!img) return;
+    // Trình duyệt trong Zalo không tải file trực tiếp: hiện ảnh để nhấn giữ và lưu
+    if (/Zalo/i.test(navigator.userAgent)) {
+      document.getElementById('result').src = canvas.toDataURL('image/png');
+      document.getElementById('savebox').hidden = false;
+      setMsg('Đang mở trong Zalo. Nhấn giữ ảnh bên dưới để lưu.');
+      return;
+    }
     canvas.toBlob(blob => {
       if (!blob) { setMsg('Không tạo được ảnh. Thử lại.'); return; }
       const a = document.createElement('a');
