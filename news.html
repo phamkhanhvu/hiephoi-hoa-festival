@@ -278,6 +278,10 @@
   .news-article .news-date { color: var(--green); font-weight: 600; }
   .news-article a { color: var(--green-dark); font-weight: 700; }
   .news-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--green-dark); background: #EEF7F0; padding: 4px 8px; }
+  .langbar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .langbar a { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; padding: 4px 9px; border: 1px solid var(--line); border-radius: 4px; text-decoration: none; color: var(--ink); background: #fff; }
+  .langbar a[aria-current="true"] { border-color: var(--green); color: var(--green-dark); box-shadow: inset 0 0 0 1px var(--green); }
+  .langbar svg { width: 22px; height: 15px; display: block; border: 1px solid #ddd; flex: none; }
 </style>
 </head>
 <body>
@@ -313,6 +317,7 @@
           <small>Dalat Flower Association (DFA)</small>
         </div>
       </div>
+      <div class="langbar" aria-label="Language / Ngôn ngữ"><a href="news.html" lang="vi" hreflang="vi" aria-current="true"><svg viewBox="0 0 3 2" aria-hidden="true"><rect width="3" height="2" fill="#DA251D"/><polygon fill="#FFFF00" points="1.5,0.7 1.5705,0.903 1.785,0.907 1.614,1.037 1.676,1.243 1.5,1.12 1.324,1.243 1.386,1.037 1.215,0.907 1.4295,0.903"/></svg>Tiếng Việt</a><a href="news-en.html" lang="en" hreflang="en" aria-current="false"><svg viewBox="0 0 60 30" aria-hidden="true"><clipPath id="ukc"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath><path d="M0,0 v30 h60 v-30 z" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#ukc)" stroke="#C8102E" stroke-width="4"/><path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/></svg>English</a></div>
       <nav class="nav" aria-label="Điều hướng">
         <a href="index.html#gioi-thieu">Thư ngỏ</a>
         <a href="index.html#su-kien">Chương trình</a>

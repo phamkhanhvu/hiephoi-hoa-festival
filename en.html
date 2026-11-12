@@ -285,6 +285,10 @@
   @media (prefers-reduced-motion: reduce) {
     * { transition: none !important; }
   }
+  .langbar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .langbar a { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; padding: 4px 9px; border: 1px solid var(--line); border-radius: 4px; text-decoration: none; color: var(--ink); background: #fff; }
+  .langbar a[aria-current="true"] { border-color: var(--green); color: var(--green-dark); box-shadow: inset 0 0 0 1px var(--green); }
+  .langbar svg { width: 22px; height: 15px; display: block; border: 1px solid #ddd; flex: none; }
 </style>
 </head>
 <body>
@@ -320,16 +324,16 @@
           <small>Dalat Flower Association (DFA)</small>
         </div>
       </div>
+      <div class="langbar" aria-label="Language / Ngôn ngữ"><a href="index.html" lang="vi" hreflang="vi" aria-current="false"><svg viewBox="0 0 3 2" aria-hidden="true"><rect width="3" height="2" fill="#DA251D"/><polygon fill="#FFFF00" points="1.5,0.7 1.5705,0.903 1.785,0.907 1.614,1.037 1.676,1.243 1.5,1.12 1.324,1.243 1.386,1.037 1.215,0.907 1.4295,0.903"/></svg>Tiếng Việt</a><a href="en.html" lang="en" hreflang="en" aria-current="true"><svg viewBox="0 0 60 30" aria-hidden="true"><clipPath id="ukc"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath><path d="M0,0 v30 h60 v-30 z" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#ukc)" stroke="#C8102E" stroke-width="4"/><path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/></svg>English</a></div>
       <nav class="nav" aria-label="Navigation">
         <a href="#gioi-thieu">Letter</a>
         <a href="#su-kien">Programme</a>
         <a href="#tai-lieu">Materials</a>
-        <a href="news.html">News</a>
+        <a href="news-en.html">News</a>
         <a href="#doi-tac">Partners</a>
         <a href="#hoi-vien">Members</a>
-        <a href="avatar.html">Avatar frame</a>
+        <a href="avatar-en.html">Avatar frame</a>
         <a href="#lien-he">Contact</a>
-        <a href="index.html" lang="vi">Tiếng Việt</a>
       </nav>
     </header>
   </div>
@@ -342,7 +346,7 @@
         <a class="btn primary" href="#su-kien">View programme</a>
         <a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSekWDf173SOOVlibDXB_lVHIjkwq5yydtrlM1H0wmL-jq9U4w/viewform" target="_blank" rel="noopener">Register as a partner</a>
       </div>
-      <a class="cta-avatar" href="avatar.html" aria-label="Create a Festival Hoa 2026 avatar frame">
+      <a class="cta-avatar" href="avatar-en.html" aria-label="Create a Festival Hoa 2026 avatar frame">
         <img src="banners/cta-avatar.png" alt="Change your avatar with the Association – celebrate the flower festival!">
       </a>
       <div class="cards-row">
@@ -614,8 +618,8 @@
       { no: 16, type: "openday", title: "THT Open Day 2026", desc: "A supporting programme by THT Farm JSC, featuring Phalaenopsis orchids, flower-dyeing techniques and AI applications in agriculture.", place: "Đà Lạt", time: "18/12/2026" }
     ],
     news: [
-      { title: "Diverse persimmon products – autumn specialties of Đà Lạt welcome the Festival Hoa", desc: "Dried persimmons, persimmon wine and persimmon sweets from producers in Xuân Trường, Xuân Sơn and Xuân Hương.", tag: "Festival Hoa Đà Lạt", url: "news.html#tin-2", thumb: "news/thumb-2.jpg" },
-      { title: "11th Festival Hoa Đà Lạt – 2026 preparing to open", desc: "A programme running from 10/12/2026 to 03/01/2027, with the opening ceremony planned for 19/12/2026.", tag: "Press release", url: "news.html#tin-1", thumb: "news/thumb-1.jpg" }
+      { title: "Diverse persimmon products – autumn specialties of Đà Lạt welcome the Festival Hoa", desc: "Dried persimmons, persimmon wine and persimmon sweets from producers in Xuân Trường, Xuân Sơn and Xuân Hương.", tag: "Festival Hoa Đà Lạt", url: "news-en.html#tin-2", thumb: "news/thumb-2.jpg" },
+      { title: "11th Festival Hoa Đà Lạt – 2026 preparing to open", desc: "A programme running from 10/12/2026 to 03/01/2027, with the opening ceremony planned for 19/12/2026.", tag: "Press release", url: "news-en.html#tin-1", thumb: "news/thumb-1.jpg" }
     ],
     materials: [
       { type: "brand", title: "Dalat Flower Association logo", date: "2026-11-12", format: "Folder", url: "https://drive.google.com/drive/folders/1YZxd4PykO4MfBvXaDF6w1lAY9XTHk3et", thumb: "logos/hiep-hoi-hoa-logo.jpg" },
