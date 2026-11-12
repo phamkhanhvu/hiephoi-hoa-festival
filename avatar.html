@@ -41,6 +41,11 @@
   .zoom input { flex: 1; accent-color: var(--green); }
   .msg { font-size: 13px; color: var(--muted); min-height: 1.2em; margin: 0; }
   .ref { font-size: 13px; color: var(--muted); }
+  .zalobox { background: #FFF8E1; border: 1px solid var(--gold); padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+  .zalobox p { margin: 0; font-size: 14px; color: var(--ink); }
+  .zalobox a.openext, .zalobox button.copy { display: block; text-align: center; text-decoration: none; padding: 12px 14px; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; border: 1px solid var(--green); border-radius: 4px; }
+  .zalobox a.openext { background: var(--green); color: #fff; }
+  .zalobox button.copy { background: #fff; color: var(--green); width: 100%; }
 </style>
 </head>
 <body>
@@ -74,6 +79,13 @@
       <div class="step">
         <b>3. Tải về</b>
         <p>Bấm nút bên dưới để tải ảnh có khung về máy.</p>
+      </div>
+
+      <div class="zalobox" id="zalobox" hidden>
+        <p><b>Bạn đang mở trang trong Zalo.</b> Để tải ảnh về máy, hãy mở trang bằng trình duyệt.</p>
+        <a class="openext" id="openext" href="#">Mở bằng trình duyệt</a>
+        <button class="copy" id="copylink" type="button">Sao chép liên kết</button>
+        <p class="ref" id="copymsg"></p>
       </div>
 
       <label class="file" for="file">Chọn ảnh</label>
@@ -227,6 +239,25 @@
       setMsg('Đã tải ảnh về máy.');
     }, 'image/png');
   });
+
+  // Trong Zalo: hiện nút mở bằng trình duyệt ngoài
+  const PAGE_URL = 'https://dalatevent.com/festivalhoadalat2026/avatar.html';
+  if (/Zalo/i.test(navigator.userAgent)) {
+    const isAndroid = /Android/i.test(navigator.userAgent);
+    // Android: intent mở Chrome; iOS không có cách mở trình duyệt ngoài từ Zalo nên dùng liên kết thường
+    document.getElementById('openext').href = isAndroid
+      ? 'intent://dalatevent.com/festivalhoadalat2026/avatar.html#Intent;scheme=https;package=com.android.chrome;end'
+      : PAGE_URL;
+    document.getElementById('zalobox').hidden = false;
+    document.getElementById('copylink').addEventListener('click', () => {
+      const m = document.getElementById('copymsg');
+      const done = () => { m.textContent = 'Đã sao chép. Dán vào Safari hoặc Chrome để mở.'; };
+      const fail = () => { m.textContent = 'Không sao chép được. Hãy chọn và sao chép: ' + PAGE_URL; };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(PAGE_URL).then(done, fail);
+      } else { fail(); }
+    });
+  }
 
   // Vẽ khung trống ban đầu
   render();
