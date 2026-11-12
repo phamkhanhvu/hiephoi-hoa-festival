@@ -48,13 +48,13 @@
     max-width: none;
     margin: 16px auto;
     border: 1px solid var(--green);
-    background: #FFFFFF url("bg/nen-hoa.jpg") center bottom / 100% auto no-repeat;
+    background: #FFFFFF;
     margin-left: max(16px, env(safe-area-inset-left, 0px));
     margin-right: max(16px, env(safe-area-inset-right, 0px));
   }
   /* Desktop: khung trung tâm rộng hơn, hai bên là nền xanh nhạt */
   @media (min-width: 1101px) {
-    body { background: #E6F4EA; }
+    body { background: #E6F4EA url("bg/nen-hoa.jpg") center / cover fixed no-repeat; }
     .frame { max-width: min(1360px, calc(100vw - 2 * 260px)); margin: 24px auto; }
     .inner { max-width: 1240px; }
   }
