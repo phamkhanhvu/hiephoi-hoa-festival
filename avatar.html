@@ -46,6 +46,8 @@
   .zalobox a.openext, .zalobox button.copy { display: block; text-align: center; text-decoration: none; padding: 12px 14px; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; border: 1px solid var(--green); border-radius: 4px; }
   .zalobox a.openext { background: var(--green); color: #fff; }
   .zalobox button.copy { background: #fff; color: var(--green); width: 100%; }
+  .zalobox ol { margin: 0; padding-left: 20px; font-size: 14px; color: var(--ink); display: flex; flex-direction: column; gap: 6px; }
+  .dots { display: inline-block; font-weight: 800; letter-spacing: 1px; border: 1px solid var(--ink); border-radius: 4px; padding: 0 5px; line-height: 1.3; }
 </style>
 </head>
 <body>
@@ -82,8 +84,13 @@
       </div>
 
       <div class="zalobox" id="zalobox" hidden>
-        <p><b>Bạn đang mở trang trong Zalo.</b> Để tải ảnh về máy, hãy mở trang bằng trình duyệt.</p>
-        <a class="openext" id="openext" href="#">Mở bằng trình duyệt</a>
+        <p><b>Bạn đang mở trang trong Zalo.</b> Để tải ảnh về máy, hãy mở trang bằng trình duyệt:</p>
+        <a class="openext" id="openext" href="#" hidden>Mở bằng trình duyệt</a>
+        <ol id="steps-ios" hidden>
+          <li>Bấm dấu <span class="dots">···</span> ở góc trên bên phải màn hình.</li>
+          <li>Chọn <b>"Mở trong trình duyệt"</b> (hoặc "Open in Safari").</li>
+          <li>Trong trình duyệt vừa mở, chọn lại ảnh và tải về.</li>
+        </ol>
         <button class="copy" id="copylink" type="button">Sao chép liên kết</button>
         <p class="ref" id="copymsg"></p>
       </div>
@@ -244,10 +251,13 @@
   const PAGE_URL = 'https://dalatevent.com/festivalhoadalat2026/avatar.html';
   if (/Zalo/i.test(navigator.userAgent)) {
     const isAndroid = /Android/i.test(navigator.userAgent);
-    // Android: intent mở Chrome; iOS không có cách mở trình duyệt ngoài từ Zalo nên dùng liên kết thường
-    document.getElementById('openext').href = isAndroid
-      ? 'intent://dalatevent.com/festivalhoadalat2026/avatar.html#Intent;scheme=https;package=com.android.chrome;end'
-      : PAGE_URL;
+    if (isAndroid) {
+      const a = document.getElementById('openext');
+      a.href = 'intent://dalatevent.com/festivalhoadalat2026/avatar.html#Intent;scheme=https;package=com.android.chrome;end';
+      a.hidden = false;
+    } else {
+      document.getElementById('steps-ios').hidden = false;
+    }
     document.getElementById('zalobox').hidden = false;
     document.getElementById('copylink').addEventListener('click', () => {
       const m = document.getElementById('copymsg');
