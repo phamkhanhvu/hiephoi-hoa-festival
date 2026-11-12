@@ -101,6 +101,9 @@
   .hero-sub { color: var(--muted); font-size: 13px; letter-spacing: .14em; text-transform: uppercase; margin: 6px 0 0; line-height: 1.7; }
   .hero h1 { color: var(--green); font-size: clamp(34px, 6.4vw, 60px); line-height: 1.05; margin-top: 22px; font-weight: 800; }
   .hero .tagline { margin-top: 16px; font-size: 16px; max-width: 58ch; color: var(--ink); }
+  .cta-avatar { display: block; width: min(100%, 560px); margin-top: 22px; border-radius: 6px; transition: transform .15s ease, box-shadow .15s ease; }
+  .cta-avatar img { display: block; width: 100%; height: auto; }
+  .cta-avatar:hover, .cta-avatar:focus-visible { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(233, 30, 99, .25); }
   .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
   .btn {
     display: inline-block; padding: 11px 20px; border-radius: 4px;
@@ -324,6 +327,9 @@
         <a class="btn primary" href="#su-kien">Xem chương trình</a>
         <a class="btn" href="#doi-tac">Đăng ký đồng hành</a>
       </div>
+      <a class="cta-avatar" href="avatar.html" aria-label="Tạo khung ảnh đại diện Festival Hoa 2026">
+        <img src="banners/cta-avatar.png" alt="Cùng Hiệp hội Hoa thay avatar hưởng ứng, Lễ hội hoa!">
+      </a>
       <div class="cards-row">
         <div class="countdown">
           <p>Đến ngày khai mạc 19/12/2026</p>
