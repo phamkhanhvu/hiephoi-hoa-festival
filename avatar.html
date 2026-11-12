@@ -140,6 +140,18 @@
     offY = h >= SIZE ? Math.min(0, Math.max(SIZE - h, offY)) : (SIZE - h) / 2;
   }
 
+  // Nhận biết trình duyệt trong ứng dụng (Zalo).
+  // iPhone: trình duyệt trong app có sẵn cầu nối window.webkit.messageHandlers, Safari thì không.
+  // Android: dùng chuỗi "Zalo" trong user agent.
+  function isInAppBrowser() {
+    const ua = navigator.userAgent;
+    if (/iPhone|iPad|iPod/i.test(ua)) {
+      return !!(window.webkit && window.webkit.messageHandlers);
+    }
+    return /Zalo/i.test(ua);
+  }
+  const INAPP = isInAppBrowser();
+
   const frameImg = new Image();
   let frameReady = false;
   frameImg.onload = () => { frameReady = true; render(); };
@@ -228,7 +240,7 @@
   downloadBtn.addEventListener('click', () => {
     if (!img) return;
     // Trình duyệt trong Zalo không tải file trực tiếp: hiện ảnh để nhấn giữ và lưu
-    if (/Zalo/i.test(navigator.userAgent)) {
+    if (INAPP) {
       document.getElementById('result').src = canvas.toDataURL('image/png');
       document.getElementById('savebox').hidden = false;
       setMsg('Đang mở trong Zalo. Nhấn giữ ảnh bên dưới để lưu.');
@@ -249,7 +261,7 @@
 
   // Trong Zalo: hiện nút mở bằng trình duyệt ngoài
   const PAGE_URL = 'https://dalatevent.com/festivalhoadalat2026/avatar.html';
-  if (/Zalo/i.test(navigator.userAgent)) {
+  if (INAPP) {
     const isAndroid = /Android/i.test(navigator.userAgent);
     if (isAndroid) {
       const a = document.getElementById('openext');
