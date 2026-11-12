@@ -43,6 +43,12 @@
     margin-left: max(16px, env(safe-area-inset-left, 0px));
     margin-right: max(16px, env(safe-area-inset-right, 0px));
   }
+  /* Desktop: khung trung tâm rộng hơn, hai bên là nền xanh nhạt */
+  @media (min-width: 1101px) {
+    body { background: #E6F4EA; }
+    .frame { max-width: 1360px; margin: 24px auto; }
+    .inner { max-width: 1240px; }
+  }
   .inner { padding-inline: clamp(16px, 4vw, 40px); max-width: 1200px; margin-inline: auto; }
   h1, h2, h3 { margin: 0; text-wrap: balance; font-family: "Montserrat", "Be Vietnam Pro", sans-serif; }
   .display-green { color: var(--green); font-weight: 800; }
