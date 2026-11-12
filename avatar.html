@@ -116,33 +116,17 @@
     offY = Math.min(0, Math.max(SIZE - h, offY));
   }
 
+  const frameImg = new Image();
+  let frameReady = false;
+  frameImg.onload = () => { frameReady = true; render(); };
+  frameImg.src = 'frames/khung-festival-2026.png';
+
   function drawFrame() {
-    const pad = 36;
-    // Dải viền gradient xanh – vàng
-    const g = ctx.createLinearGradient(0, 0, SIZE, SIZE);
-    g.addColorStop(0, '#2E9D47');
-    g.addColorStop(1, '#C99A1E');
-    ctx.strokeStyle = g;
-    ctx.lineWidth = pad * 2;
-    ctx.strokeRect(0, 0, SIZE, SIZE);
-
-    // Dải chữ dưới cùng
-    const bandH = 200;
-    ctx.fillStyle = 'rgba(30, 122, 53, 0.94)';
-    ctx.fillRect(0, SIZE - bandH, SIZE, bandH);
-
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillStyle = '#FFFFFF';
-    ctx.font = '800 66px "Be Vietnam Pro", system-ui, sans-serif';
-    ctx.fillText('FESTIVAL HOA ĐÀ LẠT', SIZE / 2, SIZE - bandH + 72);
-    ctx.fillStyle = '#F4D77B';
-    ctx.font = '600 40px "Be Vietnam Pro", system-ui, sans-serif';
-    ctx.fillText('Lần thứ XI · Năm 2026', SIZE / 2, SIZE - bandH + 140);
+    if (frameReady) ctx.drawImage(frameImg, 0, 0, SIZE, SIZE);
   }
 
   function render() {
-    ctx.fillStyle = '#EEF7F0';
+    ctx.fillStyle = '#FFFFFF';
     ctx.fillRect(0, 0, SIZE, SIZE);
     if (img) {
       ctx.drawImage(img, offX, offY, img.width * scale, img.height * scale);
