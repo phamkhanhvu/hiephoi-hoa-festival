@@ -101,6 +101,10 @@
   .hero-sub { color: var(--muted); font-size: 13px; letter-spacing: .14em; text-transform: uppercase; margin: 6px 0 0; line-height: 1.7; }
   .hero h1 { color: var(--green); font-size: clamp(34px, 6.4vw, 60px); line-height: 1.05; margin-top: 22px; font-weight: 800; }
   .hero .tagline { margin-top: 16px; font-size: 16px; max-width: 58ch; color: var(--ink); }
+  .letter-wrap { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 36px; align-items: start; }
+  .portrait { margin: 0; }
+  .portrait img { display: block; width: 100%; height: auto; border-radius: 6px; border: 1px solid var(--line); background: #fff; }
+  @media (max-width: 760px) { .letter-wrap { grid-template-columns: minmax(0, 1fr); } .portrait { max-width: 240px; margin: 0 auto; order: -1; } }
   .cta-avatar { display: block; width: min(100%, 560px); margin-top: 22px; border-radius: 6px; transition: transform .15s ease, box-shadow .15s ease; }
   .cta-avatar img { display: block; width: 100%; height: auto; }
   .cta-avatar:hover, .cta-avatar:focus-visible { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(233, 30, 99, .25); }
@@ -350,6 +354,7 @@
   <section class="block bg-letter" id="gioi-thieu">
     <div class="inner">
       <h2 class="sec-title display-green">Thư ngỏ</h2>
+      <div class="letter-wrap">
       <div class="letter">
         <p class="to">Kính gửi: Quý Hội viên, Quý doanh nghiệp, Quý tổ chức và cá nhân quan tâm đến Festival Hoa Đà Lạt 2026.</p>
         <p>Festival Hoa Đà Lạt không chỉ là ngày hội của những sắc hoa rực rỡ, mà còn là dịp tôn vinh những con người đã góp phần tạo nên giá trị ngành hoa, từ người nông dân, nghệ nhân, nhà khoa học đến doanh nghiệp, nhà phân phối và các đối tác đồng hành.</p>
@@ -360,6 +365,10 @@
           <b>TRÂN TRỌNG KÍNH MỜI ĐỒNG HÀNH!</b>
           <span>Chủ tịch</span>
         </div>
+      </div>
+      <figure class="portrait">
+        <img src="banners/anh-sang.png" alt="Ảnh anh Sang" loading="lazy">
+      </figure>
       </div>
     </div>
   </section>
