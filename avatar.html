@@ -124,7 +124,7 @@
   const frameImg = new Image();
   let frameReady = false;
   frameImg.onload = () => { frameReady = true; render(); };
-  frameImg.src = 'frames/khung-festival-2026.png';
+  frameImg.src = 'frames/khung-festival-2026.png?v=2';
 
   function drawFrame() {
     if (frameReady) ctx.drawImage(frameImg, 0, 0, SIZE, SIZE);
