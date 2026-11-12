@@ -67,7 +67,7 @@
         <p>Kéo ảnh trên khung để đổi vị trí. Dùng thanh trượt hoặc con lăn chuột để phóng to, thu nhỏ.</p>
         <div class="zoom" style="margin-top:10px">
           <span>Thu</span>
-          <input id="zoom" type="range" min="1" max="3" step="0.01" value="1" disabled>
+          <input id="zoom" type="range" min="-1" max="1" step="0.01" value="0" disabled>
           <span>Phóng</span>
         </div>
       </div>
@@ -105,15 +105,16 @@
   function fitImage() {
     const s = Math.max(SIZE / img.width, SIZE / img.height);
     baseScale = s; scale = s;
-    zoomInput.value = 1;
+    zoomInput.value = 0;
     offX = (SIZE - img.width * scale) / 2;
     offY = (SIZE - img.height * scale) / 2;
   }
 
   function clampOffsets() {
     const w = img.width * scale, h = img.height * scale;
-    offX = Math.min(0, Math.max(SIZE - w, offX));
-    offY = Math.min(0, Math.max(SIZE - h, offY));
+    // Ảnh lớn hơn khung: không cho kéo lộ mép. Ảnh nhỏ hơn khung: căn giữa.
+    offX = w >= SIZE ? Math.min(0, Math.max(SIZE - w, offX)) : (SIZE - w) / 2;
+    offY = h >= SIZE ? Math.min(0, Math.max(SIZE - h, offY)) : (SIZE - h) / 2;
   }
 
   const frameImg = new Image();
@@ -163,7 +164,7 @@
     if (!img) return;
     const cx = SIZE / 2, cy = SIZE / 2;
     const oldScale = scale;
-    scale = baseScale * parseFloat(zoomInput.value);
+    scale = baseScale * Math.pow(2, parseFloat(zoomInput.value));
     // Giữ điểm giữa khung khi phóng
     offX = cx - (cx - offX) * (scale / oldScale);
     offY = cy - (cy - offY) * (scale / oldScale);
@@ -196,7 +197,7 @@
   canvas.addEventListener('wheel', e => {
     if (!img) return;
     e.preventDefault();
-    const v = Math.min(3, Math.max(1, parseFloat(zoomInput.value) - e.deltaY * 0.001));
+    const v = Math.min(1, Math.max(-1, parseFloat(zoomInput.value) - e.deltaY * 0.002));
     zoomInput.value = v;
     zoomInput.dispatchEvent(new Event('input'));
   }, { passive: false });
