@@ -117,7 +117,8 @@
   .portrait img { display: block; width: 100%; height: auto; border-radius: 6px; border: 1px solid var(--line); background: #fff; }
   @media (max-width: 760px) { .letter-wrap { grid-template-columns: minmax(0, 1fr); } .portrait { max-width: 240px; margin: 0 auto; order: -1; } }
   .cta-avatar { display: block; width: min(100%, 560px); margin-top: 22px; border-radius: 6px; transition: transform .15s ease, box-shadow .15s ease; }
-  .cta-avatar img { display: block; width: 100%; height: auto; }
+  .cta-avatar { background: #fff; padding: 18px 20px; text-align: center; }
+  .cta-avatar .cta-text { display: block; color: #E91E63; font-weight: 800; font-size: clamp(18px, 2.8vw, 26px); line-height: 1.3; text-transform: uppercase; letter-spacing: .01em; text-wrap: balance; }
   .cta-avatar:hover, .cta-avatar:focus-visible { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(233, 30, 99, .25); }
   .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
   .btn {
@@ -348,7 +349,7 @@
         <a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSekWDf173SOOVlibDXB_lVHIjkwq5yydtrlM1H0wmL-jq9U4w/viewform" target="_blank" rel="noopener">Register as a partner</a>
       </div>
       <a class="cta-avatar" href="avatar-en.html" aria-label="Create a Festival Hoa 2026 avatar frame">
-        <img src="banners/cta-avatar.png" alt="Change your avatar with the Association – celebrate the flower festival!">
+        <span class="cta-text">JOIN THE ASSOCIATION IN CHANGING YOUR AVATAR<br>CELEBRATE THE FLOWER FESTIVAL!</span>
       </a>
       <div class="cards-row">
         <div class="countdown">
