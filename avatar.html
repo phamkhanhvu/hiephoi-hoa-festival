@@ -4,6 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Khung ảnh đại diện · Festival Hoa 2026</title>
+<meta name="description" content="Đổi ảnh đại diện của bạn với khung Festival Hoa Đà Lạt 2026 ngay trên điện thoại.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Festival Hoa Đà Lạt 2026">
+<meta property="og:title" content="Khung ảnh đại diện · Festival Hoa 2026">
+<meta property="og:description" content="Đổi ảnh đại diện của bạn với khung Festival Hoa Đà Lạt 2026 ngay trên điện thoại.">
+<meta property="og:url" content="https://dalatevent.com/festivalhoadalat2026/avatar.html">
+<meta property="og:image" content="https://dalatevent.com/festivalhoadalat2026/frames/khung-festival-2026.png">
+<meta property="og:locale" content="vi_VN">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&subset=vietnamese,latin&display=swap">
 <style>
@@ -42,6 +51,11 @@
   .msg { font-size: 13px; color: var(--muted); min-height: 1.2em; margin: 0; }
   .ref { font-size: 13px; color: var(--muted); }
   [hidden] { display: none !important; }
+  .sharebox { background: #fff; border: 1px solid var(--line); padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+  .sharebox p { margin: 0; font-size: 14px; color: var(--ink); }
+  .sharebox .caption { font-size: 13px; color: var(--muted); background: var(--mist); border: 1px solid var(--line); padding: 10px 12px; margin: 0; }
+  .sharebox button { width: 100%; background: #fff; color: var(--green); border: 1px solid var(--green); padding: 12px 14px; font: inherit; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; border-radius: 4px; cursor: pointer; }
+  .sharebox button.primary { background: var(--green); color: #fff; }
   .zalobox { background: #FFF8E1; border: 1px solid var(--gold); padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
   .zalobox p { margin: 0; font-size: 14px; color: var(--ink); }
   .zalobox a.openext, .zalobox button.copy { display: block; text-align: center; text-decoration: none; padding: 12px 14px; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; border: 1px solid var(--green); border-radius: 4px; }
@@ -100,6 +114,13 @@
       <input id="file" type="file" accept="image/jpeg,image/png,image/webp">
       <button class="primary" id="download" disabled>Tải ảnh đại diện</button>
       <p class="msg" id="msg"></p>
+      <div class="sharebox" id="sharebox" hidden>
+        <p><b>Cảm ơn bạn đã tham gia!</b> Chia sẻ ảnh của bạn để lan tỏa Festival Hoa Đà Lạt 2026.</p>
+        <p class="caption" id="caption">Tôi vừa đổi ảnh đại diện với khung Festival Hoa Đà Lạt 2026. Cùng đón chờ mùa hoa Đà Lạt! #FestivalHoaDaLat2026 #DaLat</p>
+        <button class="primary" id="shareBtn" type="button" hidden>Chia sẻ</button>
+        <button id="copyCaption" type="button">Sao chép nội dung</button>
+        <p class="ref" id="shareMsg"></p>
+      </div>
       <div id="savebox" hidden>
         <p class="msg">Nếu không tải được trong Zalo, nhấn giữ ảnh bên dưới rồi chọn "Lưu ảnh". Nếu vẫn không được, bấm dấu "..." ở góc trên bên phải, chọn "Mở trong trình duyệt" rồi nhấn giữ ảnh để lưu.</p>
         <img id="result" alt="Ảnh đại diện Festival Hoa 2026" style="width:100%;max-width:420px;display:block;border:1px solid var(--line);-webkit-user-select:none;user-select:none;-webkit-touch-callout:default">
@@ -112,6 +133,7 @@
 <script>
 (function () {
   const SIZE = 1080;
+  const PAGE_URL_SHARE = 'https://dalatevent.com/festivalhoadalat2026/avatar.html';
   const canvas = document.getElementById('out');
   const ctx = canvas.getContext('2d');
   const fileInput = document.getElementById('file');
@@ -257,6 +279,7 @@
       a.remove();
       setTimeout(() => URL.revokeObjectURL(a.href), 1000);
       setMsg('Đã tải ảnh về máy.');
+      showShare();
     }, 'image/png');
   });
 
@@ -281,6 +304,28 @@
       } else { fail(); }
     });
   }
+
+  // Chia sẻ sau khi tải ảnh
+  const CAPTION_TEXT = document.getElementById('caption').textContent;
+  const shareBox = document.getElementById('sharebox');
+  const shareMsg = document.getElementById('shareMsg');
+  const shareBtn = document.getElementById('shareBtn');
+  function showShare() {
+    shareBox.hidden = false;
+    if (navigator.share) shareBtn.hidden = false;
+  }
+  shareBtn.addEventListener('click', () => {
+    navigator.share({ title: 'Festival Hoa Đà Lạt 2026', text: CAPTION_TEXT, url: PAGE_URL_SHARE })
+      .catch(() => { shareMsg.textContent = ''; });
+  });
+  document.getElementById('copyCaption').addEventListener('click', () => {
+    const txt = CAPTION_TEXT + ' ' + PAGE_URL_SHARE;
+    const done = () => { shareMsg.textContent = 'Đã sao chép. Dán cùng ảnh khi đăng.'; };
+    const fail = () => { shareMsg.textContent = 'Không sao chép được. Hãy chọn và sao chép nội dung trên.'; };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(txt).then(done, fail);
+    } else { fail(); }
+  });
 
   // Vẽ khung trống ban đầu
   render();
