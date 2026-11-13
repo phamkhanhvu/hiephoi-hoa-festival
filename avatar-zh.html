@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>头像边框 · Festival Hoa 2026</title>
+<meta name="description" content="2026年大叻花节头像边框：选择照片、调整位置并下载。">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Festival Hoa Đà Lạt 2026">
+<meta property="og:title" content="头像边框 · Festival Hoa 2026">
+<meta property="og:description" content="2026年大叻花节头像边框：选择照片、调整位置并下载。">
+<meta property="og:url" content="https://dalatevent.com/festivalhoadalat2026/avatar-zh.html">
+<meta property="og:image" content="https://dalatevent.com/festivalhoadalat2026/frames/khung-festival-2026.png">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&subset=vietnamese,latin&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap">
+<style>
+  :root { --green: #2E9D47; --green-dark: #1E7A35; --gold: #C99A1E; --ink: #242A26; --muted: #666B68; --line: #DCD7E6; --mist: #F8F6FB; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--mist); color: var(--ink);
+    font-family: "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.6;
+    padding: 0 max(16px, env(safe-area-inset-right, 0px)) 0 max(16px, env(safe-area-inset-left, 0px));
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding-block: 32px 48px; }
+  header { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  header a { color: var(--green-dark); font-weight: 600; text-decoration: none; font-size: 14px; }
+  h1 { margin: 12px 0 6px; color: var(--green-dark); font-size: clamp(26px, 5vw, 36px); line-height: 1.2; font-weight: 800; }
+  .lead { margin: 0 0 24px; color: var(--muted); }
+  .grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; align-items: start; }
+  @media (max-width: 760px) { .grid { grid-template-columns: minmax(0, 1fr); } }
+  .stage { background: #fff; border: 1px solid var(--line); padding: 16px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  canvas#out { width: 100%; max-width: 420px; height: auto; aspect-ratio: 1 / 1; background: #EEF7F0; touch-action: none; cursor: grab; display: block; }
+  canvas#out.dragging { cursor: grabbing; }
+  .hint { font-size: 13px; color: var(--muted); text-align: center; margin: 0; }
+  .panel { display: flex; flex-direction: column; gap: 14px; }
+  .step { background: #fff; border: 1px solid var(--line); padding: 16px 18px; }
+  .step b { display: block; color: var(--green-dark); margin-bottom: 4px; }
+  .step p { margin: 0; color: var(--muted); font-size: 14px; }
+  label.file, button {
+    display: inline-block; padding: 12px 18px; border-radius: 4px; font: inherit; font-size: 14px; font-weight: 700;
+    letter-spacing: .03em; text-transform: uppercase; cursor: pointer; border: 1px solid var(--green); text-align: center;
+  }
+  label.file { background: #fff; color: var(--green); }
+  button.primary { background: var(--green); color: #fff; width: 100%; }
+  button.primary:disabled { opacity: .45; cursor: not-allowed; }
+  input[type=file] { display: none; }
+  .zoom { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--muted); }
+  .zoom input { flex: 1; accent-color: var(--green); }
+  .msg { font-size: 13px; color: var(--muted); min-height: 1.2em; margin: 0; }
+  .ref { font-size: 13px; color: var(--muted); }
+  [hidden] { display: none !important; }
+  .sharebox { background: #fff; border: 1px solid var(--line); padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+  .sharebox p { margin: 0; font-size: 14px; color: var(--ink); }
+  .sharebox .caption { font-size: 13px; color: var(--muted); background: var(--mist); border: 1px solid var(--line); padding: 10px 12px; margin: 0; }
+  .sharebox button { width: 100%; background: #fff; color: var(--green); border: 1px solid var(--green); padding: 12px 14px; font: inherit; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; border-radius: 4px; cursor: pointer; }
+  .sharebox button.primary { background: var(--green); color: #fff; }
+  .zalobox { background: #FFF8E1; border: 1px solid var(--gold); padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+  .zalobox p { margin: 0; font-size: 14px; color: var(--ink); }
+  .zalobox a.openext, .zalobox button.copy { display: block; text-align: center; text-decoration: none; padding: 12px 14px; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; border: 1px solid var(--green); border-radius: 4px; }
+  .zalobox a.openext { background: var(--green); color: #fff; }
+  .zalobox button.copy { background: #fff; color: var(--green); width: 100%; }
+  .zalobox ol { margin: 0; padding-left: 20px; font-size: 14px; color: var(--ink); display: flex; flex-direction: column; gap: 6px; }
+  .dots { display: inline-block; font-weight: 800; letter-spacing: 1px; border: 1px solid var(--ink); border-radius: 4px; padding: 0 5px; line-height: 1.3; }
+  .langbar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .langbar a { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; padding: 4px 9px; border: 1px solid var(--line); border-radius: 4px; text-decoration: none; color: var(--ink); background: #fff; }
+  .langbar a[aria-current="true"] { border-color: var(--green); color: var(--green-dark); box-shadow: inset 0 0 0 1px var(--green); }
+  .langbar svg { width: 22px; height: 15px; display: block; border: 1px solid #ddd; flex: none; }
+  .totop { position: fixed; right: max(16px, env(safe-area-inset-right, 0px)); bottom: max(16px, env(safe-area-inset-bottom, 0px)); width: 46px; height: 46px; display: flex; align-items: center; justify-content: center; background: var(--green); color: #fff; border-radius: 50%; box-shadow: 0 6px 16px rgba(0,0,0,.18); text-decoration: none; z-index: 50; opacity: 0; visibility: hidden; transition: opacity .2s ease, visibility .2s ease, background .15s ease; }
+  .totop.show { opacity: 1; visibility: visible; }
+  .totop:hover, .totop:focus-visible { background: var(--gold); color: var(--ink); }
+  .totop svg { width: 22px; height: 22px; }
+  html:lang(zh) body { font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="langbar" aria-label="Language / Ngôn ngữ"><a href="avatar.html" lang="vi" hreflang="vi" aria-current="false"><svg viewBox="0 0 3 2" aria-hidden="true"><rect width="3" height="2" fill="#DA251D"/><polygon fill="#FFFF00" points="1.5,0.7 1.5705,0.903 1.785,0.907 1.614,1.037 1.676,1.243 1.5,1.12 1.324,1.243 1.386,1.037 1.215,0.907 1.4295,0.903"/></svg>Tiếng Việt</a><a href="avatar-en.html" lang="en" hreflang="en" aria-current="false"><svg viewBox="0 0 60 30" aria-hidden="true"><clipPath id="ukc"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath><path d="M0,0 v30 h60 v-30 z" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#ukc)" stroke="#C8102E" stroke-width="4"/><path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/></svg>English</a><a href="avatar-zh.html" lang="zh-CN" hreflang="zh-CN" aria-current="true"><svg viewBox="0 0 3 2" aria-hidden="true"><rect width="3" height="2" fill="#DE2910"/><polygon fill="#FFDE00" transform="translate(0.5 0.5) scale(0.6) translate(-1.5 -1)" points="1.5,0.7 1.5705,0.903 1.785,0.907 1.614,1.037 1.676,1.243 1.5,1.12 1.324,1.243 1.386,1.037 1.215,0.907 1.4295,0.903"/></svg>中文</a></div>
+      <a href="zh.html">← 返回协会主页</a>
+  </header>
+  <h1>Festival Hoa 2026 头像边框</h1>
+  <p class="lead">选择照片，调整位置，然后下载作为您的头像。</p>
+  <div class="zalobox" id="zalobox" hidden>
+    <p><b>您正在 Zalo 内打开本页面。</b>如需下载照片，请在浏览器中打开本页面：</p>
+    <a class="openext" id="openext" href="#" hidden>在浏览器中打开</a>
+    <ol id="steps-ios" hidden>
+      <li>点击屏幕右上角的 <span class="dots">···</span> 图标。</li>
+      <li>选择 <b>“在浏览器中打开”</b>（或“在 Safari 中打开”）。</li>
+      <li>在打开的浏览器中，重新选择照片并下载。</li>
+    </ol>
+    <button class="copy" id="copylink" type="button">复制链接</button>
+    <p class="ref" id="copymsg"></p>
+  </div>
+
+
+  <div class="grid">
+    <div class="stage">
+      <canvas id="out" width="1080" height="1080" aria-label="头像预览"></canvas>
+      <p class="hint" id="hint">还没有照片。点击“选择照片”开始。</p>
+    </div>
+
+    <div class="panel">
+      <div class="step">
+        <b>1. 选择照片</b>
+        <p>请使用清晰的人像或正面照，格式为 JPG 或 PNG。</p>
+      </div>
+      <div class="step">
+        <b>2. 调整</b>
+        <p>在框内拖动照片以移动位置，使用滑块或鼠标滚轮缩放。</p>
+        <div class="zoom" style="margin-top:10px">
+          <span>缩小</span>
+          <input id="zoom" type="range" min="-1" max="1" step="0.01" value="0" disabled>
+          <span>放大</span>
+        </div>
+      </div>
+      <div class="step">
+        <b>3. 下载</b>
+        <p>点击下方按钮，下载带边框的照片。</p>
+      </div>
+
+      <label class="file" for="file">选择照片</label>
+      <input id="file" type="file" accept="image/jpeg,image/png,image/webp">
+      <button class="primary" id="download" disabled>下载头像</button>
+      <p class="msg" id="msg"></p>
+      <div class="sharebox" id="sharebox" hidden>
+        <p><b>感谢您的参与！</b>分享您的照片，为2026年大叻花节做宣传。</p>
+        <p class="caption" id="caption">我刚刚用2026年大叻花节边框更新了我的头像，期待大叻的花季！#FestivalHoaDaLat2026 #DaLat</p>
+        <button class="primary" id="shareBtn" type="button" hidden>分享</button>
+        <button id="copyCaption" type="button">复制文字</button>
+        <p class="ref" id="shareMsg"></p>
+      </div>
+      <div id="savebox" hidden>
+        <p class="msg">如果在 Zalo 中无法下载，请长按下方照片并选择“保存图片”。如果仍然失败，请点击右上角的“...”图标，选择“在浏览器中打开”，然后长按照片进行保存。</p>
+        <img id="result" alt="Festival Hoa 2026 头像" style="width:100%;max-width:420px;display:block;border:1px solid var(--line);-webkit-user-select:none;user-select:none;-webkit-touch-callout:default">
+      </div>
+      <p class="ref">您的照片仅在您的设备上处理，不会上传到任何服务器。</p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  const SIZE = 1080;
+  const PAGE_URL_SHARE = 'https://dalatevent.com/festivalhoadalat2026/avatar-zh.html';
+  const canvas = document.getElementById('out');
+  const ctx = canvas.getContext('2d');
+  const fileInput = document.getElementById('file');
+  const zoomInput = document.getElementById('zoom');
+  const downloadBtn = document.getElementById('download');
+  const hint = document.getElementById('hint');
+  const msg = document.getElementById('msg');
+
+  let img = null;
+  let scale = 1, baseScale = 1, offX = 0, offY = 0;
+  let dragging = false, lastX = 0, lastY = 0;
+
+  function setMsg(t) { msg.textContent = t || ''; }
+
+  function fitImage() {
+    const s = Math.max(SIZE / img.width, SIZE / img.height);
+    baseScale = s; scale = s;
+    zoomInput.value = 0;
+    offX = (SIZE - img.width * scale) / 2;
+    offY = (SIZE - img.height * scale) / 2;
+  }
+
+  function clampOffsets() {
+    const w = img.width * scale, h = img.height * scale;
+    // Ảnh lớn hơn khung: không cho kéo lộ mép. Ảnh nhỏ hơn khung: căn giữa.
+    offX = w >= SIZE ? Math.min(0, Math.max(SIZE - w, offX)) : (SIZE - w) / 2;
+    offY = h >= SIZE ? Math.min(0, Math.max(SIZE - h, offY)) : (SIZE - h) / 2;
+  }
+
+  // Nhận biết trình duyệt trong ứng dụng (Zalo).
+  // iPhone: trình duyệt trong app có sẵn cầu nối window.webkit.messageHandlers, Safari thì không.
+  // Android: dùng chuỗi "Zalo" trong user agent.
+  function isInAppBrowser() {
+    const ua = navigator.userAgent;
+    if (/iPhone|iPad|iPod/i.test(ua)) {
+      return !!(window.webkit && window.webkit.messageHandlers);
+    }
+    return /Zalo/i.test(ua);
+  }
+  const INAPP = isInAppBrowser();
+
+  const frameImg = new Image();
+  let frameReady = false;
+  frameImg.onload = () => { frameReady = true; render(); };
+  frameImg.src = 'frames/khung-festival-2026.png?v=3';
+
+  function drawFrame() {
+    if (frameReady) ctx.drawImage(frameImg, 0, 0, SIZE, SIZE);
+  }
+
+  function render() {
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(0, 0, SIZE, SIZE);
+    if (img) {
+      ctx.drawImage(img, offX, offY, img.width * scale, img.height * scale);
+    }
+    drawFrame();
+  }
+
+  function setEnabled(on) {
+    zoomInput.disabled = !on;
+    downloadBtn.disabled = !on;
+  }
+
+  async function loadFile(file) {
+    setMsg('');
+    if (!file || !/^image\//.test(file.type)) { setMsg('请选择图片文件。'); return; }
+    const url = URL.createObjectURL(file);
+    const im = new Image();
+    im.onload = async () => {
+      img = im;
+      try { await document.fonts.load('800 66px "Be Vietnam Pro"'); } catch (e) {}
+      fitImage();
+      hint.textContent = '拖动照片调整位置，使用滑块缩放。';
+      setEnabled(true);
+      render();
+      URL.revokeObjectURL(url);
+    };
+    im.onerror = () => { setMsg('无法读取该照片，请尝试其他照片。'); URL.revokeObjectURL(url); };
+    im.src = url;
+  }
+
+  fileInput.addEventListener('change', e => loadFile(e.target.files[0]));
+
+  zoomInput.addEventListener('input', () => {
+    if (!img) return;
+    const cx = SIZE / 2, cy = SIZE / 2;
+    const oldScale = scale;
+    scale = baseScale * Math.pow(2, parseFloat(zoomInput.value));
+    // Giữ điểm giữa khung khi phóng
+    offX = cx - (cx - offX) * (scale / oldScale);
+    offY = cy - (cy - offY) * (scale / oldScale);
+    clampOffsets();
+    render();
+  });
+
+  function toCanvasXY(evt) {
+    const r = canvas.getBoundingClientRect();
+    return { x: (evt.clientX - r.left) * (SIZE / r.width), y: (evt.clientY - r.top) * (SIZE / r.height) };
+  }
+
+  canvas.addEventListener('pointerdown', e => {
+    if (!img) return;
+    dragging = true; canvas.classList.add('dragging');
+    const p = toCanvasXY(e); lastX = p.x; lastY = p.y;
+    canvas.setPointerCapture(e.pointerId);
+  });
+  canvas.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    const p = toCanvasXY(e);
+    offX += p.x - lastX; offY += p.y - lastY;
+    lastX = p.x; lastY = p.y;
+    clampOffsets(); render();
+  });
+  const endDrag = () => { dragging = false; canvas.classList.remove('dragging'); };
+  canvas.addEventListener('pointerup', endDrag);
+  canvas.addEventListener('pointercancel', endDrag);
+
+  canvas.addEventListener('wheel', e => {
+    if (!img) return;
+    e.preventDefault();
+    const v = Math.min(1, Math.max(-1, parseFloat(zoomInput.value) - e.deltaY * 0.002));
+    zoomInput.value = v;
+    zoomInput.dispatchEvent(new Event('input'));
+  }, { passive: false });
+
+  downloadBtn.addEventListener('click', () => {
+    if (!img) return;
+    // Trình duyệt trong Zalo không tải file trực tiếp: hiện ảnh để nhấn giữ và lưu
+    if (INAPP) {
+      document.getElementById('result').src = canvas.toDataURL('image/png');
+      document.getElementById('savebox').hidden = false;
+      setMsg('已在 Zalo 中打开。请长按下方照片进行保存。');
+      return;
+    }
+    canvas.toBlob(blob => {
+      if (!blob) { setMsg('无法生成图片，请重试。'); return; }
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'avatar-festival-hoa-2026.png';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+      setMsg('照片已下载。');
+      showShare();
+    }, 'image/png');
+  });
+
+  // Trong Zalo: hiện nút mở bằng trình duyệt ngoài
+  const PAGE_URL = 'https://dalatevent.com/festivalhoadalat2026/avatar-zh.html';
+  if (INAPP) {
+    const isAndroid = /Android/i.test(navigator.userAgent);
+    if (isAndroid) {
+      const a = document.getElementById('openext');
+      a.href = 'intent://dalatevent.com/festivalhoadalat2026/avatar-zh.html#Intent;scheme=https;package=com.android.chrome;end';
+      a.hidden = false;
+    } else {
+      document.getElementById('steps-ios').hidden = false;
+    }
+    document.getElementById('zalobox').hidden = false;
+    document.getElementById('copylink').addEventListener('click', () => {
+      const m = document.getElementById('copymsg');
+      const done = () => { m.textContent = '已复制。请粘贴到 Safari 或 Chrome 中打开。'; };
+      const fail = () => { m.textContent = '无法复制，请选中并复制：' + PAGE_URL; };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(PAGE_URL).then(done, fail);
+      } else { fail(); }
+    });
+  }
+
+  // Chia sẻ sau khi tải ảnh
+  const CAPTION_TEXT = document.getElementById('caption').textContent;
+  const shareBox = document.getElementById('sharebox');
+  const shareMsg = document.getElementById('shareMsg');
+  const shareBtn = document.getElementById('shareBtn');
+  function showShare() {
+    shareBox.hidden = false;
+    if (navigator.share) shareBtn.hidden = false;
+  }
+  shareBtn.addEventListener('click', () => {
+    navigator.share({ title: 'Festival Hoa Đà Lạt 2026', text: CAPTION_TEXT, url: PAGE_URL_SHARE })
+      .catch(() => { shareMsg.textContent = ''; });
+  });
+  document.getElementById('copyCaption').addEventListener('click', () => {
+    const txt = CAPTION_TEXT + ' ' + PAGE_URL_SHARE;
+    const done = () => { shareMsg.textContent = '已复制。发布时请与照片一起粘贴。'; };
+    const fail = () => { shareMsg.textContent = '无法复制，请选中上方文字并复制。'; };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(txt).then(done, fail);
+    } else { fail(); }
+  });
+
+  // Vẽ khung trống ban đầu
+  render();
+})();
+</script>
+<a class="totop" id="totop" href="#" aria-label="返回顶部" title="返回顶部"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></a>
+<script>
+(function () {
+  var b = document.getElementById("totop");
+  function toggle() { b.classList.toggle("show", window.scrollY > 400); }
+  window.addEventListener("scroll", toggle, { passive: true });
+  b.addEventListener("click", function (e) { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); });
+  toggle();
+})();
+</script>
+</body>
+</html>
