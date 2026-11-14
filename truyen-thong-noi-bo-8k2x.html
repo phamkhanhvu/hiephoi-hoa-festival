@@ -6,25 +6,18 @@
 <meta name="robots" content="noindex,nofollow,noarchive">
 <title>Điều phối truyền thông nội bộ</title>
 <style>
+  /* Nền tối là mặc định (giống bảng điều khiển Sense Work); có thể chuyển sang sáng */
   :root {
+    --bg: #0B1424; --panel: #111C30; --fg: #E6EDF7; --muted: #8A9BB5; --line: #1F2E47; --hover: #17243B;
+    --green: #22C55E; --green-soft: #123524; --gold: #F5A524; --gold-soft: #3A2C12;
+    --red: #F2665F; --red-soft: #3D1E22; --blue: #60A5FA; --blue-soft: #14233D; --gray: #6B7A92; --gray-soft: #1A2538;
+    color-scheme: dark;
+  }
+  :root[data-theme="light"] {
     --bg: #F4F7F2; --panel: #FFFFFF; --fg: #1B2A20; --muted: #5E6F63; --line: #DDE6DE; --hover: #EEF4EF;
     --green: #1E7A46; --green-soft: #E3F1E8; --gold: #C98A12; --gold-soft: #FBF1DC;
     --red: #B3261E; --red-soft: #FBE4E2; --blue: #245E9C; --blue-soft: #E2ECF8; --gray: #7A8A80; --gray-soft: #EDF1EE;
     color-scheme: light;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --bg: #0F1712; --panel: #17221B; --fg: #E6EFE8; --muted: #9AAEA0; --line: #2A3A2F; --hover: #1D2B22;
-      --green: #5FD08F; --green-soft: #1F3328; --gold: #E8B04A; --gold-soft: #3A2E14;
-      --red: #F08A80; --red-soft: #3D1F1C; --blue: #8DB8E8; --blue-soft: #1B2B3D; --gray: #9AAEA0; --gray-soft: #22302A;
-      color-scheme: dark;
-    }
-  }
-  :root[data-theme="dark"] {
-    --bg: #0F1712; --panel: #17221B; --fg: #E6EFE8; --muted: #9AAEA0; --line: #2A3A2F; --hover: #1D2B22;
-    --green: #5FD08F; --green-soft: #1F3328; --gold: #E8B04A; --gold-soft: #3A2E14;
-    --red: #F08A80; --red-soft: #3D1F1C; --blue: #8DB8E8; --blue-soft: #1B2B3D; --gray: #9AAEA0; --gray-soft: #22302A;
-    color-scheme: dark;
   }
   * { box-sizing: border-box; }
   [hidden] { display: none !important; }
@@ -60,6 +53,41 @@
   .ph .row b { font-weight: 600; }
   .ph .bar { height: 6px; margin-top: 6px; }
   .ph .bar i { background: var(--green); }
+
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 14px; }
+  .kpi { background: var(--panel); border: 1px solid var(--line); border-top: 3px solid var(--gray); border-radius: 12px; padding: 12px 14px; display: grid; gap: 2px; min-width: 0; }
+  .kpi span { color: var(--muted); font-size: 12px; }
+  .kpi b { font-size: 26px; line-height: 1.15; }
+  .kpi small { color: var(--muted); font-size: 12px; }
+  .kpi.c-blue { border-top-color: var(--blue); } .kpi.c-blue b { color: var(--blue); }
+  .kpi.c-green { border-top-color: var(--green); } .kpi.c-green b { color: var(--green); }
+  .kpi.c-gold { border-top-color: var(--gold); } .kpi.c-gold b { color: var(--gold); }
+  .kpi.warn { border-top-color: var(--red); } .kpi.warn b { color: var(--red); }
+  .dash { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; margin-bottom: 6px; align-items: start; }
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; min-width: 0; }
+  .panel.wide { grid-column: span 2; }
+  @media (max-width: 700px) { .panel.wide { grid-column: auto; } }
+  .panel h3 { margin: 0; font-size: 15px; }
+  .ph-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+  .muted { color: var(--muted); font-size: 12px; }
+  .red { color: var(--red); }
+  .chart { display: flex; align-items: flex-end; gap: 6px; height: 150px; border-bottom: 1px solid var(--line); padding-top: 8px; }
+  .chart .c { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; height: 100%; min-width: 0; }
+  .chart .c i { display: block; width: 100%; max-width: 26px; background: var(--blue); border-radius: 4px 4px 0 0; }
+  .chart .c span { font-size: 10px; color: var(--muted); margin-top: 4px; }
+  .due { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .due li { display: grid; gap: 2px; padding-bottom: 8px; border-bottom: 1px solid var(--line); min-width: 0; }
+  .due .dt { font-weight: 600; font-size: 13px; overflow-wrap: anywhere; }
+  .dtag { font-size: 12px; font-weight: 600; color: var(--muted); }
+  .dtag.red { color: var(--red); } .dtag.gold { color: var(--gold); }
+  .owners { display: grid; gap: 10px; }
+  .orow { display: grid; grid-template-columns: minmax(110px, 200px) minmax(0, 1fr) auto; gap: 10px; align-items: center; font-size: 13px; }
+  .oname { overflow-wrap: anywhere; }
+  .obar { height: 8px; background: var(--line); border-radius: 99px; overflow: hidden; }
+  .obar i { display: block; height: 100%; background: var(--blue); }
+  .onum { text-align: right; white-space: nowrap; color: var(--muted); }
+  .onum em { color: var(--red); font-style: normal; }
+  @media (max-width: 560px) { .orow { grid-template-columns: 1fr; } .onum { text-align: left; } }
 
   .toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0 10px; align-items: center; }
   .toolbar input, .toolbar select { font: inherit; color: var(--fg); background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; min-width: 0; }
@@ -179,7 +207,7 @@
     <div class="brand">
       <small>Nội bộ • Sense • Điều phối</small>
       <h1>Điều phối truyền thông Festival Hoa Đà Lạt 2026</h1>
-      <p class="sub">Hiệp hội Hoa Đà Lạt • 10/11/2026 – 31/01/2027</p>
+      <p class="sub">Hiệp hội Hoa Đà Lạt • 10/11/2026 – 31/01/2027 • <span id="lastUpd"></span></p>
     </div>
     <div class="account">
       <span class="who" id="who">Chế độ xem</span>
@@ -206,22 +234,38 @@
   </div>
   <p class="msg" id="globalMsg" role="status" aria-live="polite"></p>
 
-  <div class="cards">
-    <div class="stat"><b id="sTotal">0</b><span>Đầu việc</span></div>
-    <div class="stat ok"><b id="sDone">0</b><span>Hoàn tất</span></div>
-    <div class="stat"><b id="sDoing">0</b><span>Đang làm / chờ duyệt</span></div>
-    <div class="stat" id="sBlockedBox"><b id="sBlocked">0</b><span>Bị chặn</span></div>
-    <div class="stat" id="sLateBox"><b id="sLate">0</b><span>Quá hạn (chưa xong)</span></div>
-    <div class="stat"><b id="sSoon">0</b><span>Đến hạn trong 3 ngày</span></div>
-    <div class="stat"><b id="sOpen">0</b><span>Mục chờ chốt</span></div>
+  <div class="kpis">
+    <div class="kpi c-blue"><span>Đang mở</span><b id="sDoing">0</b><small>trên tổng <span id="sTotal">0</span> đầu việc</small></div>
+    <div class="kpi warn" id="sLateBox"><span>Quá hạn</span><b id="sLate">0</b><small>chưa xong, cần xử lý</small></div>
+    <div class="kpi" id="sBlockedBox"><span>Bị chặn</span><b id="sBlocked">0</b><small>cần gỡ vướng</small></div>
+    <div class="kpi c-gold"><span>Đến hạn trong 3 ngày</span><b id="sSoon">0</b><small>tính từ hôm nay</small></div>
+    <div class="kpi"><span>Mục chờ chốt</span><b id="sOpen">0</b><small>với Hiệp hội</small></div>
+    <div class="kpi c-green"><span>Hoàn tất</span><b id="sDone">0</b><small>đầu việc</small></div>
   </div>
 
-  <div class="overall">
-    <div class="head"><span>Tiến độ chung: <b id="pctText">0%</b> hoàn tất</span><span id="lastUpd"></span></div>
-    <div class="bar" id="progress" role="img" aria-label="Phân bố trạng thái"></div>
-    <div class="legend" id="legend"></div>
+  <div class="dash">
+    <section class="panel">
+      <div class="ph-head"><h3>Công việc theo trạng thái</h3><span class="muted"><b id="pctText">0%</b> hoàn tất</span></div>
+      <div class="bar" id="progress" role="img" aria-label="Phân bố trạng thái"></div>
+      <div class="legend" id="legend"></div>
+    </section>
+    <section class="panel">
+      <div class="ph-head"><h3>Hoàn thành 14 ngày qua</h3><span class="muted">số việc hoàn tất mỗi ngày</span></div>
+      <div class="chart" id="dChart"></div>
+    </section>
+    <section class="panel">
+      <div class="ph-head"><h3>Sắp đến hạn</h3><span class="muted">việc chưa xong gần nhất</span></div>
+      <ul class="due" id="dDue"></ul>
+    </section>
+    <section class="panel">
+      <div class="ph-head"><h3>Tiến độ theo giai đoạn</h3></div>
+      <div class="phases" id="phases"></div>
+    </section>
+    <section class="panel wide">
+      <div class="ph-head"><h3>Khối lượng theo người phụ trách</h3><span class="muted">số việc chưa xong</span></div>
+      <div class="owners" id="dOwners"></div>
+    </section>
   </div>
-  <div class="phases" id="phases"></div>
 
   <div class="toolbar">
     <input id="q" type="search" placeholder="Tìm theo việc, đầu mối, đầu ra..." aria-label="Tìm kiếm">
@@ -529,7 +573,7 @@
     const done = cnt("Hoàn tất"), late = saved.filter(isLate).length, blocked = cnt("Bị chặn");
     $("sTotal").textContent = saved.length;
     $("sDone").textContent = done;
-    $("sDoing").textContent = saved.filter(isActive).length;
+    $("sDoing").textContent = saved.filter(t => !isDone(t)).length;
     $("sBlocked").textContent = blocked;
     $("sBlockedBox").classList.toggle("warn", blocked > 0);
     $("sLate").textContent = late;
@@ -546,6 +590,38 @@
       return `<div class="ph"><div class="row"><b>${PHASE_LABEL[p]}</b><span>${dn}/${rows.length} xong</span></div>
         <div class="bar"><i style="width:${w}%"></i></div></div>`;
     }).join("");
+
+    // bảng điều khiển: biểu đồ 14 ngày, sắp đến hạn, khối lượng theo người
+    const ymd = (x) => `${x.getFullYear()}-${String(x.getMonth() + 1).padStart(2, "0")}-${String(x.getDate()).padStart(2, "0")}`;
+    const dayKeys = [];
+    for (let k = 13; k >= 0; k--) { const x = new Date(today); x.setDate(x.getDate() - k); dayKeys.push(x); }
+    const doneBy = {};
+    (server.data.log || []).forEach(e => { if (e.to === "Hoàn tất" && e.at) { const k = ymd(new Date(e.at)); doneBy[k] = (doneBy[k] || 0) + 1; } });
+    const cmax = Math.max(1, ...dayKeys.map(x => doneBy[ymd(x)] || 0));
+    $("dChart").innerHTML = dayKeys.map(x => {
+      const v = doneBy[ymd(x)] || 0;
+      return `<div class="c" title="${x.getDate()}/${x.getMonth() + 1}: ${v} việc hoàn tất"><i style="height:${(v / cmax * 100).toFixed(0)}%"></i><span>${x.getDate()}</span></div>`;
+    }).join("");
+
+    const unfinished = saved.filter(t => !isDone(t));
+    $("dDue").innerHTML = unfinished.slice().sort((a, b) => (a.end < b.end ? -1 : a.end > b.end ? 1 : 0)).slice(0, 7).map(t => {
+      const diff = Math.round((day(t.end) - today) / 864e5);
+      const label = diff < 0 ? `Quá hạn ${-diff} ngày` : diff === 0 ? "Hôm nay" : `Còn ${diff} ngày`;
+      const cls = diff < 0 ? "red" : diff <= 3 ? "gold" : "";
+      return `<li><span class="dtag ${cls}">${label}</span><span class="dt">${esc(t.task)}</span><span class="muted">${esc(t.code)} · ${esc(t.owner || "Chưa giao")}</span></li>`;
+    }).join("") || `<li class="muted">Không có việc chưa xong.</li>`;
+
+    const byOwner = {};
+    unfinished.forEach(t => {
+      const o = (t.owner || "").trim() || "Chưa giao";
+      if (!byOwner[o]) byOwner[o] = { n: 0, late: 0 };
+      byOwner[o].n++;
+      if (isLate(t)) byOwner[o].late++;
+    });
+    const ow = Object.entries(byOwner).sort((a, b) => b[1].n - a[1].n);
+    const omax = Math.max(1, ...ow.map(x => x[1].n));
+    $("dOwners").innerHTML = ow.map(([o, v]) => `<div class="orow"><span class="oname">${esc(o)}</span><div class="obar"><i style="width:${(v.n / omax * 100).toFixed(1)}%"></i></div><span class="onum">${v.n} việc${v.late ? ` · <em>${v.late} quá hạn</em>` : ""}</span></div>`).join("")
+      || '<p class="muted">Không còn việc chưa xong.</p>';
 
     // bộ lọc (chỉ áp dụng khi xem)
     const q = $("q").value.trim().toLowerCase(), g = $("fGroup").value, o = $("fOwner").value, s = $("fStatus").value;
