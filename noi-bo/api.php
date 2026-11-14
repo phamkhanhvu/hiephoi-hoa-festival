@@ -34,6 +34,7 @@ function loadData(string $storeFile, string $seedFile): array {
     foreach ($d['tasks'] as &$t) {
         if (($t['status'] ?? '') === 'Chưa cập nhật') $t['status'] = 'Chưa bắt đầu';
         $t['statusAt'] = $t['statusAt'] ?? '';
+        $t['subtasks'] = cleanSubtasks($t['subtasks'] ?? []);
     }
     unset($t);
     return $d;
@@ -42,6 +43,17 @@ function clean($v, int $max): string {
     $s = trim((string)$v);
     $s = str_replace(["\r\n", "\r"], "\n", $s);
     return mb_substr($s, 0, $max, 'UTF-8');
+}
+function cleanSubtasks($list): array {
+    $out = [];
+    if (!is_array($list)) return $out;
+    foreach ($list as $s) {
+        $text = clean(is_array($s) ? ($s['text'] ?? '') : $s, 300);
+        if ($text === '') continue;
+        $out[] = ['text' => $text, 'done' => is_array($s) && !empty($s['done'])];
+        if (count($out) >= 50) break;
+    }
+    return $out;
 }
 function validDate($v): bool { return (bool)preg_match('/^\d{4}-\d{2}-\d{2}$/', (string)$v); }
 
@@ -110,6 +122,7 @@ if ($action === 'save') {
             'group' => clean($t['group'] ?? '', 120),
             'status' => $status,
             'statusAt' => '',
+            'subtasks' => cleanSubtasks($t['subtasks'] ?? []),
         ];
     }
     $kpi = [];

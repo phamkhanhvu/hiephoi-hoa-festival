@@ -111,6 +111,11 @@
   details { margin-top: 8px; font-size: 13px; color: var(--muted); }
   details summary { cursor: pointer; color: var(--blue); }
   details pre { white-space: pre-wrap; margin: 6px 0 0; font: inherit; color: var(--fg); }
+  ul.subs { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 6px; }
+  ul.subs label { display: flex; gap: 8px; align-items: flex-start; color: var(--fg); cursor: pointer; }
+  ul.subs input[type="checkbox"] { margin-top: 3px; accent-color: var(--green); }
+  ul.subs input:disabled + span { cursor: default; }
+  ul.subs .done { color: var(--muted); text-decoration: line-through; }
 
   .board { display: grid; grid-template-columns: repeat(5, minmax(210px, 1fr)); gap: 10px; overflow-x: auto; padding-bottom: 6px; margin-top: 16px; }
   .col { background: var(--gray-soft); border-radius: 12px; padding: 8px; min-height: 180px; min-width: 0; }
@@ -212,6 +217,7 @@
   <div class="toolbar">
     <input id="q" type="search" placeholder="Tìm theo việc, đầu mối, đầu ra..." aria-label="Tìm kiếm">
     <select id="fGroup" aria-label="Nhóm công việc"></select>
+    <select id="fOwner" aria-label="Người phụ trách"></select>
     <select id="fStatus" aria-label="Lọc trạng thái"></select>
     <div class="seg" role="group" aria-label="Kiểu xem">
       <button type="button" id="vList" aria-pressed="true">Danh sách</button>
@@ -288,8 +294,20 @@
   const isSoon = (t) => !isDone(t) && !isLate(t) && (day(t.end) - today) <= 3 * 864e5;
   const isActive = (t) => stOf(t) === "Đang làm" || stOf(t) === "Chờ duyệt";
   const canEdit = () => server.loggedIn && !editing;
+  const subs = (t) => (Array.isArray(t.subtasks) ? t.subtasks : []);
+  const subLabel = (t) => { const s = subs(t); return s.length ? `${s.filter(x => x.done).length}/${s.length} đầu mục` : "Chưa có đầu mục"; };
   const numFields = ["fb", "short", "live"];
   const coerce = (f, v) => numFields.includes(f) ? Math.max(0, Math.min(999, parseInt(v, 10) || 0)) : v;
+  // ghi giá trị ô nhập vào bản đang sửa; đầu mục con (mỗi dòng) giữ nguyên trạng thái đã xong theo thứ tự
+  function setField(i, f, v) {
+    if (f === "subtasks") {
+      const old = subs(work.tasks[i]);
+      work.tasks[i].subtasks = String(v).split("\n").map(x => x.trim()).filter(Boolean)
+        .map((text, k) => ({ text, done: !!(old[k] && old[k].done) }));
+      return;
+    }
+    work.tasks[i][f] = coerce(f, v);
+  }
 
   async function api(action, body) {
     const opt = { credentials: "same-origin", headers: { "Content-Type": "application/json" } };
@@ -346,6 +364,22 @@
     });
   }
 
+  // đánh dấu đầu mục con xong/chưa xong (admin): lưu ngay
+  function toggleSub(code, k, checked) {
+    if (!canEdit()) return;
+    const next = clone(server.data);
+    const t = next.tasks.find(x => x.code === code);
+    if (!t || !subs(t)[k]) return;
+    t.subtasks[k].done = checked;
+    persist(next).then(() => {
+      msg(`Đã cập nhật đầu mục của ${code}.`, "ok");
+      render();
+    }).catch(err => {
+      msg(err.message, "err");
+      if (/đăng nhập|hết hạn/i.test(err.message)) load(); else render();
+    });
+  }
+
   function setEditing(on) {
     editing = on;
     if (on) work = clone(server.data);
@@ -383,7 +417,10 @@
       <div class="range" aria-hidden="true"><i style="left:${a.toFixed(2)}%;width:${Math.max(b - a, 1).toFixed(2)}%"></i></div>
       <div class="tags">${tags.join("")}</div>
       ${quick}
-      <details><summary>Ghi chú và phụ thuộc</summary><pre>${esc(t.note)}</pre></details>
+      <details><summary>Đầu mục con và ghi chú · ${esc(subLabel(t))}</summary>
+        ${subs(t).length ? `<ul class="subs">${subs(t).map((s, k) => `<li><label><input type="checkbox" data-sub="${esc(t.code)}" data-k="${k}" ${s.done ? "checked" : ""} ${canEdit() ? "" : "disabled"}> <span class="${s.done ? "done" : ""}">${esc(s.text)}</span></label></li>`).join("")}</ul>` : ""}
+        ${t.note ? `<pre>${esc(t.note)}</pre>` : ""}
+      </details>
     </article>`;
   }
 
@@ -408,6 +445,7 @@
         ${f("Bài Facebook", inp("fb", t.fb, "number", 'min="0" max="999"'))}
         ${f("Short", inp("short", t.short, "number", 'min="0" max="999"'))}
         ${f("Livestream", inp("live", t.live, "number", 'min="0" max="999"'))}
+        <div class="wide">${f("Đầu mục con (mỗi dòng một việc cần làm)", `<textarea class="f" data-i="${i}" data-f="subtasks">${esc(subs(t).map(s => s.text).join("\n"))}</textarea>`)}</div>
         <div class="wide">${f("Ghi chú và phụ thuộc", ta("note", t.note))}</div>
       </div>
       <div class="rowbtns"><button class="btn danger" type="button" data-del="${i}">Xóa đầu việc này</button></div>
@@ -445,6 +483,9 @@
     const curG = $("fGroup").value;
     $("fGroup").innerHTML = '<option value="">Mọi nhóm công việc</option>' + groups.map(g => `<option${g === curG ? " selected" : ""}>${esc(g)}</option>`).join("");
     $("groupList").innerHTML = groups.map(g => `<option value="${esc(g)}">`).join("");
+    const owners = [...new Set(tasks.map(t => (t.owner || "").trim()).filter(Boolean))].sort();
+    const curO = $("fOwner").value;
+    $("fOwner").innerHTML = '<option value="">Mọi người phụ trách</option>' + owners.map(o => `<option${o === curO ? " selected" : ""}>${esc(o)}</option>`).join("");
     const curS = $("fStatus").value;
     $("fStatus").innerHTML = '<option value="">Mọi trạng thái</option>' + STATUSES.map(s => `<option${s === curS ? " selected" : ""}>${esc(s)}</option>`).join("") + `<option value="__late"${curS === "__late" ? " selected" : ""}>Quá hạn</option>`;
 
@@ -473,11 +514,12 @@
     }).join("");
 
     // bộ lọc (chỉ áp dụng khi xem)
-    const q = $("q").value.trim().toLowerCase(), g = $("fGroup").value, s = $("fStatus").value;
+    const q = $("q").value.trim().toLowerCase(), g = $("fGroup").value, o = $("fOwner").value, s = $("fStatus").value;
     const rows = tasks.map((t, i) => ({ t, i })).filter(({ t }) => {
       if (editing) return true;
       if (phase !== "all" && t.phase !== phase) return false;
       if (g && t.group !== g) return false;
+      if (o && (t.owner || "").trim() !== o) return false;
       if (s === "__late" && !isLate(t)) return false;
       if (s && s !== "__late" && stOf(t) !== s) return false;
       if (q && !(t.task + " " + t.owner + " " + t.output + " " + t.note + " " + t.code).toLowerCase().includes(q)) return false;
@@ -532,7 +574,7 @@
   }
 
   // ---------- lọc ----------
-  ["q", "fGroup", "fStatus"].forEach(id => $(id).addEventListener("input", render));
+  ["q", "fGroup", "fOwner", "fStatus"].forEach(id => $(id).addEventListener("input", render));
   document.querySelectorAll(".chip").forEach(c => c.addEventListener("click", () => {
     phase = c.dataset.phase;
     document.querySelectorAll(".chip").forEach(x => x.setAttribute("aria-pressed", String(x === c)));
@@ -541,7 +583,7 @@
   $("vList").addEventListener("click", () => { view = "list"; render(); });
   $("vBoard").addEventListener("click", () => { view = "board"; render(); });
   $("reset").addEventListener("click", () => {
-    $("q").value = ""; $("fGroup").value = ""; $("fStatus").value = ""; phase = "all";
+    $("q").value = ""; $("fGroup").value = ""; $("fOwner").value = ""; $("fStatus").value = ""; phase = "all";
     document.querySelectorAll(".chip").forEach(x => x.setAttribute("aria-pressed", String(x.dataset.phase === "all")));
     render();
   });
@@ -593,13 +635,18 @@
     if (!editing) return;
     const el = e.target, i = +el.dataset.i, f = el.dataset.f;
     if (isNaN(i) || !f || !work.tasks[i]) return;
-    work.tasks[i][f] = coerce(f, el.value);
+    setField(i, f, el.value);
   });
   $("list").addEventListener("change", (e) => {
+    const cb = e.target.closest ? e.target : null;
+    if (cb && cb.matches && cb.matches("input[data-sub]")) {
+      toggleSub(cb.dataset.sub, +cb.dataset.k, cb.checked);
+      return;
+    }
     if (!editing) return;
     const el = e.target, i = +el.dataset.i, f = el.dataset.f;
     if (isNaN(i) || !f || !work.tasks[i]) return;
-    work.tasks[i][f] = coerce(f, el.value);
+    setField(i, f, el.value);
     if (f === "phase" || f === "status") render();
   });
   $("addTask").addEventListener("click", () => {
