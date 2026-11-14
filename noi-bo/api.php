@@ -12,7 +12,7 @@ $cfgFile = $dir . '/config.local.php';
 $storeDir = $dir . '/data';
 $storeFile = $storeDir . '/store.json';
 $seedFile = $dir . '/seed.json';
-$STATUSES = ['Chưa cập nhật', 'Đang làm', 'Chờ duyệt', 'Hoàn tất'];
+$STATUSES = ['Chưa bắt đầu', 'Đang làm', 'Chờ duyệt', 'Bị chặn', 'Hoàn tất'];
 $PHASES = ['Trước', 'Trong', 'Sau'];
 
 function out($arr, int $code = 200): void {
@@ -29,7 +29,14 @@ function body(): array {
 function loadData(string $storeFile, string $seedFile): array {
     $f = is_file($storeFile) ? $storeFile : $seedFile;
     $d = json_decode((string)file_get_contents($f), true);
-    return is_array($d) ? $d : ['tasks' => [], 'kpi' => [], 'open' => []];
+    if (!is_array($d)) $d = ['tasks' => [], 'kpi' => [], 'open' => []];
+    $d['log'] = is_array($d['log'] ?? null) ? $d['log'] : [];
+    foreach ($d['tasks'] as &$t) {
+        if (($t['status'] ?? '') === 'Chưa cập nhật') $t['status'] = 'Chưa bắt đầu';
+        $t['statusAt'] = $t['statusAt'] ?? '';
+    }
+    unset($t);
+    return $d;
 }
 function clean($v, int $max): string {
     $s = trim((string)$v);
@@ -83,7 +90,7 @@ if ($action === 'save') {
     foreach ($in['tasks'] as $t) {
         if (!is_array($t)) continue;
         $phase = (string)($t['phase'] ?? '');
-        $status = (string)($t['status'] ?? 'Chưa cập nhật');
+        $status = (string)($t['status'] ?? 'Chưa bắt đầu');
         if (!in_array($phase, $PHASES, true)) fail('Giai đoạn không hợp lệ.');
         if (!in_array($status, $STATUSES, true)) fail('Trạng thái không hợp lệ.');
         if (!validDate($t['start'] ?? '') || !validDate($t['end'] ?? '')) fail('Ngày không hợp lệ.');
@@ -102,6 +109,7 @@ if ($action === 'save') {
             'live' => max(0, min(999, (int)($t['live'] ?? 0))),
             'group' => clean($t['group'] ?? '', 120),
             'status' => $status,
+            'statusAt' => '',
         ];
     }
     $kpi = [];
@@ -116,7 +124,26 @@ if ($action === 'save') {
         if ($s !== '') $open[] = $s;
         if (count($open) >= 60) break;
     }
-    $store = ['tasks' => $tasks, 'kpi' => $kpi, 'open' => $open, 'updatedAt' => date('c')];
+    // ghi nhận thời điểm đổi trạng thái và nhật ký
+    $prev = loadData($storeFile, $seedFile);
+    $prevMap = [];
+    foreach ($prev['tasks'] as $pt) $prevMap[$pt['code']] = $pt;
+    $now = date('c');
+    $log = $prev['log'];
+    foreach ($tasks as &$t) {
+        $old = $prevMap[$t['code']] ?? null;
+        if ($old === null || $old['status'] !== $t['status']) {
+            $t['statusAt'] = $now;
+            if ($old !== null) {
+                array_unshift($log, ['at' => $now, 'code' => $t['code'], 'task' => mb_substr($t['task'], 0, 80, 'UTF-8'), 'from' => $old['status'], 'to' => $t['status']]);
+            }
+        } else {
+            $t['statusAt'] = $old['statusAt'] ?? $now;
+        }
+    }
+    unset($t);
+    $log = array_slice($log, 0, 200);
+    $store = ['tasks' => $tasks, 'kpi' => $kpi, 'open' => $open, 'log' => $log, 'updatedAt' => $now];
     if (!is_dir($storeDir)) mkdir($storeDir, 0755, true);
     $tmp = $storeFile . '.tmp';
     if (file_put_contents($tmp, json_encode($store, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT)) === false || !rename($tmp, $storeFile)) {

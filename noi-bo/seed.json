@@ -14,7 +14,8 @@
    "short": 0,
    "live": 0,
    "group": "Điều phối và lịch tác nghiệp",
-   "status": "Chưa cập nhật"
+   "status": "Chưa bắt đầu",
+   "statusAt": ""
   },
   {
    "code": "TT02",
@@ -30,7 +31,8 @@
    "short": 0,
    "live": 0,
    "group": "Điều phối và lịch tác nghiệp",
-   "status": "Chưa cập nhật"
+   "status": "Chưa bắt đầu",
+   "statusAt": ""
   },
   {
    "code": "TT03",
@@ -46,7 +48,8 @@
    "short": 0,
    "live": 0,
    "group": "Vận hành kênh và quảng cáo",
-   "status": "Chưa cập nhật"
+   "status": "Chưa bắt đầu",
+   "statusAt": ""
   },
   {
    "code": "TT04",
@@ -62,7 +65,8 @@
    "short": 0,
    "live": 0,
    "group": "Sản xuất video và tư liệu",
-   "status": "Chưa cập nhật"
+   "status": "Chưa bắt đầu",
+   "statusAt": ""
   },
   {
    "code": "TT05",
@@ -78,7 +82,8 @@
    "short": 0,
    "live": 0,
    "group": "Tài trợ và quyền lợi",
-   "status": "Chưa cập nhật"
+   "status": "Chưa bắt đầu",
+   "statusAt": ""
   },
   {
    "code": "TT06",
@@ -94,7 +99,8 @@
    "short": 0,
    "live": 0,
    "group": "Biên tập và đăng bài",
-   "status": "Chưa cập nhật"
+   "status": "Chưa bắt đầu",
+   "statusAt": ""
   },
   {
    "code": "TT07",
@@ -110,7 +116,8 @@
    "short": 0,
    "live": 0,
    "group": "Sản xuất video và tư liệu",
-   "status": "Chưa cập nhật"
+   "status": "Chưa bắt đầu",
+   "statusAt": ""
   },
   {
    "code": "TT08",
@@ -126,7 +133,8 @@
    "short": 0,
    "live": 0,
    "group": "Thiết kế và ấn phẩm",
-   "status": "Chưa cập nhật"
+   "status": "Chưa bắt đầu",
+   "statusAt": ""
   },
   {
    "code": "TT09",
@@ -142,7 +150,8 @@
    "short": 0,
    "live": 0,
    "group": "Sản xuất video và tư liệu",
-   "status": "Chưa cập nhật"
+   "status": "Chưa bắt đầu",
+   "statusAt": ""
   },
   {
    "code": "TT10",
@@ -158,7 +167,8 @@
    "short": 0,
    "live": 0,
    "group": "Sản xuất video và tư liệu",
-   "status": "Chưa cập nhật"
+   "status": "Chưa bắt đầu",
+   "statusAt": ""
   },
   {
    "code": "TT11",
@@ -174,7 +184,8 @@
    "short": 0,
    "live": 0,
    "group": "Biên tập và đăng bài",
-   "status": "Chưa cập nhật"
+   "status": "Chưa bắt đầu",
+   "statusAt": ""
   },
   {
    "code": "TT12",
@@ -190,7 +201,8 @@
    "short": 0,
    "live": 0,
    "group": "Vận hành kênh và quảng cáo",
-   "status": "Chưa cập nhật"
+   "status": "Chưa bắt đầu",
+   "statusAt": ""
   },
   {
    "code": "TT13",
@@ -206,7 +218,8 @@
    "short": 0,
    "live": 0,
    "group": "Biên tập và đăng bài",
-   "status": "Chưa cập nhật"
+   "status": "Chưa bắt đầu",
+   "statusAt": ""
   },
   {
    "code": "TT14",
@@ -222,7 +235,8 @@
    "short": 0,
    "live": 0,
    "group": "Điều phối và lịch tác nghiệp",
-   "status": "Chưa cập nhật"
+   "status": "Chưa bắt đầu",
+   "statusAt": ""
   },
   {
    "code": "TT15",
@@ -238,7 +252,8 @@
    "short": 3,
    "live": 0,
    "group": "Tác nghiệp sự kiện",
-   "status": "Chưa cập nhật"
+   "status": "Chưa bắt đầu",
+   "statusAt": ""
   },
   {
    "code": "TT16",
@@ -254,7 +269,8 @@
    "short": 0,
    "live": 1,
    "group": "Livestream",
-   "status": "Chưa cập nhật"
+   "status": "Chưa bắt đầu",
+   "statusAt": ""
   },
   {
    "code": "TT17",
@@ -270,7 +286,8 @@
    "short": 0,
    "live": 1,
    "group": "Livestream",
-   "status": "Chưa cập nhật"
+   "status": "Chưa bắt đầu",
+   "statusAt": ""
   },
   {
    "code": "TT18",
@@ -286,7 +303,8 @@
    "short": 0,
    "live": 1,
    "group": "Livestream",
-   "status": "Chưa cập nhật"
+   "status": "Chưa bắt đầu",
+   "statusAt": ""
   },
   {
    "code": "TT19",
@@ -302,7 +320,8 @@
    "short": 5,
    "live": 0,
    "group": "Tác nghiệp sự kiện",
-   "status": "Chưa cập nhật"
+   "status": "Chưa bắt đầu",
+   "statusAt": ""
   },
   {
    "code": "TT20",
@@ -318,7 +337,8 @@
    "short": 2,
    "live": 0,
    "group": "Tác nghiệp sự kiện",
-   "status": "Chưa cập nhật"
+   "status": "Chưa bắt đầu",
+   "statusAt": ""
   },
   {
    "code": "TT21",
@@ -334,7 +354,8 @@
    "short": 0,
    "live": 0,
    "group": "Tổng kết và bàn giao",
-   "status": "Chưa cập nhật"
+   "status": "Chưa bắt đầu",
+   "statusAt": ""
   },
   {
    "code": "TT22",
@@ -350,7 +371,8 @@
    "short": 0,
    "live": 0,
    "group": "Tài trợ và quyền lợi",
-   "status": "Chưa cập nhật"
+   "status": "Chưa bắt đầu",
+   "statusAt": ""
   },
   {
    "code": "TT23",
@@ -366,7 +388,8 @@
    "short": 0,
    "live": 0,
    "group": "Tổng kết và bàn giao",
-   "status": "Chưa cập nhật"
+   "status": "Chưa bắt đầu",
+   "statusAt": ""
   },
   {
    "code": "TT24",
@@ -382,7 +405,8 @@
    "short": 0,
    "live": 0,
    "group": "Tổng kết và bàn giao",
-   "status": "Chưa cập nhật"
+   "status": "Chưa bắt đầu",
+   "statusAt": ""
   },
   {
    "code": "TT25",
@@ -398,7 +422,8 @@
    "short": 0,
    "live": 0,
    "group": "Tổng kết và bàn giao",
-   "status": "Chưa cập nhật"
+   "status": "Chưa bắt đầu",
+   "statusAt": ""
   }
  ],
  "kpi": [
@@ -516,5 +541,6 @@
   "Ngày bắt đầu và kết thúc gói vận hành Facebook/TikTok 2 tháng (TT03).",
   "Mức chi và lịch chạy quảng cáo (TT12).",
   "Ngày giờ và người phát ngôn của 3 buổi livestream (TT14, TT16–TT18)."
- ]
+ ],
+ "log": []
 }

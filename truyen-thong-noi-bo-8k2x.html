@@ -7,53 +7,79 @@
 <title>Điều phối truyền thông nội bộ</title>
 <style>
   :root {
-    --bg: #F4F7F2; --panel: #FFFFFF; --fg: #1B2A20; --muted: #5E6F63; --line: #DDE6DE;
+    --bg: #F4F7F2; --panel: #FFFFFF; --fg: #1B2A20; --muted: #5E6F63; --line: #DDE6DE; --hover: #EEF4EF;
     --green: #1E7A46; --green-soft: #E3F1E8; --gold: #C98A12; --gold-soft: #FBF1DC;
-    --red: #B3261E; --red-soft: #FBE4E2; --blue: #245E9C; --blue-soft: #E2ECF8; color-scheme: light;
+    --red: #B3261E; --red-soft: #FBE4E2; --blue: #245E9C; --blue-soft: #E2ECF8; --gray: #7A8A80; --gray-soft: #EDF1EE;
+    color-scheme: light;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg: #0F1712; --panel: #17221B; --fg: #E6EFE8; --muted: #9AAEA0; --line: #2A3A2F;
+      --bg: #0F1712; --panel: #17221B; --fg: #E6EFE8; --muted: #9AAEA0; --line: #2A3A2F; --hover: #1D2B22;
       --green: #5FD08F; --green-soft: #1F3328; --gold: #E8B04A; --gold-soft: #3A2E14;
-      --red: #F08A80; --red-soft: #3D1F1C; --blue: #8DB8E8; --blue-soft: #1B2B3D; color-scheme: dark;
+      --red: #F08A80; --red-soft: #3D1F1C; --blue: #8DB8E8; --blue-soft: #1B2B3D; --gray: #9AAEA0; --gray-soft: #22302A;
+      color-scheme: dark;
     }
   }
   :root[data-theme="dark"] {
-    --bg: #0F1712; --panel: #17221B; --fg: #E6EFE8; --muted: #9AAEA0; --line: #2A3A2F;
+    --bg: #0F1712; --panel: #17221B; --fg: #E6EFE8; --muted: #9AAEA0; --line: #2A3A2F; --hover: #1D2B22;
     --green: #5FD08F; --green-soft: #1F3328; --gold: #E8B04A; --gold-soft: #3A2E14;
-    --red: #F08A80; --red-soft: #3D1F1C; --blue: #8DB8E8; --blue-soft: #1B2B3D; color-scheme: dark;
+    --red: #F08A80; --red-soft: #3D1F1C; --blue: #8DB8E8; --blue-soft: #1B2B3D; --gray: #9AAEA0; --gray-soft: #22302A;
+    color-scheme: dark;
   }
   * { box-sizing: border-box; }
   [hidden] { display: none !important; }
   body { margin: 0; background: var(--bg); color: var(--fg); font: 14px/1.5 "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", sans-serif;
     padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
-  .wrap { max-width: 1100px; margin: 0 auto; padding-block: 24px 48px; }
-  header.top { display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: flex-end; margin-bottom: 18px; }
+  .wrap { max-width: 1140px; margin: 0 auto; padding-block: 24px 48px; }
+  header.top { display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: flex-end; margin-bottom: 16px; }
   .brand small { display: block; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; font-size: 11px; font-weight: 600; }
   h1 { margin: 2px 0 4px; font-size: 26px; line-height: 1.2; color: var(--green); text-wrap: balance; }
   .sub { margin: 0; color: var(--muted); }
   .account { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 13px; color: var(--muted); }
-  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 18px; }
+  .who { padding: 4px 10px; border-radius: 99px; background: var(--gray-soft); }
+  .who.admin { background: var(--green-soft); color: var(--green); font-weight: 600; }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 14px; }
   .stat { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; min-width: 0; }
   .stat b { display: block; font-size: 24px; line-height: 1.1; }
   .stat span { color: var(--muted); font-size: 12px; }
   .stat.warn b { color: var(--red); }
-  .bar { height: 8px; border-radius: 99px; background: var(--line); overflow: hidden; margin-top: 8px; display: flex; }
-  .bar i { display: block; height: 100%; }
-  .toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; align-items: center; }
-  .toolbar input, .toolbar select, input.f, select.f, textarea.f { font: inherit; color: var(--fg); background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; min-width: 0; width: 100%; }
-  .toolbar input { flex: 1 1 220px; width: auto; }
-  .toolbar select { width: auto; }
-  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .stat.ok b { color: var(--green); }
+
+  .overall { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; margin-bottom: 10px; }
+  .overall .head { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; font-size: 13px; color: var(--muted); }
+  .overall .head b { color: var(--fg); }
+  .bar { height: 10px; border-radius: 99px; background: var(--line); overflow: hidden; margin-top: 8px; display: flex; }
+  .bar i { display: block; height: 100%; transition: width .3s; }
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12px; color: var(--muted); margin-top: 8px; }
+  .legend i { display: inline-block; width: 9px; height: 9px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
+
+  .phases { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; margin-bottom: 14px; }
+  .ph { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; font-size: 13px; }
+  .ph .row { display: flex; justify-content: space-between; gap: 8px; }
+  .ph .row b { font-weight: 600; }
+  .ph .bar { height: 6px; margin-top: 6px; }
+  .ph .bar i { background: var(--green); }
+
+  .toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0 10px; align-items: center; }
+  .toolbar input, .toolbar select { font: inherit; color: var(--fg); background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; min-width: 0; }
+  .toolbar input { flex: 1 1 220px; }
+  .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  .seg button { font: inherit; font-size: 13px; padding: 7px 12px; border: 0; background: var(--panel); color: var(--fg); cursor: pointer; }
+  .seg button + button { border-left: 1px solid var(--line); }
+  .seg button[aria-pressed="true"] { background: var(--green); color: #fff; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 6px; }
   .chip { font: inherit; font-size: 13px; padding: 6px 12px; border-radius: 99px; border: 1px solid var(--line); background: var(--panel); color: var(--fg); cursor: pointer; }
-  .chip[aria-pressed="true"] { background: var(--green); border-color: var(--green); color: #fff; }
-  h2.phase { display: flex; align-items: center; gap: 10px; margin: 26px 0 10px; font-size: 16px; color: var(--green); }
+  .chip[aria-pressed="true"] { background: var(--fg); border-color: var(--fg); color: var(--panel); }
+
+  h2.phase { display: flex; align-items: center; gap: 10px; margin: 24px 0 10px; font-size: 16px; color: var(--green); }
   h2.phase small { color: var(--muted); font-weight: 500; font-size: 13px; }
-  .task { background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--line); border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; }
-  .task.st-doing { border-left-color: var(--blue); }
-  .task.st-done { border-left-color: var(--green); }
-  .task.st-late { border-left-color: var(--red); }
-  .task.st-wait { border-left-color: var(--gold); }
+  .task { background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--gray); border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; }
+  .task[data-st="Đang làm"] { border-left-color: var(--blue); }
+  .task[data-st="Chờ duyệt"] { border-left-color: var(--gold); }
+  .task[data-st="Bị chặn"] { border-left-color: var(--red); }
+  .task[data-st="Hoàn tất"] { border-left-color: var(--green); }
+  .task.late { box-shadow: inset 0 0 0 1px var(--red); }
   .task-head { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: baseline; justify-content: space-between; }
   .code { font-weight: 800; color: var(--muted); font-size: 12px; letter-spacing: .05em; }
   .dates { font-size: 13px; color: var(--muted); white-space: nowrap; }
@@ -62,19 +88,45 @@
   .meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 6px 16px; font-size: 13px; color: var(--muted); }
   .meta b { color: var(--fg); font-weight: 600; }
   .meta div { min-width: 0; overflow-wrap: anywhere; }
+  .range { position: relative; height: 6px; background: var(--line); border-radius: 99px; margin-top: 10px; }
+  .range i { position: absolute; top: 0; bottom: 0; background: var(--green); border-radius: 99px; opacity: .6; }
   .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; align-items: center; }
   .tag { font-size: 12px; padding: 2px 8px; border-radius: 6px; background: var(--green-soft); color: var(--green); }
   .tag.gold { background: var(--gold-soft); color: var(--gold); }
   .tag.blue { background: var(--blue-soft); color: var(--blue); }
   .tag.red { background: var(--red-soft); color: var(--red); }
-  .range { position: relative; height: 6px; background: var(--line); border-radius: 99px; margin-top: 10px; }
-  .range i { position: absolute; top: 0; bottom: 0; background: var(--green); border-radius: 99px; opacity: .75; }
-  .task-foot { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; margin-top: 10px; }
+  .tag.gray { background: var(--gray-soft); color: var(--muted); }
+  .statusrow { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--line); }
+  .statusrow .lbl { font-size: 12px; color: var(--muted); margin-right: 2px; }
+  .sbtn { font: inherit; font-size: 12px; padding: 5px 10px; border-radius: 99px; border: 1px solid var(--line); background: var(--panel); color: var(--fg); cursor: pointer; }
+  .sbtn:hover:not(:disabled) { border-color: var(--fg); }
+  .sbtn[aria-pressed="true"] { color: #fff; border-color: transparent; font-weight: 600; }
+  .sbtn[data-s="Chưa bắt đầu"][aria-pressed="true"] { background: var(--gray); }
+  .sbtn[data-s="Đang làm"][aria-pressed="true"] { background: var(--blue); }
+  .sbtn[data-s="Chờ duyệt"][aria-pressed="true"] { background: var(--gold); }
+  .sbtn[data-s="Bị chặn"][aria-pressed="true"] { background: var(--red); }
+  .sbtn[data-s="Hoàn tất"][aria-pressed="true"] { background: var(--green); }
+  .sbtn:disabled { opacity: .6; cursor: progress; }
+  .stamp { font-size: 12px; color: var(--muted); margin-left: auto; }
   details { margin-top: 8px; font-size: 13px; color: var(--muted); }
   details summary { cursor: pointer; color: var(--blue); }
   details pre { white-space: pre-wrap; margin: 6px 0 0; font: inherit; color: var(--fg); }
+
+  .board { display: grid; grid-template-columns: repeat(5, minmax(210px, 1fr)); gap: 10px; overflow-x: auto; padding-bottom: 6px; margin-top: 16px; }
+  .col { background: var(--gray-soft); border-radius: 12px; padding: 8px; min-height: 180px; min-width: 0; }
+  .col.over { outline: 2px dashed var(--green); outline-offset: -4px; }
+  .col h3 { margin: 4px 6px 8px; font-size: 13px; display: flex; justify-content: space-between; }
+  .col h3 span { color: var(--muted); font-weight: 500; }
+  .kcard { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 10px; margin-bottom: 8px; font-size: 13px; }
+  .kcard[draggable="true"] { cursor: grab; }
+  .kcard p { margin: 4px 0; font-weight: 600; line-height: 1.35; text-wrap: pretty; }
+  .kcard .sm { color: var(--muted); font-size: 12px; }
+  .kcard .mv { display: flex; gap: 4px; margin-top: 8px; }
+  .kcard .mv button { font: inherit; font-size: 12px; padding: 2px 8px; border-radius: 6px; border: 1px solid var(--line); background: var(--panel); color: var(--fg); cursor: pointer; }
+  .kcard .mv button:disabled { opacity: .4; cursor: default; }
+
   .empty { padding: 24px; text-align: center; color: var(--muted); background: var(--panel); border: 1px dashed var(--line); border-radius: 10px; }
-  section.box { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-top: 28px; }
+  section.box { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-top: 24px; }
   section.box h2 { margin: 0 0 10px; font-size: 17px; color: var(--green); }
   .table-wrap { overflow-x: auto; }
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
@@ -82,8 +134,9 @@
   th { color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
   td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
   .pending { color: var(--gold); font-weight: 600; }
-  ul.open { margin: 0; padding-left: 18px; }
-  ul.open li { margin: 4px 0; }
+  ul.open, ul.log { margin: 0; padding-left: 18px; }
+  ul.open li, ul.log li { margin: 6px 0; }
+  ul.log li { font-size: 13px; }
   .note { font-size: 12px; color: var(--muted); margin: 8px 0 0; }
   .btn { font: inherit; font-size: 13px; padding: 7px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--panel); color: var(--fg); cursor: pointer; }
   .btn:hover { border-color: var(--green); }
@@ -93,16 +146,17 @@
   .msg { font-size: 13px; min-height: 1.2em; margin: 8px 0 0; }
   .msg.err { color: var(--red); }
   .msg.ok { color: var(--green); }
-  .login { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px; max-width: 360px; display: grid; gap: 8px; }
+  .login { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px; max-width: 360px; display: grid; gap: 8px; margin-bottom: 12px; }
   .login label { display: grid; gap: 4px; font-size: 13px; color: var(--muted); }
+  input.f, select.f, textarea.f { font: inherit; color: var(--fg); background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; min-width: 0; width: 100%; }
+  textarea.f { min-height: 64px; resize: vertical; }
   .editbar { position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; background: var(--green-soft); border: 1px solid var(--green); border-radius: 10px; padding: 10px 12px; margin-bottom: 14px; }
   .editgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 8px; margin-top: 8px; }
   .editgrid label { display: grid; gap: 3px; font-size: 12px; color: var(--muted); min-width: 0; }
   .editgrid .wide { grid-column: 1 / -1; }
-  textarea.f { min-height: 64px; resize: vertical; }
   .rowbtns { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; justify-content: flex-end; }
   .kpi-edit input.f { min-width: 80px; }
-  @media (max-width: 560px) { h1 { font-size: 22px; } .dates { white-space: normal; } }
+  @media (max-width: 560px) { h1 { font-size: 22px; } .dates { white-space: normal; } .stamp { margin-left: 0; width: 100%; } }
 </style>
 </head>
 <body>
@@ -114,8 +168,8 @@
       <p class="sub">Hiệp hội Hoa Đà Lạt • 10/11/2026 – 31/01/2027</p>
     </div>
     <div class="account">
-      <span id="who">Chế độ xem</span>
-      <button class="btn primary" id="editOpen" type="button" hidden>Chỉnh sửa</button>
+      <span class="who" id="who">Chế độ xem</span>
+      <button class="btn primary" id="editOpen" type="button" hidden>Chỉnh sửa nội dung</button>
       <button class="btn" id="loginOpen" type="button">Đăng nhập admin</button>
       <button class="btn" id="logout" type="button" hidden>Đăng xuất</button>
     </div>
@@ -129,43 +183,57 @@
   </form>
 
   <div class="editbar" id="editbar" hidden>
-    <span id="editState">Đang chỉnh sửa. Nhớ bấm Lưu.</span>
+    <span>Đang chỉnh sửa nội dung. Nhớ bấm Lưu.</span>
     <span style="display:flex;gap:8px;flex-wrap:wrap">
       <button class="btn" id="addTask" type="button">+ Thêm đầu việc</button>
       <button class="btn" id="cancelEdit" type="button">Hủy thay đổi</button>
       <button class="btn primary" id="save" type="button">Lưu</button>
     </span>
   </div>
-  <p class="msg" id="globalMsg" role="status"></p>
+  <p class="msg" id="globalMsg" role="status" aria-live="polite"></p>
 
   <div class="cards">
     <div class="stat"><b id="sTotal">0</b><span>Đầu việc</span></div>
-    <div class="stat"><b id="sDone">0</b><span>Hoàn tất</span></div>
+    <div class="stat ok"><b id="sDone">0</b><span>Hoàn tất</span></div>
     <div class="stat"><b id="sDoing">0</b><span>Đang làm / chờ duyệt</span></div>
-    <div class="stat warn" id="sLateBox"><b id="sLate">0</b><span>Quá hạn (chưa xong)</span></div>
+    <div class="stat" id="sBlockedBox"><b id="sBlocked">0</b><span>Bị chặn</span></div>
+    <div class="stat" id="sLateBox"><b id="sLate">0</b><span>Quá hạn (chưa xong)</span></div>
     <div class="stat"><b id="sSoon">0</b><span>Đến hạn trong 3 ngày</span></div>
     <div class="stat"><b id="sOpen">0</b><span>Mục chờ chốt</span></div>
   </div>
-  <div class="bar" id="progress" aria-label="Tiến độ"></div>
-  <p class="note">Trạng thái được lưu chung cho cả team. Ai cũng xem được; chỉ admin đăng nhập mới chỉnh sửa được.</p>
+
+  <div class="overall">
+    <div class="head"><span>Tiến độ chung: <b id="pctText">0%</b> hoàn tất</span><span id="lastUpd"></span></div>
+    <div class="bar" id="progress" role="img" aria-label="Phân bố trạng thái"></div>
+    <div class="legend" id="legend"></div>
+  </div>
+  <div class="phases" id="phases"></div>
 
   <div class="toolbar">
     <input id="q" type="search" placeholder="Tìm theo việc, đầu mối, đầu ra..." aria-label="Tìm kiếm">
     <select id="fGroup" aria-label="Nhóm công việc"></select>
-    <select id="fStatus" aria-label="Trạng thái">
-      <option value="">Mọi trạng thái</option>
-      <option>Chưa cập nhật</option><option>Đang làm</option><option>Chờ duyệt</option><option>Hoàn tất</option><option>Quá hạn</option>
-    </select>
+    <select id="fStatus" aria-label="Lọc trạng thái"></select>
+    <div class="seg" role="group" aria-label="Kiểu xem">
+      <button type="button" id="vList" aria-pressed="true">Danh sách</button>
+      <button type="button" id="vBoard" aria-pressed="false">Bảng trạng thái</button>
+    </div>
     <button class="btn" id="reset" type="button">Xóa lọc</button>
   </div>
   <div class="chips" role="group" aria-label="Lọc theo giai đoạn">
-    <button class="chip" type="button" data-phase="all" aria-pressed="true">Tất cả</button>
+    <button class="chip" type="button" data-phase="all" aria-pressed="true">Tất cả giai đoạn</button>
     <button class="chip" type="button" data-phase="Trước" aria-pressed="false">Trước Festival</button>
     <button class="chip" type="button" data-phase="Trong" aria-pressed="false">Trong Festival</button>
     <button class="chip" type="button" data-phase="Sau" aria-pressed="false">Sau Festival</button>
   </div>
+  <p class="note" id="hint"></p>
 
   <main id="list"></main>
+
+  <section class="box">
+    <h2>Nhật ký cập nhật trạng thái</h2>
+    <ul class="log" id="log"></ul>
+    <p class="note" id="logNote"></p>
+  </section>
 
   <section class="box">
     <h2>Sản lượng và KPI</h2>
@@ -192,29 +260,36 @@
 <script>
 (function () {
   const API = "noi-bo/api.php";
-  const STATUSES = ["Chưa cập nhật", "Đang làm", "Chờ duyệt", "Hoàn tất"];
+  const STATUSES = ["Chưa bắt đầu", "Đang làm", "Chờ duyệt", "Bị chặn", "Hoàn tất"];
+  const COLORS = { "Chưa bắt đầu": "var(--gray)", "Đang làm": "var(--blue)", "Chờ duyệt": "var(--gold)", "Bị chặn": "var(--red)", "Hoàn tất": "var(--green)" };
   const PHASES = ["Trước", "Trong", "Sau"];
   const PHASE_LABEL = { "Trước": "Trước Festival", "Trong": "Trong Festival", "Sau": "Sau Festival" };
   const START = new Date("2026-11-10T00:00:00"), END = new Date("2027-01-31T23:59:59");
   const TOTAL_MS = END - START;
   const today = new Date(); today.setHours(0, 0, 0, 0);
 
-  let server = { loggedIn: false, csrf: null, data: { tasks: [], kpi: [], open: [] } };
-  let work = null;     // bản đang sửa (deep copy)
+  let server = { loggedIn: false, csrf: null, data: { tasks: [], kpi: [], open: [], log: [] } };
+  let work = null;          // bản đang sửa nội dung (sao chép sâu)
   let editing = false;
   let phase = "all";
+  let view = "list";        // "list" | "board"
+  let queue = Promise.resolve(); // xếp hàng các lần lưu để không ghi đè nhau
 
   const $ = (id) => document.getElementById(id);
   const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-  const d = (iso) => { const [y, m, dd] = iso.split("-"); return `${dd}/${m}/${y}`; };
+  const d = (iso) => { const [y, m, dd] = String(iso).split("-"); return `${dd}/${m}/${y}`; };
   const day = (iso) => new Date(iso + "T00:00:00");
   const clone = (o) => JSON.parse(JSON.stringify(o));
+  const stamp = (iso) => { if (!iso) return ""; const x = new Date(iso); return isNaN(x) ? "" : x.toLocaleString("vi-VN", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }); };
   const msg = (text, cls) => { const el = $("globalMsg"); el.textContent = text || ""; el.className = "msg " + (cls || ""); };
-
-  const cur = () => (editing ? work : server.data);
-  const stOf = (t) => t.status || "Chưa cập nhật";
-  const isLate = (t) => stOf(t) !== "Hoàn tất" && day(t.end) < today;
-  const isSoon = (t) => stOf(t) !== "Hoàn tất" && !isLate(t) && (day(t.end) - today) <= 3 * 864e5;
+  const stOf = (t) => (STATUSES.includes(t.status) ? t.status : "Chưa bắt đầu");
+  const isDone = (t) => stOf(t) === "Hoàn tất";
+  const isLate = (t) => !isDone(t) && day(t.end) < today;
+  const isSoon = (t) => !isDone(t) && !isLate(t) && (day(t.end) - today) <= 3 * 864e5;
+  const isActive = (t) => stOf(t) === "Đang làm" || stOf(t) === "Chờ duyệt";
+  const canEdit = () => server.loggedIn && !editing;
+  const numFields = ["fb", "short", "live"];
+  const coerce = (f, v) => numFields.includes(f) ? Math.max(0, Math.min(999, parseInt(v, 10) || 0)) : v;
 
   async function api(action, body) {
     const opt = { credentials: "same-origin", headers: { "Content-Type": "application/json" } };
@@ -229,36 +304,75 @@
   async function load() {
     try {
       server = await api("state");
-      if (!editing) { work = clone(server.data); }
-      $("loginOpen").hidden = !!server.loggedIn;
-      $("editOpen").hidden = !server.loggedIn || editing;
+      if (!editing) work = clone(server.data);
+      $("loginOpen").hidden = server.loggedIn;
       $("logout").hidden = !server.loggedIn;
-      $("who").textContent = server.loggedIn ? "Đã đăng nhập: admin" : "Chế độ xem";
-      $("kpiAdd").hidden = true;
+      $("editOpen").hidden = !server.loggedIn || editing;
+      $("who").textContent = server.loggedIn ? "Admin" : "Chế độ xem";
+      $("who").className = "who" + (server.loggedIn ? " admin" : "");
+      $("kpiAdd").hidden = !editing;
       render();
     } catch (e) { msg("Không tải được dữ liệu: " + e.message, "err"); }
   }
 
+  // Lưu toàn bộ dữ liệu lên máy chủ (máy chủ tự ghi nhận thời điểm và nhật ký đổi trạng thái)
+  function persist(data) {
+    const run = async () => {
+      const r = await api("save", { csrf: server.csrf, data });
+      server.data = r.data;
+      return r.data;
+    };
+    const p = queue.then(run, run);
+    queue = p.catch(() => {});
+    return p;
+  }
+
+  // Đổi trạng thái nhanh: lưu ngay, không cần mở form
+  function quickStatus(code, status) {
+    if (!canEdit()) return;
+    const next = clone(server.data);
+    const t = next.tasks.find(x => x.code === code);
+    if (!t || stOf(t) === status) return;
+    t.status = status;
+    msg(`Đang lưu ${code} → ${status}...`, "");
+    document.querySelectorAll("button[data-code], button[data-move]").forEach(b => b.disabled = true);
+    persist(next).then(() => {
+      msg(`Đã cập nhật ${code} → ${status}.`, "ok");
+      render();
+    }).catch(err => {
+      msg(err.message, "err");
+      if (/đăng nhập|hết hạn/i.test(err.message)) load();
+      else render();
+    });
+  }
+
   function setEditing(on) {
     editing = on;
-    if (on) { work = clone(server.data); }
+    if (on) work = clone(server.data);
     $("editbar").hidden = !on;
+    $("editOpen").hidden = on || !server.loggedIn;
     render();
   }
 
+  // ---------- thẻ đầu việc (xem) ----------
+  function statusButtons(t) {
+    return STATUSES.map(s => `<button type="button" class="sbtn" data-code="${esc(t.code)}" data-s="${esc(s)}" aria-pressed="${s === stOf(t)}">${esc(s)}</button>`).join("");
+  }
   function cardView(t) {
     const st = stOf(t);
-    const cls = st === "Hoàn tất" ? "st-done" : isLate(t) ? "st-late" : st === "Đang làm" ? "st-doing" : st === "Chờ duyệt" ? "st-wait" : "";
     const a = (day(t.start) - START) / TOTAL_MS * 100, b = (day(t.end) - START) / TOTAL_MS * 100;
     const tags = [];
     if (t.fb) tags.push(`<span class="tag">${t.fb} bài Facebook</span>`);
     if (t.short) tags.push(`<span class="tag gold">${t.short} short</span>`);
     if (t.live) tags.push(`<span class="tag blue">${t.live} livestream</span>`);
     if (isLate(t)) tags.push(`<span class="tag red">Quá hạn</span>`);
-    else if (isSoon(t)) tags.push(`<span class="tag gold">Đến hạn sớm</span>`);
-    const statusCtl = server.loggedIn ? "" : `<span class="tag">${esc(st)}</span>`;
-    return `<article class="task ${cls}" data-code="${esc(t.code)}">
-      <div class="task-head"><span class="code">${esc(t.code)} • ${esc(PHASE_LABEL[t.phase] || t.phase)}</span>
+    else if (isSoon(t)) tags.push(`<span class="tag gold">Đến hạn trong 3 ngày</span>`);
+    if (!server.loggedIn) tags.push(`<span class="tag gray">${esc(st)}</span>`);
+    if (t.group) tags.push(`<span class="tag gray">${esc(t.group)}</span>`);
+    const lateCls = isLate(t) ? " late" : "";
+    const quick = canEdit() ? `<div class="statusrow"><span class="lbl">Đổi trạng thái:</span>${statusButtons(t)}${t.statusAt ? `<span class="stamp">Cập nhật ${esc(stamp(t.statusAt))}</span>` : ""}</div>` : "";
+    return `<article class="task${lateCls}" data-st="${esc(st)}" data-code="${esc(t.code)}">
+      <div class="task-head"><span class="code">${esc(t.code)}</span>
         <span class="dates">${d(t.start)} → <b>${d(t.end)}</b></span></div>
       <p class="title">${esc(t.task)}</p>
       <div class="meta">
@@ -267,85 +381,138 @@
         <div><b>Duyệt / phối hợp:</b> ${esc(t.approve)}</div>
       </div>
       <div class="range" aria-hidden="true"><i style="left:${a.toFixed(2)}%;width:${Math.max(b - a, 1).toFixed(2)}%"></i></div>
-      <div class="tags">${tags.join("")}${statusCtl}<span class="tag" style="background:transparent;color:var(--muted)">${esc(t.group)}</span></div>
+      <div class="tags">${tags.join("")}</div>
+      ${quick}
       <details><summary>Ghi chú và phụ thuộc</summary><pre>${esc(t.note)}</pre></details>
     </article>`;
   }
 
+  // ---------- thẻ đầu việc (sửa nội dung) ----------
   function cardEdit(t, i) {
-    const opts = STATUSES.map(s => `<option${s === stOf(t) ? " selected" : ""}>${s}</option>`).join("");
+    const opts = STATUSES.map(s => `<option${s === stOf(t) ? " selected" : ""}>${esc(s)}</option>`).join("");
     const ph = PHASES.map(p => `<option value="${p}"${p === t.phase ? " selected" : ""}>${PHASE_LABEL[p]}</option>`).join("");
-    const f = (field, label, input) => `<label>${label}${input}</label>`;
+    const f = (label, input) => `<label>${label}${input}</label>`;
     const inp = (field, val, type = "text", extra = "") => `<input class="f" type="${type}" data-i="${i}" data-f="${field}" value="${esc(val)}" ${extra}>`;
-    const ta = (field, val, cls = "") => `<textarea class="f ${cls}" data-i="${i}" data-f="${field}">${esc(val)}</textarea>`;
-    return `<article class="task" data-i="${i}">
-      <div class="editgrid">
-        ${f("code", "Mã", inp("code", t.code))}
-        ${f("phase", "Giai đoạn", `<select class="f" data-i="${i}" data-f="phase">${ph}</select>`)}
-        ${f("start", "Bắt đầu", inp("start", t.start, "date"))}
-        ${f("end", "Hạn", inp("end", t.end, "date"))}
-        ${f("status", "Trạng thái", `<select class="f" data-i="${i}" data-f="status">${opts}</select>`)}
-        ${f("group", "Nhóm công việc", inp("group", t.group, "text", 'list="groupList"'))}
-        <div class="wide">${f("task", "Đầu việc", ta("task", t.task))}</div>
-        ${f("owner", "Chủ trì đề xuất", inp("owner", t.owner))}
-        ${f("approve", "Duyệt / phối hợp", inp("approve", t.approve))}
-        ${f("output", "Đầu ra", inp("output", t.output))}
-        ${f("fb", "Bài Facebook", inp("fb", t.fb, "number", 'min="0" max="999"'))}
-        ${f("short", "Short", inp("short", t.short, "number", 'min="0" max="999"'))}
-        ${f("live", "Livestream", inp("live", t.live, "number", 'min="0" max="999"'))}
-        <div class="wide">${f("note", "Ghi chú và phụ thuộc", ta("note", t.note))}</div>
+    const ta = (field, val) => `<textarea class="f" data-i="${i}" data-f="${field}">${esc(val)}</textarea>`;
+    return `<article class="task" data-st="${esc(stOf(t))}"><div class="editgrid">
+        ${f("Mã", inp("code", t.code))}
+        ${f("Giai đoạn", `<select class="f" data-i="${i}" data-f="phase">${ph}</select>`)}
+        ${f("Bắt đầu", inp("start", t.start, "date"))}
+        ${f("Hạn", inp("end", t.end, "date"))}
+        ${f("Trạng thái", `<select class="f" data-i="${i}" data-f="status">${opts}</select>`)}
+        ${f("Nhóm công việc", inp("group", t.group, "text", 'list="groupList"'))}
+        <div class="wide">${f("Đầu việc", ta("task", t.task))}</div>
+        ${f("Chủ trì đề xuất", inp("owner", t.owner))}
+        ${f("Duyệt / phối hợp", inp("approve", t.approve))}
+        ${f("Đầu ra", inp("output", t.output))}
+        ${f("Bài Facebook", inp("fb", t.fb, "number", 'min="0" max="999"'))}
+        ${f("Short", inp("short", t.short, "number", 'min="0" max="999"'))}
+        ${f("Livestream", inp("live", t.live, "number", 'min="0" max="999"'))}
+        <div class="wide">${f("Ghi chú và phụ thuộc", ta("note", t.note))}</div>
       </div>
       <div class="rowbtns"><button class="btn danger" type="button" data-del="${i}">Xóa đầu việc này</button></div>
     </article>`;
   }
 
-  function render() {
-    const data = cur();
-    const tasks = data.tasks || [];
-    const groups = [...new Set(tasks.map(t => t.group).filter(Boolean))];
-    const curGroup = $("fGroup").value;
-    $("fGroup").innerHTML = '<option value="">Mọi nhóm công việc</option>' + groups.map(g => `<option${g === curGroup ? " selected" : ""}>${esc(g)}</option>`).join("");
-    $("groupList").innerHTML = groups.map(g => `<option value="${esc(g)}">`).join("");
+  // ---------- bảng trạng thái (kanban) ----------
+  function boardHTML(rows) {
+    return `<div class="board">${STATUSES.map((s, idx) => {
+      const items = rows.filter(({ t }) => stOf(t) === s);
+      const cards = items.map(({ t }) => {
+        const prev = STATUSES[idx - 1], next = STATUSES[idx + 1];
+        const mv = canEdit() ? `<div class="mv">
+            <button type="button" data-move="${esc(t.code)}" data-to="${esc(prev)}" ${prev ? "" : "disabled"} aria-label="Chuyển sang ${esc(prev)}">◀</button>
+            <button type="button" data-move="${esc(t.code)}" data-to="${esc(next)}" ${next ? "" : "disabled"} aria-label="Chuyển sang ${esc(next)}">▶</button>
+          </div>` : "";
+        return `<div class="kcard" data-code="${esc(t.code)}" ${canEdit() ? 'draggable="true"' : ""}>
+          <span class="code">${esc(t.code)}</span>${isLate(t) ? ' <span class="tag red">Quá hạn</span>' : ""}
+          <p>${esc(t.task)}</p>
+          <div class="sm">${d(t.start)} → ${d(t.end)}</div>
+          <div class="sm">${esc(t.owner)}</div>${mv}</div>`;
+      }).join("") || `<div class="sm" style="padding:6px">Chưa có đầu việc</div>`;
+      return `<div class="col" data-status="${esc(s)}"><h3>${esc(s)} <span>${items.length}</span></h3>${cards}</div>`;
+    }).join("")}</div>`;
+  }
 
-    // thống kê dùng bản đã lưu, không đổi khi đang sửa
+  // ---------- hiển thị chính ----------
+  function render() {
+    const data = editing ? work : server.data;
+    const tasks = data.tasks || [];
     const saved = server.data.tasks || [];
+
+    // nhóm công việc
+    const groups = [...new Set(tasks.map(t => t.group).filter(Boolean))];
+    const curG = $("fGroup").value;
+    $("fGroup").innerHTML = '<option value="">Mọi nhóm công việc</option>' + groups.map(g => `<option${g === curG ? " selected" : ""}>${esc(g)}</option>`).join("");
+    $("groupList").innerHTML = groups.map(g => `<option value="${esc(g)}">`).join("");
+    const curS = $("fStatus").value;
+    $("fStatus").innerHTML = '<option value="">Mọi trạng thái</option>' + STATUSES.map(s => `<option${s === curS ? " selected" : ""}>${esc(s)}</option>`).join("") + `<option value="__late"${curS === "__late" ? " selected" : ""}>Quá hạn</option>`;
+
+    // thống kê và tiến độ dựa trên bản đã lưu
+    const n = saved.length || 1;
+    const cnt = (s) => saved.filter(t => stOf(t) === s).length;
+    const done = cnt("Hoàn tất"), late = saved.filter(isLate).length, blocked = cnt("Bị chặn");
     $("sTotal").textContent = saved.length;
-    $("sDone").textContent = saved.filter(t => stOf(t) === "Hoàn tất").length;
-    $("sDoing").textContent = saved.filter(t => stOf(t) === "Đang làm" || stOf(t) === "Chờ duyệt").length;
-    const late = saved.filter(isLate).length;
+    $("sDone").textContent = done;
+    $("sDoing").textContent = saved.filter(isActive).length;
+    $("sBlocked").textContent = blocked;
+    $("sBlockedBox").classList.toggle("warn", blocked > 0);
     $("sLate").textContent = late;
     $("sLateBox").classList.toggle("warn", late > 0);
     $("sSoon").textContent = saved.filter(isSoon).length;
     $("sOpen").textContent = (server.data.kpi || []).filter(r => r[2] === "Chờ chốt").length;
-    const n = saved.length || 1;
-    const pct = (x) => (x / n * 100).toFixed(1) + "%";
-    const done = saved.filter(t => stOf(t) === "Hoàn tất").length, doing = saved.filter(t => stOf(t) === "Đang làm" || stOf(t) === "Chờ duyệt").length;
-    $("progress").innerHTML = `<i style="width:${pct(done)};background:var(--green)"></i><i style="width:${pct(doing)};background:var(--blue)"></i><i style="width:${pct(late)};background:var(--red)"></i>`;
+    $("pctText").textContent = Math.round(done / n * 100) + "%";
+    $("lastUpd").textContent = server.data.updatedAt ? "Lưu lần cuối: " + stamp(server.data.updatedAt) : "";
+    $("progress").innerHTML = STATUSES.map(s => `<i style="width:${(cnt(s) / n * 100).toFixed(2)}%;background:${COLORS[s]}" title="${esc(s)}"></i>`).join("");
+    $("legend").innerHTML = STATUSES.map(s => `<span><i style="background:${COLORS[s]}"></i>${esc(s)} (${cnt(s)})</span>`).join("");
+    $("phases").innerHTML = PHASES.map(p => {
+      const rows = saved.filter(t => t.phase === p), dn = rows.filter(isDone).length;
+      const w = rows.length ? (dn / rows.length * 100).toFixed(1) : 0;
+      return `<div class="ph"><div class="row"><b>${PHASE_LABEL[p]}</b><span>${dn}/${rows.length} xong</span></div>
+        <div class="bar"><i style="width:${w}%"></i></div></div>`;
+    }).join("");
 
-    // lọc (chỉ áp dụng khi xem)
+    // bộ lọc (chỉ áp dụng khi xem)
     const q = $("q").value.trim().toLowerCase(), g = $("fGroup").value, s = $("fStatus").value;
-    const indexed = tasks.map((t, i) => ({ t, i }));
-    const show = indexed.filter(({ t }) => {
+    const rows = tasks.map((t, i) => ({ t, i })).filter(({ t }) => {
       if (editing) return true;
       if (phase !== "all" && t.phase !== phase) return false;
       if (g && t.group !== g) return false;
-      if (s === "Quá hạn" && !isLate(t)) return false;
-      if (s && s !== "Quá hạn" && stOf(t) !== s) return false;
+      if (s === "__late" && !isLate(t)) return false;
+      if (s && s !== "__late" && stOf(t) !== s) return false;
       if (q && !(t.task + " " + t.owner + " " + t.output + " " + t.note + " " + t.code).toLowerCase().includes(q)) return false;
       return true;
     });
+
+    const useBoard = !editing && view === "board";
     let html = "";
-    for (const p of PHASES) {
-      const rows = show.filter(({ t }) => t.phase === p);
-      if (!rows.length && !editing) continue;
-      if (!rows.length && editing && !tasks.some(t => t.phase === p)) continue;
-      html += `<h2 class="phase">${PHASE_LABEL[p]} <small>${rows.length} đầu việc</small></h2>`;
-      html += rows.map(({ t, i }) => editing ? cardEdit(t, i) : cardView(t)).join("");
+    if (useBoard) {
+      html = boardHTML(rows);
+    } else {
+      for (const p of PHASES) {
+        const list = rows.filter(({ t }) => t.phase === p);
+        if (!list.length) continue;
+        html += `<h2 class="phase">${PHASE_LABEL[p]} <small>${list.length} đầu việc</small></h2>`;
+        html += list.map(({ t, i }) => editing ? cardEdit(t, i) : cardView(t)).join("");
+      }
+      if (!html) html = '<div class="empty">Không có đầu việc phù hợp bộ lọc.</div>';
     }
-    $("list").innerHTML = html || '<div class="empty">Không có đầu việc phù hợp bộ lọc.</div>';
+    $("list").innerHTML = html;
+
+    $("vList").setAttribute("aria-pressed", String(!useBoard));
+    $("vBoard").setAttribute("aria-pressed", String(useBoard));
+    $("vList").disabled = editing; $("vBoard").disabled = editing;
+    $("hint").textContent = editing ? "" : (server.loggedIn
+      ? (useBoard ? "Kéo thẻ sang cột khác hoặc dùng ◀ ▶ để đổi trạng thái. Thay đổi được lưu ngay." : "Bấm một nút trạng thái trên thẻ để đổi. Thay đổi được lưu ngay.")
+      : "Chỉ admin đăng nhập mới đổi được trạng thái. Thành viên xem trạng thái ở đây.");
+
+    // nhật ký
+    const log = server.data.log || [];
+    $("log").innerHTML = log.slice(0, 30).map(e => `<li><b>${esc(stamp(e.at))}</b> • ${esc(e.code)} ${esc(e.task)}: ${esc(e.from)} → <b>${esc(e.to)}</b></li>`).join("") || "<li>Chưa có thay đổi trạng thái nào.</li>";
+    $("logNote").textContent = log.length > 30 ? `Hiển thị 30 thay đổi gần nhất trong tổng ${log.length}.` : "";
 
     // KPI
-    const kpi = cur().kpi || [];
+    const kpi = data.kpi || [];
     if (editing) {
       $("kpi").innerHTML = kpi.map((r, i) => `<tr class="kpi-edit">
         <td><input class="f" data-k="${i}" data-c="0" value="${esc(r[0])}"></td>
@@ -355,53 +522,92 @@
     } else {
       $("kpi").innerHTML = kpi.map(r => `<tr><td>${esc(r[0])}</td><td class="num">${esc(r[1])}</td><td class="num ${r[2] === "Chờ chốt" ? "pending" : ""}">${esc(r[2])}</td><td>${esc(r[3])}</td></tr>`).join("");
     }
-    $("kpiAdd").hidden = !editing;
 
-    // Cần chốt
-    const open = cur().open || [];
+    // cần chốt
+    const open = data.open || [];
     $("openList").hidden = editing;
     $("openEdit").hidden = !editing;
     $("openList").innerHTML = open.map(o => `<li>${esc(o)}</li>`).join("");
     if (editing) $("openText").value = open.join("\n");
-    $("sOpen").textContent = (server.data.kpi || []).filter(r => r[2] === "Chờ chốt").length;
   }
 
-  // sự kiện: lọc
+  // ---------- lọc ----------
   ["q", "fGroup", "fStatus"].forEach(id => $(id).addEventListener("input", render));
   document.querySelectorAll(".chip").forEach(c => c.addEventListener("click", () => {
     phase = c.dataset.phase;
     document.querySelectorAll(".chip").forEach(x => x.setAttribute("aria-pressed", String(x === c)));
     render();
   }));
-  $("reset").addEventListener("click", () => { $("q").value = ""; $("fGroup").value = ""; $("fStatus").value = ""; phase = "all"; document.querySelectorAll(".chip").forEach(x => x.setAttribute("aria-pressed", String(x.dataset.phase === "all"))); render(); });
+  $("vList").addEventListener("click", () => { view = "list"; render(); });
+  $("vBoard").addEventListener("click", () => { view = "board"; render(); });
+  $("reset").addEventListener("click", () => {
+    $("q").value = ""; $("fGroup").value = ""; $("fStatus").value = ""; phase = "all";
+    document.querySelectorAll(".chip").forEach(x => x.setAttribute("aria-pressed", String(x.dataset.phase === "all")));
+    render();
+  });
 
-  // sự kiện: sửa
+  // ---------- đổi trạng thái nhanh (admin) ----------
+  $("list").addEventListener("click", (e) => {
+    const sb = e.target.closest(".sbtn");
+    if (sb && canEdit()) { quickStatus(sb.dataset.code, sb.dataset.s); return; }
+    const mv = e.target.closest("[data-move]");
+    if (mv && canEdit() && !mv.disabled) { quickStatus(mv.dataset.move, mv.dataset.to); return; }
+    const del = e.target.closest("[data-del]");
+    if (del && editing && confirm("Xóa đầu việc này? Bấm Lưu để áp dụng.")) { work.tasks.splice(+del.dataset.del, 1); render(); }
+  });
+  // kéo thả giữa các cột (admin)
+  let dragCode = null;
+  $("list").addEventListener("dragstart", (e) => {
+    const c = e.target.closest(".kcard");
+    if (!c || !canEdit()) return;
+    dragCode = c.dataset.code;
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/plain", dragCode);
+  });
+  $("list").addEventListener("dragover", (e) => {
+    const col = e.target.closest(".col");
+    if (!col || dragCode === null) return;
+    e.preventDefault();
+    document.querySelectorAll(".col.over").forEach(x => { if (x !== col) x.classList.remove("over"); });
+    col.classList.add("over");
+  });
+  $("list").addEventListener("dragleave", (e) => {
+    const col = e.target.closest(".col");
+    if (col && !col.contains(e.relatedTarget)) col.classList.remove("over");
+  });
+  $("list").addEventListener("drop", (e) => {
+    const col = e.target.closest(".col");
+    if (!col || dragCode === null) return;
+    e.preventDefault();
+    col.classList.remove("over");
+    const code = dragCode; dragCode = null;
+    quickStatus(code, col.dataset.status);
+  });
+  $("list").addEventListener("dragend", () => {
+    dragCode = null;
+    document.querySelectorAll(".col.over").forEach(x => x.classList.remove("over"));
+  });
+
+  // ---------- sửa nội dung (admin) ----------
   $("list").addEventListener("input", (e) => {
     if (!editing) return;
     const el = e.target, i = +el.dataset.i, f = el.dataset.f;
-    if (isNaN(i) || !f) return;
-    const t = work.tasks[i];
-    t[f] = (f === "fb" || f === "short" || f === "live") ? Math.max(0, Math.min(999, parseInt(el.value, 10) || 0)) : el.value;
+    if (isNaN(i) || !f || !work.tasks[i]) return;
+    work.tasks[i][f] = coerce(f, el.value);
   });
   $("list").addEventListener("change", (e) => {
     if (!editing) return;
     const el = e.target, i = +el.dataset.i, f = el.dataset.f;
-    if (isNaN(i) || !f) return;
-    work.tasks[i][f] = (f === "fb" || f === "short" || f === "live") ? Math.max(0, Math.min(999, parseInt(el.value, 10) || 0)) : el.value;
+    if (isNaN(i) || !f || !work.tasks[i]) return;
+    work.tasks[i][f] = coerce(f, el.value);
     if (f === "phase" || f === "status") render();
-  });
-  $("list").addEventListener("click", (e) => {
-    const b = e.target.closest("[data-del]");
-    if (!b || !editing) return;
-    const i = +b.dataset.del;
-    if (!confirm("Xóa đầu việc này? Bấm Lưu để áp dụng.")) return;
-    work.tasks.splice(i, 1); render();
   });
   $("addTask").addEventListener("click", () => {
     if (!editing) return;
-    const n = (work.tasks.length + 1).toString().padStart(2, "0");
-    const today10 = new Date().toISOString().slice(0, 10);
-    work.tasks.push({ code: "TT" + n, phase: "Trước", start: today10, end: today10, task: "", owner: "", output: "", approve: "", note: "", fb: 0, short: 0, live: 0, group: "", status: "Chưa cập nhật" });
+    const nums = work.tasks.map(t => parseInt(String(t.code).replace(/\D/g, ""), 10) || 0);
+    const code = "TT" + String(Math.max(0, ...nums) + 1).padStart(2, "0");
+    const t0 = new Date().toISOString().slice(0, 10);
+    work.tasks.push({ code, phase: "Trước", start: t0, end: t0, task: "", owner: "", output: "", approve: "", note: "", fb: 0, short: 0, live: 0, group: "", status: "Chưa bắt đầu", statusAt: "" });
     render();
     const last = document.querySelector("#list .task:last-of-type textarea");
     if (last) last.focus();
@@ -409,8 +615,7 @@
   $("kpi").addEventListener("input", (e) => {
     if (!editing) return;
     const k = +e.target.dataset.k, c = +e.target.dataset.c;
-    if (isNaN(k)) return;
-    work.kpi[k][c] = e.target.value;
+    if (!isNaN(k) && work.kpi[k]) work.kpi[k][c] = e.target.value;
   });
   $("kpi").addEventListener("click", (e) => {
     const b = e.target.closest("[data-kdel]");
@@ -419,16 +624,16 @@
   });
   $("addKpi").addEventListener("click", () => { if (editing) { work.kpi.push(["", "", "", ""]); render(); } });
   $("openText").addEventListener("input", (e) => {
-    if (!editing) return;
-    work.open = e.target.value.split("\n").map(x => x.trim()).filter(Boolean);
+    if (editing) work.open = e.target.value.split("\n").map(x => x.trim()).filter(Boolean);
   });
 
-  // đăng nhập / đăng xuất / lưu
+  // ---------- đăng nhập / đăng xuất / lưu ----------
   $("loginOpen").addEventListener("click", () => { $("loginForm").hidden = false; $("loginMsg").textContent = ""; $("loginForm").user.focus(); });
   $("loginCancel").addEventListener("click", () => { $("loginForm").hidden = true; $("loginForm").reset(); });
   $("loginForm").addEventListener("submit", async (e) => {
     e.preventDefault();
-    const f = e.target; const btn = f.querySelector("button[type=submit]"); btn.disabled = true;
+    const f = e.target, btn = f.querySelector("button[type=submit]");
+    btn.disabled = true;
     try {
       await api("login", { user: f.user.value, pass: f.pass.value });
       f.reset(); f.hidden = true; msg("Đã đăng nhập.", "ok");
@@ -437,31 +642,32 @@
     finally { btn.disabled = false; }
   });
   $("logout").addEventListener("click", async () => {
-    if (editing && !confirm("Bỏ các thay đổi chưa lưu và đăng xuất?")) return;
+    if (editing && !confirm("Bỏ các thay đổi nội dung chưa lưu và đăng xuất?")) return;
     editing = false; $("editbar").hidden = true;
     await api("logout", {}).catch(() => {});
     msg("Đã đăng xuất.", "ok"); await load();
   });
-  $("editOpen").addEventListener("click", () => { setEditing(true); $("editOpen").hidden = true; msg("", ""); });
+  $("editOpen").addEventListener("click", () => { setEditing(true); msg("", ""); });
   $("cancelEdit").addEventListener("click", () => {
-    if (!confirm("Hủy toàn bộ thay đổi chưa lưu?")) return;
-    setEditing(false); $("editOpen").hidden = !server.loggedIn; msg("Đã hủy thay đổi.", "");
+    if (!confirm("Hủy toàn bộ thay đổi nội dung chưa lưu?")) return;
+    setEditing(false); msg("Đã hủy thay đổi.", "");
   });
   $("save").addEventListener("click", async () => {
-    // lấy lại dữ liệu mới nhất từ textarea nếu cần
     if (!$("openEdit").hidden) work.open = $("openText").value.split("\n").map(x => x.trim()).filter(Boolean);
     const bad = work.tasks.find(t => !t.task || !t.start || !t.end || !t.code);
-    if (bad) { msg("Mỗi đầu việc cần có mã, đầu việc và hai ngày.", "err"); return; }
+    if (bad) { msg("Mỗi đầu việc cần có mã, nội dung và hai ngày.", "err"); return; }
     const btn = $("save"); btn.disabled = true; msg("Đang lưu...", "");
     try {
-      const r = await api("save", { csrf: server.csrf, data: work });
-      server.data = r.data; editing = false; $("editbar").hidden = true;
-      msg("Đã lưu.", "ok"); $("editOpen").hidden = false; await load();
-    } catch (err) { msg(err.message, "err"); }
+      await persist(work);
+      editing = false; $("editbar").hidden = true;
+      msg("Đã lưu.", "ok"); await load();
+    } catch (err) {
+      msg(err.message, "err");
+      if (/đăng nhập|hết hạn/i.test(err.message)) { editing = false; $("editbar").hidden = true; await load(); }
+    }
     finally { btn.disabled = false; }
   });
 
-  // khởi động
   load();
 })();
 </script>
