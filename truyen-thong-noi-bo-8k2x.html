@@ -6,18 +6,18 @@
 <meta name="robots" content="noindex,nofollow,noarchive">
 <title>Điều phối truyền thông nội bộ</title>
 <style>
-  /* Nền tối là mặc định (giống bảng điều khiển Sense Work); có thể chuyển sang sáng */
+  /* Nền sáng là mặc định; chọn nền tối bằng data-theme="dark" */
   :root {
-    --bg: #0B1424; --panel: #111C30; --fg: #E6EDF7; --muted: #8A9BB5; --line: #1F2E47; --hover: #17243B;
-    --green: #22C55E; --green-soft: #123524; --gold: #F5A524; --gold-soft: #3A2C12;
-    --red: #F2665F; --red-soft: #3D1E22; --blue: #60A5FA; --blue-soft: #14233D; --gray: #6B7A92; --gray-soft: #1A2538;
-    color-scheme: dark;
-  }
-  :root[data-theme="light"] {
     --bg: #F4F7F2; --panel: #FFFFFF; --fg: #1B2A20; --muted: #5E6F63; --line: #DDE6DE; --hover: #EEF4EF;
     --green: #1E7A46; --green-soft: #E3F1E8; --gold: #C98A12; --gold-soft: #FBF1DC;
     --red: #B3261E; --red-soft: #FBE4E2; --blue: #245E9C; --blue-soft: #E2ECF8; --gray: #7A8A80; --gray-soft: #EDF1EE;
     color-scheme: light;
+  }
+  :root[data-theme="dark"] {
+    --bg: #0B1424; --panel: #111C30; --fg: #E6EDF7; --muted: #8A9BB5; --line: #1F2E47; --hover: #17243B;
+    --green: #22C55E; --green-soft: #123524; --gold: #F5A524; --gold-soft: #3A2C12;
+    --red: #F2665F; --red-soft: #3D1E22; --blue: #60A5FA; --blue-soft: #14233D; --gray: #6B7A92; --gray-soft: #1A2538;
+    color-scheme: dark;
   }
   * { box-sizing: border-box; }
   [hidden] { display: none !important; }
