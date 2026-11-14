@@ -45,12 +45,17 @@ function clean($v, int $max): string {
     return mb_substr($s, 0, $max, 'UTF-8');
 }
 function cleanSubtasks($list): array {
+    global $STATUSES;
     $out = [];
     if (!is_array($list)) return $out;
     foreach ($list as $s) {
-        $text = clean(is_array($s) ? ($s['text'] ?? '') : $s, 300);
+        if (!is_array($s)) $s = ['text' => $s];
+        $text = clean($s['text'] ?? '', 300);
         if ($text === '') continue;
-        $out[] = ['text' => $text, 'done' => is_array($s) && !empty($s['done'])];
+        // dữ liệu cũ dùng cờ "done" thay cho trạng thái
+        $status = (string)($s['status'] ?? (!empty($s['done']) ? 'Hoàn tất' : 'Chưa bắt đầu'));
+        if (!in_array($status, $STATUSES, true)) $status = 'Chưa bắt đầu';
+        $out[] = ['text' => $text, 'owner' => clean($s['owner'] ?? '', 200), 'status' => $status];
         if (count($out) >= 50) break;
     }
     return $out;

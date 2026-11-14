@@ -111,11 +111,20 @@
   details { margin-top: 8px; font-size: 13px; color: var(--muted); }
   details summary { cursor: pointer; color: var(--blue); }
   details pre { white-space: pre-wrap; margin: 6px 0 0; font: inherit; color: var(--fg); }
-  ul.subs { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 6px; }
-  ul.subs label { display: flex; gap: 8px; align-items: flex-start; color: var(--fg); cursor: pointer; }
-  ul.subs input[type="checkbox"] { margin-top: 3px; accent-color: var(--green); }
-  ul.subs input:disabled + span { cursor: default; }
-  ul.subs .done { color: var(--muted); text-decoration: line-through; }
+  .subpanel { margin-top: 12px; border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; background: var(--hover); }
+  .subhead { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+  .subhead b { color: var(--fg); }
+  .sublist { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 6px; }
+  .subrow { display: grid; grid-template-columns: minmax(0, 1fr) minmax(120px, 200px) minmax(140px, 170px); gap: 8px; align-items: center; font-size: 13px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; }
+  .subrow .stext { min-width: 0; overflow-wrap: anywhere; }
+  .subrow .sown { color: var(--muted); min-width: 0; overflow-wrap: anywhere; }
+  .subrow.done .stext { color: var(--muted); text-decoration: line-through; }
+  .subrow select.subst { padding: 4px 8px; font-size: 12px; }
+  .subrow.edit { grid-template-columns: minmax(0, 1fr) minmax(120px, 180px) minmax(130px, 160px) auto; }
+  .subrow.edit input, .subrow.edit select { padding: 6px 8px; font-size: 13px; }
+  .subedit { display: grid; gap: 6px; }
+  .subedit .sublabel { font-size: 12px; color: var(--muted); }
+  @media (max-width: 640px) { .subrow, .subrow.edit { grid-template-columns: 1fr; } }
 
   .board { display: grid; grid-template-columns: repeat(5, minmax(210px, 1fr)); gap: 10px; overflow-x: auto; padding-bottom: 6px; margin-top: 16px; }
   .col { background: var(--gray-soft); border-radius: 12px; padding: 8px; min-height: 180px; min-width: 0; }
@@ -262,6 +271,7 @@
   </section>
 </div>
 <datalist id="groupList"></datalist>
+<datalist id="ownerList"></datalist>
 
 <script>
 (function () {
@@ -295,19 +305,13 @@
   const isActive = (t) => stOf(t) === "Đang làm" || stOf(t) === "Chờ duyệt";
   const canEdit = () => server.loggedIn && !editing;
   const subs = (t) => (Array.isArray(t.subtasks) ? t.subtasks : []);
-  const subLabel = (t) => { const s = subs(t); return s.length ? `${s.filter(x => x.done).length}/${s.length} đầu mục` : "Chưa có đầu mục"; };
+  const subStatus = (s) => (STATUSES.includes(s.status) ? s.status : (s.done ? "Hoàn tất" : "Chưa bắt đầu"));
+  const subDone = (t) => subs(t).filter(s => subStatus(s) === "Hoàn tất").length;
+  const subLabel = (t) => (subs(t).length ? `${subDone(t)}/${subs(t).length} hoàn tất` : "Chưa có đầu mục");
   const numFields = ["fb", "short", "live"];
   const coerce = (f, v) => numFields.includes(f) ? Math.max(0, Math.min(999, parseInt(v, 10) || 0)) : v;
   // ghi giá trị ô nhập vào bản đang sửa; đầu mục con (mỗi dòng) giữ nguyên trạng thái đã xong theo thứ tự
-  function setField(i, f, v) {
-    if (f === "subtasks") {
-      const old = subs(work.tasks[i]);
-      work.tasks[i].subtasks = String(v).split("\n").map(x => x.trim()).filter(Boolean)
-        .map((text, k) => ({ text, done: !!(old[k] && old[k].done) }));
-      return;
-    }
-    work.tasks[i][f] = coerce(f, v);
-  }
+  function setField(i, f, v) { work.tasks[i][f] = coerce(f, v); }
 
   async function api(action, body) {
     const opt = { credentials: "same-origin", headers: { "Content-Type": "application/json" } };
@@ -364,13 +368,14 @@
     });
   }
 
-  // đánh dấu đầu mục con xong/chưa xong (admin): lưu ngay
-  function toggleSub(code, k, checked) {
+  // đổi trạng thái một đầu mục con (admin): lưu ngay
+  function setSubStatus(code, k, value) {
     if (!canEdit()) return;
     const next = clone(server.data);
     const t = next.tasks.find(x => x.code === code);
     if (!t || !subs(t)[k]) return;
-    t.subtasks[k].done = checked;
+    t.subtasks[k].status = value;
+    msg(`Đang lưu đầu mục của ${code}...`, "");
     persist(next).then(() => {
       msg(`Đã cập nhật đầu mục của ${code}.`, "ok");
       render();
@@ -379,6 +384,7 @@
       if (/đăng nhập|hết hạn/i.test(err.message)) load(); else render();
     });
   }
+  const ensureSubs = (i) => { if (!Array.isArray(work.tasks[i].subtasks)) work.tasks[i].subtasks = []; return work.tasks[i].subtasks; };
 
   function setEditing(on) {
     editing = on;
@@ -417,11 +423,28 @@
       <div class="range" aria-hidden="true"><i style="left:${a.toFixed(2)}%;width:${Math.max(b - a, 1).toFixed(2)}%"></i></div>
       <div class="tags">${tags.join("")}</div>
       ${quick}
-      <details><summary>Đầu mục con và ghi chú · ${esc(subLabel(t))}</summary>
-        ${subs(t).length ? `<ul class="subs">${subs(t).map((s, k) => `<li><label><input type="checkbox" data-sub="${esc(t.code)}" data-k="${k}" ${s.done ? "checked" : ""} ${canEdit() ? "" : "disabled"}> <span class="${s.done ? "done" : ""}">${esc(s.text)}</span></label></li>`).join("")}</ul>` : ""}
-        ${t.note ? `<pre>${esc(t.note)}</pre>` : ""}
-      </details>
+      ${subPanel(t)}
+      ${t.note ? `<details><summary>Ghi chú</summary><pre>${esc(t.note)}</pre></details>` : ""}
     </article>`;
+  }
+
+  // khu đầu mục con: người làm, trạng thái và tiến độ riêng của từng đầu mục
+  function subPanel(t) {
+    const list = subs(t);
+    if (!list.length && !server.loggedIn) return "";
+    const n = list.length, dn = subDone(t), pct = n ? (dn / n * 100).toFixed(1) : 0;
+    const rows = list.map((s, k) => {
+      const st = subStatus(s);
+      const ctl = canEdit()
+        ? `<select class="f subst" data-subst="${esc(t.code)}" data-k="${k}" aria-label="Trạng thái đầu mục">${STATUSES.map(x => `<option${x === st ? " selected" : ""}>${esc(x)}</option>`).join("")}</select>`
+        : `<span class="tag ${st === "Hoàn tất" ? "" : "gray"}">${esc(st)}</span>`;
+      return `<li class="subrow${st === "Hoàn tất" ? " done" : ""}"><span class="stext">${esc(s.text)}</span><span class="sown">${esc(s.owner || "Chưa giao người")}</span>${ctl}</li>`;
+    }).join("");
+    return `<div class="subpanel">
+      <div class="subhead"><b>Đầu mục con</b><span>${n ? `${dn}/${n} hoàn tất` : "Chưa có đầu mục"}</span></div>
+      ${n ? `<div class="bar"><i style="width:${pct}%;background:var(--green)"></i></div>` : ""}
+      ${n ? `<ul class="sublist">${rows}</ul>` : ""}
+    </div>`;
   }
 
   // ---------- thẻ đầu việc (sửa nội dung) ----------
@@ -445,7 +468,16 @@
         ${f("Bài Facebook", inp("fb", t.fb, "number", 'min="0" max="999"'))}
         ${f("Short", inp("short", t.short, "number", 'min="0" max="999"'))}
         ${f("Livestream", inp("live", t.live, "number", 'min="0" max="999"'))}
-        <div class="wide">${f("Đầu mục con (mỗi dòng một việc cần làm)", `<textarea class="f" data-i="${i}" data-f="subtasks">${esc(subs(t).map(s => s.text).join("\n"))}</textarea>`)}</div>
+        <div class="wide subedit">
+          <span class="sublabel">Đầu mục con: nội dung, người làm, trạng thái</span>
+          ${subs(t).map((s, k) => `<div class="subrow edit">
+              <input class="f" data-i="${i}" data-k="${k}" data-sf="text" value="${esc(s.text)}" aria-label="Nội dung đầu mục">
+              <input class="f" data-i="${i}" data-k="${k}" data-sf="owner" value="${esc(s.owner || "")}" list="ownerList" placeholder="Người làm" aria-label="Người làm">
+              <select class="f" data-i="${i}" data-k="${k}" data-sf="status" aria-label="Trạng thái đầu mục">${STATUSES.map(x => `<option${x === subStatus(s) ? " selected" : ""}>${esc(x)}</option>`).join("")}</select>
+              <button class="btn danger" type="button" data-subdel="${i}" data-k="${k}" aria-label="Xóa đầu mục">✕</button>
+            </div>`).join("")}
+          <div><button class="btn" type="button" data-subadd="${i}">+ Thêm đầu mục</button></div>
+        </div>
         <div class="wide">${f("Ghi chú và phụ thuộc", ta("note", t.note))}</div>
       </div>
       <div class="rowbtns"><button class="btn danger" type="button" data-del="${i}">Xóa đầu việc này</button></div>
@@ -486,6 +518,8 @@
     const owners = [...new Set(tasks.map(t => (t.owner || "").trim()).filter(Boolean))].sort();
     const curO = $("fOwner").value;
     $("fOwner").innerHTML = '<option value="">Mọi người phụ trách</option>' + owners.map(o => `<option${o === curO ? " selected" : ""}>${esc(o)}</option>`).join("");
+    const people = [...new Set([...owners, ...tasks.flatMap(t => subs(t).map(s => (s.owner || "").trim())).filter(Boolean)])].sort();
+    $("ownerList").innerHTML = people.map(o => `<option value="${esc(o)}">`).join("");
     const curS = $("fStatus").value;
     $("fStatus").innerHTML = '<option value="">Mọi trạng thái</option>' + STATUSES.map(s => `<option${s === curS ? " selected" : ""}>${esc(s)}</option>`).join("") + `<option value="__late"${curS === "__late" ? " selected" : ""}>Quá hạn</option>`;
 
@@ -595,7 +629,19 @@
     const mv = e.target.closest("[data-move]");
     if (mv && canEdit() && !mv.disabled) { quickStatus(mv.dataset.move, mv.dataset.to); return; }
     const del = e.target.closest("[data-del]");
-    if (del && editing && confirm("Xóa đầu việc này? Bấm Lưu để áp dụng.")) { work.tasks.splice(+del.dataset.del, 1); render(); }
+    if (del && editing && confirm("Xóa đầu việc này? Bấm Lưu để áp dụng.")) { work.tasks.splice(+del.dataset.del, 1); render(); return; }
+    if (!editing) return;
+    const add = e.target.closest("[data-subadd]");
+    if (add) {
+      ensureSubs(+add.dataset.subadd).push({ text: "", owner: "", status: "Chưa bắt đầu" });
+      render();
+      const rows = document.querySelectorAll(`.subedit .subrow.edit`);
+      const last = rows[rows.length - 1];
+      if (last) last.querySelector("input").focus();
+      return;
+    }
+    const sd = e.target.closest("[data-subdel]");
+    if (sd) { const list = ensureSubs(+sd.dataset.subdel); list.splice(+sd.dataset.k, 1); render(); }
   });
   // kéo thả giữa các cột (admin)
   let dragCode = null;
@@ -633,18 +679,25 @@
   // ---------- sửa nội dung (admin) ----------
   $("list").addEventListener("input", (e) => {
     if (!editing) return;
-    const el = e.target, i = +el.dataset.i, f = el.dataset.f;
+    const el = e.target;
+    if (el.dataset.sf) {
+      const i = +el.dataset.i, k = +el.dataset.k, subs2 = work.tasks[i] && work.tasks[i].subtasks;
+      if (subs2 && subs2[k]) subs2[k][el.dataset.sf] = el.value;
+      return;
+    }
+    const i = +el.dataset.i, f = el.dataset.f;
     if (isNaN(i) || !f || !work.tasks[i]) return;
     setField(i, f, el.value);
   });
   $("list").addEventListener("change", (e) => {
-    const cb = e.target.closest ? e.target : null;
-    if (cb && cb.matches && cb.matches("input[data-sub]")) {
-      toggleSub(cb.dataset.sub, +cb.dataset.k, cb.checked);
+    const el = e.target;
+    if (el.matches && el.matches("select[data-subst]")) {
+      setSubStatus(el.dataset.subst, +el.dataset.k, el.value);
       return;
     }
     if (!editing) return;
-    const el = e.target, i = +el.dataset.i, f = el.dataset.f;
+    if (el.dataset.sf) { if (el.dataset.sf === "status") render(); return; }
+    const i = +el.dataset.i, f = el.dataset.f;
     if (isNaN(i) || !f || !work.tasks[i]) return;
     setField(i, f, el.value);
     if (f === "phase" || f === "status") render();
