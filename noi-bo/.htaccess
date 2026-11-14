@@ -1,0 +1,7 @@
+# Chặn truy cập trực tiếp dữ liệu và cấu hình; PHP vẫn đọc được bình thường.
+<FilesMatch "\.(json|tmp)$">
+  Require all denied
+</FilesMatch>
+<FilesMatch "^config\.local\.php$">
+  Require all denied
+</FilesMatch>
