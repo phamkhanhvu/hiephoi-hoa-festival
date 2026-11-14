@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>Điều phối truyền thông nội bộ</title>
+<style>
+  :root {
+    --bg: #F4F7F2; --panel: #FFFFFF; --fg: #1B2A20; --muted: #5E6F63; --line: #DDE6DE;
+    --green: #1E7A46; --green-soft: #E3F1E8; --gold: #C98A12; --gold-soft: #FBF1DC;
+    --red: #B3261E; --red-soft: #FBE4E2; --blue: #245E9C; --blue-soft: #E2ECF8;
+    --lime: #B7E36B; color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0F1712; --panel: #17221B; --fg: #E6EFE8; --muted: #9AAEA0; --line: #2A3A2F;
+      --green: #5FD08F; --green-soft: #1F3328; --gold: #E8B04A; --gold-soft: #3A2E14;
+      --red: #F08A80; --red-soft: #3D1F1C; --blue: #8DB8E8; --blue-soft: #1B2B3D; color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0F1712; --panel: #17221B; --fg: #E6EFE8; --muted: #9AAEA0; --line: #2A3A2F;
+    --green: #5FD08F; --green-soft: #1F3328; --gold: #E8B04A; --gold-soft: #3A2E14;
+    --red: #F08A80; --red-soft: #3D1F1C; --blue: #8DB8E8; --blue-soft: #1B2B3D; color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 14px/1.5 "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", sans-serif;
+    padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  .wrap { max-width: 1100px; margin: 0 auto; padding-block: 24px 48px; }
+  header.top { display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: flex-end; margin-bottom: 18px; }
+  .brand small { display: block; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; font-size: 11px; font-weight: 600; }
+  h1 { margin: 2px 0 4px; font-size: 26px; line-height: 1.2; color: var(--green); text-wrap: balance; }
+  .sub { margin: 0; color: var(--muted); }
+  .today { font-size: 13px; color: var(--muted); }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 18px; }
+  .stat { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; min-width: 0; }
+  .stat b { display: block; font-size: 24px; line-height: 1.1; }
+  .stat span { color: var(--muted); font-size: 12px; }
+  .stat.warn b { color: var(--red); }
+  .stat.ok b { color: var(--green); }
+  .bar { height: 8px; border-radius: 99px; background: var(--line); overflow: hidden; margin-top: 8px; display: flex; }
+  .bar i { display: block; height: 100%; }
+  .toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; align-items: center; }
+  .toolbar input, .toolbar select { font: inherit; color: var(--fg); background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; min-width: 0; }
+  .toolbar input { flex: 1 1 220px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .chip { font: inherit; font-size: 13px; padding: 6px 12px; border-radius: 99px; border: 1px solid var(--line); background: var(--panel); color: var(--fg); cursor: pointer; }
+  .chip[aria-pressed="true"] { background: var(--green); border-color: var(--green); color: #fff; }
+  h2.phase { display: flex; align-items: center; gap: 10px; margin: 26px 0 10px; font-size: 16px; color: var(--green); }
+  h2.phase small { color: var(--muted); font-weight: 500; font-size: 13px; }
+  .task { background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--line); border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; }
+  .task.st-doing { border-left-color: var(--blue); }
+  .task.st-done { border-left-color: var(--green); }
+  .task.st-late { border-left-color: var(--red); }
+  .task.st-wait { border-left-color: var(--gold); }
+  .task-head { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: baseline; justify-content: space-between; }
+  .code { font-weight: 800; color: var(--muted); font-size: 12px; letter-spacing: .05em; }
+  .dates { font-size: 13px; color: var(--muted); white-space: nowrap; }
+  .dates b { color: var(--fg); }
+  .title { margin: 6px 0 8px; font-weight: 600; font-size: 15px; text-wrap: pretty; }
+  .meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 6px 16px; font-size: 13px; color: var(--muted); }
+  .meta b { color: var(--fg); font-weight: 600; }
+  .meta div { min-width: 0; overflow-wrap: anywhere; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; align-items: center; }
+  .tag { font-size: 12px; padding: 2px 8px; border-radius: 6px; background: var(--green-soft); color: var(--green); }
+  .tag.gold { background: var(--gold-soft); color: var(--gold); }
+  .tag.blue { background: var(--blue-soft); color: var(--blue); }
+  .tag.red { background: var(--red-soft); color: var(--red); }
+  .range { position: relative; height: 6px; background: var(--line); border-radius: 99px; margin-top: 10px; }
+  .range i { position: absolute; top: 0; bottom: 0; background: var(--green); border-radius: 99px; opacity: .75; }
+  .task-foot { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; margin-top: 10px; }
+  .status { font: inherit; color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 6px 8px; }
+  details { margin-top: 8px; font-size: 13px; color: var(--muted); }
+  details summary { cursor: pointer; color: var(--blue); }
+  details pre { white-space: pre-wrap; margin: 6px 0 0; font: inherit; color: var(--fg); }
+  .empty { padding: 24px; text-align: center; color: var(--muted); background: var(--panel); border: 1px dashed var(--line); border-radius: 10px; }
+  section.box { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-top: 28px; }
+  section.box h2 { margin: 0 0 10px; font-size: 17px; color: var(--green); }
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .pending { color: var(--gold); font-weight: 600; }
+  ul.open { margin: 0; padding-left: 18px; }
+  ul.open li { margin: 4px 0; }
+  .note { font-size: 12px; color: var(--muted); margin-top: 12px; }
+  .btn { font: inherit; font-size: 13px; padding: 6px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--panel); color: var(--fg); cursor: pointer; }
+  .btn:hover { border-color: var(--green); }
+  .legend { display: flex; flex-wrap: wrap; gap: 12px; font-size: 12px; color: var(--muted); margin: 6px 0 0; }
+  @media (max-width: 560px) { h1 { font-size: 22px; } .dates { white-space: normal; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <small>Nội bộ • Sense • Điều phối</small>
+      <h1>Điều phối truyền thông Festival Hoa Đà Lạt 2026</h1>
+      <p class="sub">Hiệp hội Hoa Đà Lạt • 10/11/2026 – 31/01/2027 • 25 đầu việc</p>
+    </div>
+    <div class="today" id="today"></div>
+  </header>
+
+  <div class="cards">
+    <div class="stat"><b id="sTotal">25</b><span>Đầu việc</span></div>
+    <div class="stat"><b id="sDone">0</b><span>Hoàn tất</span></div>
+    <div class="stat"><b id="sDoing">0</b><span>Đang làm</span></div>
+    <div class="stat warn"><b id="sLate">0</b><span>Quá hạn (chưa xong)</span></div>
+    <div class="stat"><b id="sSoon">0</b><span>Đến hạn trong 3 ngày</span></div>
+    <div class="stat"><b id="sOpen">0</b><span>Mục chờ chốt</span></div>
+  </div>
+  <div class="bar" id="progress" aria-label="Tiến độ"></div>
+  <p class="note">Tiến độ tính theo cột Trạng thái bạn chọn ở từng đầu việc. Trạng thái lưu trên trình duyệt này.</p>
+
+  <div class="toolbar">
+    <input id="q" type="search" placeholder="Tìm theo việc, đầu mối, đầu ra..." aria-label="Tìm kiếm">
+    <select id="fGroup" aria-label="Nhóm công việc"></select>
+    <select id="fStatus" aria-label="Trạng thái">
+      <option value="">Mọi trạng thái</option>
+      <option>Chưa cập nhật</option><option>Đang làm</option><option>Chờ duyệt</option><option>Hoàn tất</option><option>Quá hạn</option>
+    </select>
+    <button class="btn" id="reset" type="button">Xóa lọc</button>
+  </div>
+  <div class="chips" role="group" aria-label="Lọc theo giai đoạn">
+    <button class="chip" type="button" data-phase="all" aria-pressed="true">Tất cả</button>
+    <button class="chip" type="button" data-phase="Trước" aria-pressed="false">Trước Festival</button>
+    <button class="chip" type="button" data-phase="Trong" aria-pressed="false">Trong Festival</button>
+    <button class="chip" type="button" data-phase="Sau" aria-pressed="false">Sau Festival</button>
+  </div>
+
+  <main id="list"></main>
+
+  <section class="box">
+    <h2>Sản lượng và KPI</h2>
+    <p class="note" style="margin-top:0">Đối chiếu theo kế hoạch truyền thông đã gửi (trang 9–22). Các mục “Chờ chốt” cần thống nhất trước khi chạy.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Chỉ tiêu</th><th class="num">Mục tiêu</th><th class="num">Timeline</th><th>Cơ sở tính / ghi chú</th></tr></thead>
+        <tbody id="kpi"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="box">
+    <h2>Cần chốt với Hiệp hội</h2>
+    <ul class="open">
+      <li>Cách tính KPI video: 10 short giai đoạn Festival có ghép với 10 video giới thiệu hay không (TT15, TT19, TT20).</li>
+      <li>Số lượng video phỏng vấn người trồng hoa: 5 hay 10 (trang 11 và trang 20 ghi khác nhau).</li>
+      <li>Số lượng video tư liệu lịch sử nghề hoa: 10 hay 5 (trang 12 và trang 20 ghi khác nhau).</li>
+      <li>Trailer có nằm trong KPI tổng 28 video hay là sản phẩm riêng (trang 22 chưa thấy dòng trailer).</li>
+      <li>Ngày bắt đầu và kết thúc gói vận hành Facebook/TikTok 2 tháng (TT03).</li>
+      <li>Mức chi và lịch chạy quảng cáo (TT12).</li>
+      <li>Ngày giờ và người phát ngôn của 3 buổi livestream (TT14, TT16–TT18).</li>
+    </ul>
+  </section>
+</div>
+
+<script>
+(function () {
+  const DATA = [
+    { code:"TT01", phase:"Trước", start:"2026-11-10", end:"2026-11-16", task:"Đối chiếu tiến độ khởi động, xác nhận đầu mối, lịch tác nghiệp và danh sách nhà vườn.", owner:"Ban truyền thông Hiệp hội", output:"Bảng phân công và danh sách liên hệ", approve:"Hiệp hội Hoa Đà Lạt", note:"1. Rà tiến độ từ 10/11\n2. Xác nhận đầu mối và danh sách nhà vườn\n3. Chốt lịch tác nghiệp", fb:0, short:0, live:0, group:"Điều phối và lịch tác nghiệp" },
+    { code:"TT02", phase:"Trước", start:"2026-11-14", end:"2026-11-16", task:"Chốt khối lượng hai series, cách tính KPI video và thời hạn vận hành hai kênh.", owner:"Sense • Điều phối", output:"Biên bản chốt phạm vi", approve:"Hiệp hội Hoa Đà Lạt", note:"Đối chiếu các chênh lệch tại sheet Sản lượng và KPI.", fb:0, short:0, live:0, group:"Điều phối và lịch tác nghiệp" },
+    { code:"TT03", phase:"Trước", start:"2026-11-14", end:"2026-11-18", task:"Kiểm tra quyền Facebook/TikTok. Chuẩn hóa hồ sơ kênh và ghi số liệu ban đầu.", owner:"Sense • Quản trị kênh", output:"Hai kênh sẵn sàng và bảng số liệu gốc", approve:"Ban truyền thông Hiệp hội", note:"Chốt ngày bắt đầu/kết thúc gói 2 tháng.", fb:0, short:0, live:0, group:"Vận hành kênh và quảng cáo" },
+    { code:"TT04", phase:"Trước", start:"2026-11-17", end:"2026-11-20", task:"Lập lịch quay, đề cương phỏng vấn, xác nhận nhà vườn, nghệ nhân và tư liệu nghề.", owner:"Sense • Nội dung", output:"Lịch quay và bộ câu hỏi đã duyệt", approve:"Ban truyền thông Hiệp hội", note:"Ưu tiên nhân vật có câu chuyện và hình ảnh tác nghiệp.", fb:0, short:0, live:0, group:"Sản xuất video và tư liệu" },
+    { code:"TT05", phase:"Trước", start:"2026-11-17", end:"2026-11-21", task:"Soạn thư ngỏ, proposal và bài kêu gọi tài trợ. Chốt hình thức đóng góp và quyền lợi.", owner:"Ban vận động tài trợ", output:"Bộ hồ sơ tài trợ và sổ tiếp nhận đầu mối", approve:"Hiệp hội Hoa Đà Lạt", note:"Chuyển đầu mối về Ban vận động sau khi tiếp nhận.", fb:0, short:0, live:0, group:"Tài trợ và quyền lợi" },
+    { code:"TT06", phase:"Trước", start:"2026-11-17", end:"2026-11-30", task:"Đăng bài mở chiến dịch, giới thiệu Hiệp hội, người làm nghề và các hình thức đồng hành.", owner:"Sense • Nội dung", output:"8 bài Facebook", approve:"Ban truyền thông Hiệp hội", note:"Phân bổ đề xuất. Quản trị kênh ghi link đã đăng.", fb:8, short:0, live:0, group:"Biên tập và đăng bài" },
+    { code:"TT07", phase:"Trước", start:"2026-11-20", end:"2026-11-30", task:"Quay phỏng vấn Người giữ mùa hoa và thu tư liệu Dấu ấn nghề hoa Đà Lạt.", owner:"Sense • Media", output:"Footage, âm thanh, ảnh, nhật ký nhân vật", approve:"Ban truyền thông Hiệp hội", note:"Quay sau khi xác nhận nhân vật và địa điểm.", fb:0, short:0, live:0, group:"Sản xuất video và tư liệu" },
+    { code:"TT08", phase:"Trước", start:"2026-11-21", end:"2026-12-03", task:"Thiết kế decal dán xe và băng rôn. Duyệt nội dung, quy cách, số lượng và vị trí phối hợp hội viên.", owner:"Sense • Thiết kế", output:"File in và danh sách vị trí đã xác nhận", approve:"Ban truyền thông Hiệp hội", note:"Chốt thông số trước khi gửi in.", fb:0, short:0, live:0, group:"Thiết kế và ấn phẩm" },
+    { code:"TT09", phase:"Trước", start:"2026-11-24", end:"2026-12-04", task:"Viết kịch bản, dựng và duyệt trailer giới thiệu chương trình của Hiệp hội.", owner:"Sense • Media", output:"1 trailer và bản tối ưu cho kênh số", approve:"Ban truyền thông Hiệp hội", note:"Xác nhận thông tin chương trình trước khi xuất bản.", fb:0, short:0, live:0, group:"Sản xuất video và tư liệu" },
+    { code:"TT10", phase:"Trước", start:"2026-11-25", end:"2026-12-15", task:"Dựng hai series, duyệt theo đợt, bổ sung phụ đề và thumbnail.", owner:"Sense • Media", output:"Hai series video đã duyệt", approve:"Ban truyền thông Hiệp hội", note:"Số lượng từng series chờ Hiệp hội xác nhận.", fb:0, short:0, live:0, group:"Sản xuất video và tư liệu" },
+    { code:"TT11", phase:"Trước", start:"2026-12-01", end:"2026-12-10", task:"Phát hành trailer, video series và bài giới thiệu chương trình, nhà vườn và doanh nghiệp.", owner:"Sense • Quản trị kênh", output:"10 bài Facebook và các video đã duyệt", approve:"Ban truyền thông Hiệp hội", note:"Theo dõi danh sách tối thiểu 15 đơn vị xuyên chiến dịch.", fb:10, short:0, live:0, group:"Biên tập và đăng bài" },
+    { code:"TT12", phase:"Trước", start:"2026-12-01", end:"2026-12-16", task:"Chạy quảng cáo theo gói đã duyệt. Theo dõi chi tiêu, kết quả và điều chỉnh nội dung.", owner:"Sense • Quản trị kênh", output:"Kế hoạch chạy và bảng theo dõi quảng cáo", approve:"Hiệp hội Hoa Đà Lạt", note:"Mức chi và lịch chạy cụ thể chờ duyệt.", fb:0, short:0, live:0, group:"Vận hành kênh và quảng cáo" },
+    { code:"TT13", phase:"Trước", start:"2026-12-11", end:"2026-12-16", task:"Công bố lịch, đăng hướng dẫn tham dự, đẩy truyền thông trước triển lãm và ghi nhận đơn vị đồng hành.", owner:"Sense • Nội dung", output:"10 bài Facebook", approve:"Ban truyền thông Hiệp hội", note:"Rà thời gian, địa điểm, tên chương trình với đầu mối.", fb:10, short:0, live:0, group:"Biên tập và đăng bài" },
+    { code:"TT14", phase:"Trước", start:"2026-12-11", end:"2026-12-16", task:"Chốt lịch trực, phân tổ quay chụp, kiểm tra kết nối livestream và chuẩn bị mẫu đăng nhanh.", owner:"Sense • Điều phối", output:"Lịch trực, shot list và phương án dự phòng", approve:"Ban truyền thông Hiệp hội", note:"Xác nhận giờ, địa điểm, người phát ngôn của 3 buổi live.", fb:0, short:0, live:0, group:"Điều phối và lịch tác nghiệp" },
+    { code:"TT15", phase:"Trong", start:"2026-12-17", end:"2026-12-19", task:"Tác nghiệp cao điểm hai triển lãm quốc tế. Chụp ảnh, quay phỏng vấn, cập nhật và lưu footage recap.", owner:"Sense • Media", output:"5 bài Facebook, 3 short", approve:"Ban truyền thông Hiệp hội", note:"Xác nhận lịch từng triển lãm, tránh trùng tổ tác nghiệp.", fb:5, short:3, live:0, group:"Tác nghiệp sự kiện" },
+    { code:"TT16", phase:"Trong", start:"2026-12-17", end:"2027-01-03", task:"Livestream Triển lãm quốc tế hoa Lan Hồ điệp.", owner:"Sense • Media", output:"1 livestream và link lưu", approve:"Ban truyền thông Hiệp hội", note:"Cửa sổ tác nghiệp. Ngày và giờ chờ xác nhận.", fb:0, short:0, live:1, group:"Livestream" },
+    { code:"TT17", phase:"Trong", start:"2026-12-17", end:"2027-01-03", task:"Livestream Triển lãm hoa tươi nghệ thuật quốc tế.", owner:"Sense • Media", output:"1 livestream và link lưu", approve:"Ban truyền thông Hiệp hội", note:"Cửa sổ tác nghiệp. Ngày và giờ chờ xác nhận.", fb:0, short:0, live:1, group:"Livestream" },
+    { code:"TT18", phase:"Trong", start:"2026-12-17", end:"2027-01-03", task:"Livestream Không gian hoa của Hiệp hội.", owner:"Sense • Media", output:"1 livestream và link lưu", approve:"Ban truyền thông Hiệp hội", note:"Cửa sổ tác nghiệp. Ngày và giờ chờ xác nhận.", fb:0, short:0, live:1, group:"Livestream" },
+    { code:"TT19", phase:"Trong", start:"2026-12-20", end:"2026-12-31", task:"Giới thiệu gian hàng, giống hoa, sản phẩm, chủ vườn, giao thương và đơn vị tài trợ.", owner:"Sense • Nội dung", output:"12 bài Facebook, 5 short", approve:"Ban truyền thông Hiệp hội", note:"Dùng Facebook và TikTok, theo dõi tương tác và link.", fb:12, short:5, live:0, group:"Tác nghiệp sự kiện" },
+    { code:"TT20", phase:"Trong", start:"2027-01-01", end:"2027-01-03", task:"Cập nhật Không gian hoa và ghi nhận kết quả, phỏng vấn cuối kỳ, thu tư liệu còn thiếu.", owner:"Sense • Media", output:"3 bài Facebook, 2 short", approve:"Ban truyền thông Hiệp hội", note:"Rà kết quả và minh chứng truyền thông tài trợ.", fb:3, short:2, live:0, group:"Tác nghiệp sự kiện" },
+    { code:"TT21", phase:"Sau", start:"2027-01-04", end:"2027-01-10", task:"Dựng và phát hành recap. Đăng tổng kết, tri ân hội viên và nhà tài trợ.", owner:"Sense • Media", output:"3 recap và 4 bài Facebook", approve:"Hiệp hội Hoa Đà Lạt", note:"Chủ đề từng recap và danh sách tri ân cần duyệt.", fb:4, short:0, live:0, group:"Tổng kết và bàn giao" },
+    { code:"TT22", phase:"Sau", start:"2027-01-04", end:"2027-01-15", task:"Đối chiếu quyền lợi tài trợ, hoàn thiện các nội dung ghi nhận và tập hợp minh chứng.", owner:"Ban vận động tài trợ", output:"Bảng đối soát quyền lợi và link minh chứng", approve:"Hiệp hội Hoa Đà Lạt", note:"Đối chiếu theo cam kết của từng đối tác.", fb:0, short:0, live:0, group:"Tài trợ và quyền lợi" },
+    { code:"TT23", phase:"Sau", start:"2027-01-04", end:"2027-01-15", task:"Phân loại video, ảnh và sản phẩm theo chương trình, chủ đề và doanh nghiệp.", owner:"Sense • Media", output:"1 bộ tư liệu kèm danh mục", approve:"Ban truyền thông Hiệp hội", note:"Gắn link theo từng chương trình và quyền truy cập.", fb:0, short:0, live:0, group:"Tổng kết và bàn giao" },
+    { code:"TT24", phase:"Sau", start:"2027-01-11", end:"2027-01-15", task:"Hoàn thiện báo cáo Facebook/TikTok, truyền thông sự kiện, quảng bá hội viên và hỗ trợ tài trợ.", owner:"Sense • Điều phối", output:"1 báo cáo và định hướng nội dung dài hạn", approve:"Hiệp hội Hoa Đà Lạt", note:"Tổng hợp lượt xem, tăng trưởng theo dõi và số liệu đối tác.", fb:0, short:0, live:0, group:"Tổng kết và bàn giao" },
+    { code:"TT25", phase:"Sau", start:"2027-01-16", end:"2027-01-31", task:"Bổ sung theo phản hồi, đăng nội dung nối tiếp, bàn giao và xác nhận nghiệm thu.", owner:"Sense • Điều phối", output:"Biên bản bàn giao và 2 bài Facebook", approve:"Hiệp hội Hoa Đà Lạt", note:"Mốc 16–31/01 đề xuất trong phạm vi giai đoạn sau Festival.", fb:2, short:0, live:0, group:"Tổng kết và bàn giao" }
+  ];
+  const KPI = [
+    ["Bài Facebook • trước Festival", "Phân bổ đề xuất", "28", "28 bài từ 17/11 đến 16/12."],
+    ["Bài Facebook • trong Festival", "20", "20", "Giữ chỉ tiêu riêng trong giai đoạn 17/12–03/01."],
+    ["Bài Facebook • sau Festival", "Phân bổ đề xuất", "6", "6 bài trong giai đoạn 04–31/01."],
+    ["Tổng bài Facebook", "54", "54", "Tổng sản lượng theo trang 20 và 22."],
+    ["Short / video giới thiệu", "10", "10", "Tạm ghép 10 short giai đoạn trong Festival với 10 video giới thiệu. Xác nhận cách tính."],
+    ["Livestream", "3", "3", "Một buổi cho mỗi hoạt động trọng điểm. Giờ phát chờ xác nhận."],
+    ["Video phỏng vấn người trồng hoa", "5 hoặc 10", "Chờ chốt", "Trang 11 ghi 5 video, 2–4 phút. Trang 10 và 20 ghi 10 video."],
+    ["Video tư liệu / lịch sử nghề hoa", "10 hoặc 5", "Chờ chốt", "Trang 12 ghi 10 video, 60–120 giây. Trang 20 ghi 5 video."],
+    ["Video recap hoạt động và tổng kết", "3", "3", "Trang 20. Phát hành đợt 04–10/01 theo trang 21."],
+    ["Trailer giới thiệu sự kiện", "1", "1", "Trang 10 và 13. Xác nhận trailer tính trong KPI 28 hay là sản phẩm riêng."],
+    ["KPI tổng video", "28", "Chờ chốt", "Trang 22. Bốn dòng video trang 20 cộng đúng 28, chưa thấy dòng trailer."],
+    ["Vận hành Facebook và TikTok", "2 tháng", "Chờ chốt", "Xác nhận ngày bắt đầu và kết thúc gói."],
+    ["Quảng cáo số", "1 gói", "1 gói", "Xác nhận ngân sách, lịch chạy và kết quả theo kênh."],
+    ["Lượt xem video cộng dồn", "500.000–1.000.000", "Theo dõi", "Ghi nguồn số liệu từng kênh và kỳ báo cáo."],
+    ["Đơn vị được giới thiệu", "Tối thiểu 15", "Theo dõi", "Nhà vườn, doanh nghiệp hoặc hội viên. Đếm theo đơn vị."],
+    ["Người theo dõi và tương tác", "Tăng so với đầu kỳ", "Theo dõi", "Lưu số liệu đầu kỳ và cuối kỳ theo từng kênh."],
+    ["KPI hỗ trợ vận động tài trợ", "Theo phát sinh", "Theo dõi", "Số quan tâm, đầu mối đã chuyển, đơn vị xác nhận, giá trị đóng góp."],
+    ["Bộ tư liệu và báo cáo", "1 bộ mỗi loại", "1 bộ mỗi loại", "Hoàn thiện báo cáo 15/01 theo trang 21."]
+  ];
+  const STATUSES = ["Chưa cập nhật", "Đang làm", "Chờ duyệt", "Hoàn tất"];
+  const STORE = "sense-truyenthong-status-v1";
+  const START = new Date("2026-11-10T00:00:00"), END = new Date("2027-01-31T23:59:59");
+  const TOTAL_MS = END - START;
+  const PHASE_LABEL = { "Trước": "Trước Festival", "Trong": "Trong Festival", "Sau": "Sau Festival" };
+  const today = new Date(); today.setHours(0,0,0,0);
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const d = (iso) => { const [y,m,dd] = iso.split("-"); return `${dd}/${m}/${y}`; };
+  const day = (iso) => new Date(iso + "T00:00:00");
+
+  let status = {};
+  try { status = JSON.parse(localStorage.getItem(STORE) || "{}") || {}; } catch (e) { status = {}; }
+  const saveStatus = () => { try { localStorage.setItem(STORE, JSON.stringify(status)); } catch (e) {} };
+  const stOf = (t) => status[t.code] || "Chưa cập nhật";
+  const isLate = (t) => stOf(t) !== "Hoàn tất" && day(t.end) < today;
+  const isSoon = (t) => stOf(t) !== "Hoàn tất" && !isLate(t) && (day(t.end) - today) <= 3 * 864e5;
+
+  $("today").textContent = "Hôm nay: " + today.toLocaleDateString("vi-VN", { weekday: "long", day: "2-digit", month: "2-digit", year: "numeric" });
+
+  const groups = [...new Set(DATA.map(t => t.group))];
+  $("fGroup").innerHTML = '<option value="">Mọi nhóm công việc</option>' + groups.map(g => `<option>${esc(g)}</option>`).join("");
+
+  let phase = "all";
+  function visible(t) {
+    const q = $("q").value.trim().toLowerCase();
+    const g = $("fGroup").value, s = $("fStatus").value;
+    if (phase !== "all" && t.phase !== phase) return false;
+    if (g && t.group !== g) return false;
+    if (s) {
+      if (s === "Quá hạn") { if (!isLate(t)) return false; }
+      else if (stOf(t) !== s) return false;
+    }
+    if (q && !(t.task + " " + t.owner + " " + t.output + " " + t.note + " " + t.code).toLowerCase().includes(q)) return false;
+    return true;
+  }
+
+  function cardHTML(t) {
+    const st = stOf(t);
+    const cls = st === "Hoàn tất" ? "st-done" : isLate(t) ? "st-late" : st === "Đang làm" ? "st-doing" : st === "Chờ duyệt" ? "st-wait" : "";
+    const a = (day(t.start) - START) / TOTAL_MS * 100;
+    const b = (day(t.end) - START) / TOTAL_MS * 100;
+    const tags = [];
+    if (t.fb) tags.push(`<span class="tag">${t.fb} bài Facebook</span>`);
+    if (t.short) tags.push(`<span class="tag gold">${t.short} short</span>`);
+    if (t.live) tags.push(`<span class="tag blue">${t.live} livestream</span>`);
+    if (isLate(t)) tags.push(`<span class="tag red">Quá hạn</span>`);
+    else if (isSoon(t)) tags.push(`<span class="tag gold">Đến hạn sớm</span>`);
+    return `<article class="task ${cls}" data-code="${t.code}">
+      <div class="task-head"><span class="code">${t.code} • ${esc(PHASE_LABEL[t.phase])}</span>
+        <span class="dates">${d(t.start)} → <b>${d(t.end)}</b></span></div>
+      <p class="title">${esc(t.task)}</p>
+      <div class="meta">
+        <div><b>Chủ trì:</b> ${esc(t.owner)}</div>
+        <div><b>Đầu ra:</b> ${esc(t.output)}</div>
+        <div><b>Duyệt / phối hợp:</b> ${esc(t.approve)}</div>
+      </div>
+      <div class="range" aria-hidden="true"><i style="left:${a.toFixed(2)}%;width:${Math.max(b - a, 1).toFixed(2)}%"></i></div>
+      <div class="tags">${tags.join("")}<span class="tag" style="background:transparent;color:var(--muted)">${esc(t.group)}</span></div>
+      <div class="task-foot">
+        <details><summary>Ghi chú và phụ thuộc</summary><pre>${esc(t.note)}</pre></details>
+        <label>Trạng thái
+          <select class="status" data-code="${t.code}">${STATUSES.map(s => `<option${s === st ? " selected" : ""}>${s}</option>`).join("")}</select>
+        </label>
+      </div>
+    </article>`;
+  }
+
+  function render() {
+    const list = DATA.filter(visible);
+    const byPhase = { "Trước": [], "Trong": [], "Sau": [] };
+    list.forEach(t => byPhase[t.phase].push(t));
+    let html = "";
+    for (const p of ["Trước", "Trong", "Sau"]) {
+      if (!byPhase[p].length) continue;
+      const rng = DATA.filter(t => t.phase === p);
+      html += `<h2 class="phase">${PHASE_LABEL[p]} <small>${byPhase[p].length}/${rng.length} đầu việc</small></h2>`;
+      html += byPhase[p].map(cardHTML).join("");
+    }
+    $("list").innerHTML = html || '<div class="empty">Không có đầu việc phù hợp bộ lọc.</div>';
+    updateStats();
+  }
+
+  function updateStats() {
+    const n = DATA.length;
+    const done = DATA.filter(t => stOf(t) === "Hoàn tất").length;
+    const doing = DATA.filter(t => stOf(t) === "Đang làm" || stOf(t) === "Chờ duyệt").length;
+    const late = DATA.filter(isLate).length;
+    const soon = DATA.filter(isSoon).length;
+    $("sDone").textContent = done;
+    $("sDoing").textContent = doing;
+    $("sLate").textContent = late;
+    $("sSoon").textContent = soon;
+    $("sOpen").textContent = KPI.filter(r => r[2] === "Chờ chốt").length;
+    $("sLate").parentElement.classList.toggle("warn", late > 0);
+    const pct = (x) => (x / n * 100).toFixed(1) + "%";
+    const bar = $("progress");
+    bar.innerHTML = `<i style="width:${pct(done)};background:var(--green)"></i><i style="width:${pct(doing)};background:var(--blue)"></i><i style="width:${pct(late)};background:var(--red)"></i>`;
+    bar.setAttribute("aria-label", `Hoàn tất ${done} trên ${n} đầu việc`);
+  }
+
+  $("kpi").innerHTML = KPI.map(r => `<tr><td>${esc(r[0])}</td><td class="num">${esc(r[1])}</td><td class="num ${r[2] === "Chờ chốt" ? "pending" : ""}">${esc(r[2])}</td><td>${esc(r[3])}</td></tr>`).join("");
+
+  document.addEventListener("change", (e) => {
+    if (e.target.classList.contains("status")) {
+      status[e.target.dataset.code] = e.target.value; saveStatus(); render();
+    }
+  });
+  ["q", "fGroup", "fStatus"].forEach(id => $(id).addEventListener("input", render));
+  $("reset").addEventListener("click", () => { $("q").value = ""; $("fGroup").value = ""; $("fStatus").value = ""; setPhase("all"); });
+  function setPhase(p) {
+    phase = p;
+    document.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", String(c.dataset.phase === p)));
+    render();
+  }
+  document.querySelectorAll(".chip").forEach(c => c.addEventListener("click", () => setPhase(c.dataset.phase)));
+  render();
+})();
+</script>
+</body>
+</html>
