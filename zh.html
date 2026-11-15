@@ -238,7 +238,7 @@
 
 
   /* Sponsor packages */
-  .packages { display: grid; gap: 18px; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 22px; }
+  .packages { display: grid; gap: 18px; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 22px; }
   .pkg { background: #fff; border: 1px solid var(--line); display: flex; flex-direction: column; min-width: 0; }
   .pkg-head { padding: 18px 18px 16px; color: #fff; text-align: center; }
   .pkg-head h3 { font-size: 16px; font-weight: 800; text-transform: uppercase; line-height: 1.25; }
@@ -246,11 +246,22 @@
   .pkg ul { list-style: none; margin: 0; padding: 16px 18px 20px; display: grid; gap: 10px; font-size: 13px; line-height: 1.5; }
   .pkg li { position: relative; padding-left: 16px; }
   .pkg li::before { content: ""; position: absolute; left: 0; top: .55em; width: 6px; height: 6px; background: currentColor; border-radius: 1px; }
-  .pkg.t1 .pkg-head { background: #7FCB55; } .pkg.t1 li { color: var(--ink); }
-  .pkg.t2 .pkg-head { background: #D2C25A; } .pkg.t2 .price { color: #3A3210; } .pkg.t2 li { color: var(--ink); }
-  .pkg.t3 .pkg-head { background: #D6A8E0; } .pkg.t3 .price { color: #3E2350; } .pkg.t3 li { color: var(--ink); }
-  .pkg.t4 .pkg-head { background: #F5B07C; } .pkg.t4 .price { color: #4A2A10; } .pkg.t4 li { color: var(--ink); }
-  .pkg.t5 .pkg-head { background: #EF4E63; } .pkg.t5 li { color: var(--ink); }
+  .pkg-intro { font-size: 14px; line-height: 1.6; color: var(--ink); max-width: 80ch; margin-top: 10px; }
+  .pkg .pkg-head { background: var(--hc, #7FCB55); color: var(--hf, #14301A); }
+  .pkg .pkg-head .price { color: var(--hf, #14301A); font-size: 17px; line-height: 1.3; }
+  .pkg li { color: var(--ink); }
+  .pkg.c1 .pkg-head .price { font-size: 14px; }
+  .pkg.c1 { --hc: #8CC6EE; } .pkg.c2 { --hc: #B4DE9B; } .pkg.c3 { --hc: #7FCB55; } .pkg.c4 { --hc: #6CCABA; }
+  .pkg.c5 { --hc: #D8C660; --hf: #2E280A; } .pkg.c6 { --hc: #D6A8E0; --hf: #3A1F4A; } .pkg.c7 { --hc: #F5B07C; --hf: #43240C; } .pkg.c8 { --hc: #EF4E63; --hf: #fff; }
+  .pkg-table-wrap { margin-top: 26px; overflow-x: auto; border: 1px solid var(--line); background: #fff; }
+  .pkg-table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 13px; }
+  .pkg-table caption { text-align: left; font-weight: 800; padding: 12px 14px; font-size: 14px; }
+  .pkg-table th, .pkg-table td { padding: 10px 14px; border-top: 1px solid var(--line); text-align: center; }
+  .pkg-table thead th { background: #F4F7EF; font-weight: 800; font-size: 12px; }
+  .pkg-table tbody th { text-align: left; font-weight: 700; border-left: 6px solid var(--hc, #7FCB55); }
+  .pkg-table td { font-family: "Montserrat", sans-serif; font-weight: 700; }
+  .pkg-table tr.c1 th { --hc: #8CC6EE; } .pkg-table tr.c2 th { --hc: #B4DE9B; } .pkg-table tr.c3 th { --hc: #7FCB55; } .pkg-table tr.c4 th { --hc: #6CCABA; }
+  .pkg-table tr.c5 th { --hc: #D8C660; } .pkg-table tr.c6 th { --hc: #D6A8E0; } .pkg-table tr.c7 th { --hc: #F5B07C; } .pkg-table tr.c8 th { --hc: #EF4E63; }
   .pkg-note { font-size: 12px; color: var(--muted); font-style: italic; margin-top: 18px; max-width: 80ch; }
 
   /* Tablet */
@@ -442,74 +453,105 @@
 
   <section class="block" id="goi-tai-tro">
     <div class="inner">
-      <div class="sec-kicker">赞助</div>
-      <h2 class="sec-title display-green">赞助方案</h2>
+      <div class="sec-kicker">赞助方案</div>
+      <h2 class="sec-title display-green">同行、赞助及参与政策</h2>
+      <p class="pkg-intro">共分8个组别，参与并支持第十一届大叻花卉节2026的16项响应活动：第01组为晚会入场费，第02组为自费参与套餐，第03–08组为六个企业赞助等级。</p>
       <div class="packages">
-        <article class="pkg t1">
-          <div class="pkg-head"><h3>01. 同行赞助商</h3><span class="price">10.000.000 VNĐ</span></div>
+        <article class="pkg c1">
+          <div class="pkg-head"><h3>01. “花色之舞”之夜嘉宾</h3><span class="price">2.000.000 VNĐ/成人<br>1.000.000 VNĐ/儿童</span></div>
           <ul>
-            <li>协会在其媒体渠道上推广赞助商的名称与品牌。</li>
-            <li>在协会展览空间（春香湖畔）及大叻学院的感谢展板或幻灯片上展示标识。</li>
-            <li>在大叻学院展览中摆放宣传册、传单或产品。</li>
-            <li>在2026年12月18日 DFA 花节晚会上被提及并致谢。</li>
-            <li>2026年12月18日晚会1个席位，免费参加。</li>
+            <li>含1个席位，2026年12月18日晚在大叻学院参加“花色之舞”之夜，共享花卉文化与艺术交流。</li>
+            <li>此为单独的参加费用，不含自行车、巡游、12月16日纪念仪式、12月19日开幕式名额、住宿、旅游或赞助商权益。</li>
+            <li>儿童年龄界定、幼儿规定及座位安排将在开放报名前由组委会公布。</li>
           </ul>
         </article>
-        <article class="pkg t2">
-          <div class="pkg-head"><h3>02. 协办赞助商</h3><span class="price">30.000.000 VNĐ</span></div>
+        <article class="pkg c2">
+          <div class="pkg-head"><h3>02. 自费同行花业人士</h3><span class="price">8.000.000 VNĐ</span></div>
           <ul>
-            <li>协会在其媒体渠道上推广赞助商的名称与品牌。</li>
-            <li>在协会展览空间（春香湖畔）及大叻学院的感谢展板或幻灯片上展示标识。</li>
-            <li>在大叻学院展览中摆放宣传册、传单或产品。</li>
-            <li>在2026年12月18日 DFA 花节晚会上被提及并致谢。</li>
-            <li>标识的尺寸与位置明确高于同行赞助商。</li>
-            <li>2026年12月18日晚会1个席位，免费参加。</li>
-            <li>2026年12月19日花节开幕夜1个席位（由林同省人民委员会主办）。</li>
+            <li>面向实际从事花卉行业、经营信息可核实的人士；交通、住宿及活动以外的费用自理。</li>
+            <li>捐赠1辆统一品质的自行车，以鲜花装饰，配有单位标志、地址和二维码标牌；活动结束后车辆赠予学生。</li>
+            <li>1名代表参加12月18日上午环绕春香湖的巡游。</li>
+            <li>1个12月16日大叻皇宫酒店协会成立20周年纪念仪式席位；1个12月18日晚“花色之舞”晚会席位。</li>
+            <li>可提名最多1名花业代表出席12月19日开幕式；名称/标志列入二维码名录及共同致谢板。</li>
           </ul>
         </article>
-        <article class="pkg t3">
-          <div class="pkg-head"><h3>03. 银级赞助商</h3><span class="price">50.000.000 VNĐ</span></div>
+        <article class="pkg c3">
+          <div class="pkg-head"><h3>03. 同行赞助商</h3><span class="price">10.000.000 VNĐ</span></div>
           <ul>
-            <li>协会全部媒体渠道推广赞助商的名称与品牌。</li>
-            <li>在两处展览空间的感谢展板或幻灯片上展示标识。</li>
-            <li>配合制作一段2–5分钟的企业介绍视频，在协会渠道播放。</li>
-            <li>免费提供1个3m×3m标准展位，展示产品并摆放宣传册（大叻学院展览）。</li>
-            <li>在花节晚会上被提及并致谢。</li>
-            <li>标识优先级高于协办赞助商。</li>
-            <li>2026年12月18日晚会2个席位，免费参加。</li>
-            <li>2026年12月19日开幕夜2个席位。</li>
+            <li>主要面向花店店主及花卉经营单位。</li>
+            <li>1辆花卉自行车、1名巡游代表、12月16日1个席位、12月18日晚会1个席位，并可提名最多1名开幕式代表。</li>
+            <li>标志展示于获准空间的共同致谢板、二维码名录及统一设计的签到板。</li>
+            <li>可获取展览、B2B及交流活动的相关信息。</li>
           </ul>
         </article>
-        <article class="pkg t4">
-          <div class="pkg-head"><h3>04. 金级赞助商</h3><span class="price">100.000.000 VNĐ</span></div>
+        <article class="pkg c4">
+          <div class="pkg-head"><h3>04. 亲密同行合作伙伴</h3><span class="price">20.000.000 VNĐ</span></div>
           <ul>
-            <li>协会全部媒体渠道推广赞助商的名称与品牌。</li>
-            <li>在两处展览空间的感谢展板或幻灯片上展示标识。</li>
-            <li>在协会赞助商中，标识尺寸与位置、展位位置及品牌排序享有最高优先级。</li>
-            <li>配合制作一段2–5分钟的企业介绍视频。</li>
-            <li>免费提供1个3m×3m标准展位（大叻学院展览）。</li>
-            <li>在花节晚会上被提及并致谢。</li>
-            <li>2026年12月18日晚会3个席位，免费参加。</li>
-            <li>2026年12月19日开幕夜3个席位。</li>
+            <li>包含同行赞助商全部权益：1辆自行车、12月16日1个席位、12月18日晚会1个席位，可提名最多1名开幕式代表。</li>
+            <li>在协会媒体渠道发布1篇企业专属介绍；标志位置区别于1000万档。</li>
+            <li>在获批地点摆放宣传册、传单；协助安排最多2场B2B洽谈。</li>
+            <li>如符合计划，优先申请产品介绍、新品种推介或开放日；可使用“亲密同行合作伙伴 – 2026大叻花卉节”称号。</li>
           </ul>
         </article>
-        <article class="pkg t5">
-          <div class="pkg-head"><h3>05. 钻石赞助商</h3><span class="price">300.000.000 VNĐ</span></div>
+        <article class="pkg c5">
+          <div class="pkg-head"><h3>05. 铜级赞助商</h3><span class="price">40.000.000 VNĐ</span></div>
           <ul>
-            <li>协会全部媒体渠道推广赞助商的名称与品牌。</li>
-            <li>在两处展览空间的感谢展板或幻灯片上展示标识。</li>
-            <li>标识尺寸与位置、展位位置及品牌排序享有最高优先级。</li>
-            <li>配合制作一段2–5分钟的企业介绍视频。</li>
-            <li>免费提供2个3m×3m标准展位（大叻学院展览）。</li>
-            <li>在花节晚会上被提及并致谢。</li>
-            <li>2026年12月18日晚会4个席位，免费参加。</li>
-            <li>2026年12月19日开幕夜4个席位。</li>
+            <li>2辆自行车、12月16日2个席位、12月18日晚会3个席位，可提名最多2名开幕式代表。</li>
+            <li>铜级标志，按组别进行媒体宣传；在获批地点展示宣传册和产品。</li>
+            <li>1个盆花小景展区或1个产品展示台（视场地与设计审批而定）；协助安排最多3场B2B洽谈。</li>
+            <li>可按获批的品牌识别规范使用“铜级赞助商 – 2026大叻花卉节系列活动”称号。</li>
+          </ul>
+        </article>
+        <article class="pkg c6">
+          <div class="pkg-head"><h3>06. 银级赞助商</h3><span class="price">80.000.000 VNĐ</span></div>
+          <ul>
+            <li>3辆自行车、12月16日2个席位、12月18日晚会4个席位，可提名最多3名开幕式代表。</li>
+            <li>1个预计3 × 3米的标准展位或同等展示空间，视产品及确认面积而定。</li>
+            <li>1篇专属介绍文章；1条约2–5分钟的企业短片（制作、剪辑及播出范围以合同为准）；银级标志；协助安排最多5场B2B洽谈。</li>
+            <li>晚会上按流程点名致谢；在获批区域摆放宣传册并介绍产品。</li>
+          </ul>
+        </article>
+        <article class="pkg c7">
+          <div class="pkg-head"><h3>07. 金级赞助商</h3><span class="price">200.000.000 VNĐ</span></div>
+          <ul>
+            <li>5辆自行车、12月16日3个席位、12月18日晚会6个席位，可提名最多5名开幕式代表。</li>
+            <li>2个标准展位，或1个展位加1个合适的展示小景，视场地审批而定。</li>
+            <li>金级标志，位置和面积优先于银级；2–5分钟企业短片；2篇专属介绍；协助安排最多10场B2B洽谈。</li>
+            <li>优先介绍新品种、科技产品，或参加经组委会审批内容的专业座谈；按流程在舞台上致谢。</li>
+          </ul>
+        </article>
+        <article class="pkg c8">
+          <div class="pkg-head"><h3>08. 钻石赞助商</h3><span class="price">300.000.000 VNĐ</span></div>
+          <ul>
+            <li>8辆自行车、12月16日5个席位、12月18日晚会10个席位，可提名最多8名开幕式代表。</li>
+            <li>3个标准展位，或2个展位加1个专题展区，视组织能力和合同而定。</li>
+            <li>协会赞助体系中最大的标志，在获准地点享有优先位置；1条2–5分钟短片，最多3篇专属介绍；协助安排最多20场B2B洽谈。</li>
+            <li>经批准可共同承办一场座谈或专题活动的内容；不默认享有独家权益，也不得与其他赞助商权益冲突。</li>
+            <li>在纪念仪式及晚会上获得突出致谢；可按品牌规范使用“钻石赞助商 – 2026大叻花卉节系列活动”称号。</li>
           </ul>
         </article>
       </div>
-      <p class="pkg-note">品牌露出、展位位置及活动席位均视实际组织条件并经主管单位批准确定。视频的内容、时长及制作方式以赞助协议为准。</p>
-<div class="pkg-note"><p><b>报名及接收赞助截止日期：</b>2026年12月12日。协会接收现金或转账赞助，并开具完整发票。</p><p><b>转账信息：</b>户名：大叻花卉协会 · 账号：5400201004297 · 银行：Agribank 林同省分行。</p><p><b>联系人：</b>潘青山先生（Phan Thanh Sang），会长，+84 907 352 111，sangdalat84@gmail.com。</p></div>
-            <a class="btn primary" style="margin-top:20px" href="docs/goi-tai-tro-festival-2026.pdf" target="_blank" rel="noopener">下载赞助方案（PDF）</a>
+      <div class="pkg-table-wrap" tabindex="0" role="region" aria-label="各组别权益数量（金额单位：越南盾）">
+        <table class="pkg-table">
+          <caption>各组别权益数量（金额单位：越南盾）</caption>
+          <thead><tr><th scope="col">组别</th><th scope="col">花卉自行车</th><th scope="col">12月16日纪念仪式</th><th scope="col">12月18日晚会</th><th scope="col">可提名出席12月19日开幕式</th></tr></thead>
+          <tbody>
+            <tr class="c1"><th scope="row">01. 晚会嘉宾（成人200万／儿童100万）</th><td>0</td><td>0</td><td>1*</td><td>0</td></tr>
+            <tr class="c2"><th scope="row">02. 自费 – 800万</th><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+            <tr class="c3"><th scope="row">03. 同行 – 1000万</th><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+            <tr class="c4"><th scope="row">04. 亲密伙伴 – 2000万</th><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+            <tr class="c5"><th scope="row">05. 铜级 – 4000万</th><td>2</td><td>2</td><td>3</td><td>2</td></tr>
+            <tr class="c6"><th scope="row">06. 银级 – 8000万</th><td>3</td><td>2</td><td>4</td><td>3</td></tr>
+            <tr class="c7"><th scope="row">07. 金级 – 2亿</th><td>5</td><td>3</td><td>6</td><td>5</td></tr>
+            <tr class="c8"><th scope="row">08. 钻石 – 3亿</th><td>8</td><td>5</td><td>10</td><td>8</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="pkg-note">* 第01组：每位报名者1个席位。最后一列为最多可提名的代表人数，并非已发放的门票。2026年12月19日开幕式的出席安排取决于省级组委会确认的名单、条件和席位数量；提名名额不得出售、转让、折现，也不得提供给花卉产业链以外的人员。</p>
+      <p class="pkg-note">晚会席位包含入场资格；餐饮、座位及具体服务以报名表和合同为准。</p>
+      <p class="pkg-note">缴纳金额及权益须经协会书面确认后方可生效。标志、展位、短片、媒体、展示空间及公共场所活动等权益，视组织能力、许可、批准及已签署的权益附件执行；如无法落实，双方书面协商价值相当的替代方案。</p>
+      <div class="pkg-note"><p><b>报名截止：</b>2026年12月10日，如各项活动名额已满则提前截止。协会接收现金或转账；收据、赞助确认书及发票（如需开具）按款项性质及现行规定办理。</p><p><b>转账信息：</b>户名：大叻花卉协会 · 账号：5400201004297 · 银行：Agribank 林同省分行。</p><p><b>联系人：</b>潘青山先生（Phan Thanh Sang），会长，+84 907 352 111，sangdalat84@gmail.com。胡英勇先生（Hồ Anh Dũng），副会长，+84 917 100 397，dungho@f1biotech.com。</p></div>
+      <a class="btn primary" style="margin-top:20px" href="docs/chinh-sach-tai-tro-festival-2026.pdf" target="_blank" rel="noopener">下载同行及赞助政策（PDF）</a>
     </div>
   </section>
 
@@ -850,18 +892,20 @@
 <a class="side-ad side-ad-left" href="#lien-he" aria-label="广告">广告位招租</a>
 <a class="side-ad side-ad-right" href="#lien-he" aria-label="广告">广告位招租</a>
 <div class="side-pkgs" aria-label="赞助方案">
-  <a class="side-pkg" href="#goi-tai-tro" style="height:80px">钻石赞助商<br>广告位招租</a>
-  <a class="side-pkg" href="#goi-tai-tro" style="height:70px">金级赞助商<br>广告位招租</a>
-  <a class="side-pkg" href="#goi-tai-tro" style="height:62px">银级赞助商<br>广告位招租</a>
-  <a class="side-pkg" href="#goi-tai-tro" style="height:56px">协办赞助商<br>广告位招租</a>
-  <a class="side-pkg" href="#goi-tai-tro" style="height:50px">同行赞助商<br>广告位招租</a>
+  <a class="side-pkg" href="#goi-tai-tro" style="height:74px">钻石赞助商<br>广告位招租</a>
+  <a class="side-pkg" href="#goi-tai-tro" style="height:64px">金级赞助商<br>广告位招租</a>
+  <a class="side-pkg" href="#goi-tai-tro" style="height:56px">银级赞助商<br>广告位招租</a>
+  <a class="side-pkg" href="#goi-tai-tro" style="height:50px">铜级赞助商<br>广告位招租</a>
+  <a class="side-pkg" href="#goi-tai-tro" style="height:46px">亲密同行合作伙伴<br>广告位招租</a>
+  <a class="side-pkg" href="#goi-tai-tro" style="height:42px">同行赞助商<br>广告位招租</a>
 </div>
 <div class="side-pkgs side-pkgs-right" aria-label="赞助方案">
-  <a class="side-pkg" href="#goi-tai-tro" style="height:80px">钻石赞助商<br>广告位招租</a>
-  <a class="side-pkg" href="#goi-tai-tro" style="height:70px">金级赞助商<br>广告位招租</a>
-  <a class="side-pkg" href="#goi-tai-tro" style="height:62px">银级赞助商<br>广告位招租</a>
-  <a class="side-pkg" href="#goi-tai-tro" style="height:56px">协办赞助商<br>广告位招租</a>
-  <a class="side-pkg" href="#goi-tai-tro" style="height:50px">同行赞助商<br>广告位招租</a>
+  <a class="side-pkg" href="#goi-tai-tro" style="height:74px">钻石赞助商<br>广告位招租</a>
+  <a class="side-pkg" href="#goi-tai-tro" style="height:64px">金级赞助商<br>广告位招租</a>
+  <a class="side-pkg" href="#goi-tai-tro" style="height:56px">银级赞助商<br>广告位招租</a>
+  <a class="side-pkg" href="#goi-tai-tro" style="height:50px">铜级赞助商<br>广告位招租</a>
+  <a class="side-pkg" href="#goi-tai-tro" style="height:46px">亲密同行合作伙伴<br>广告位招租</a>
+  <a class="side-pkg" href="#goi-tai-tro" style="height:42px">同行赞助商<br>广告位招租</a>
 </div>
 </body>
 </html>

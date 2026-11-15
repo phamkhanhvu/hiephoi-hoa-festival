@@ -237,7 +237,7 @@
 
 
   /* Sponsor packages */
-  .packages { display: grid; gap: 18px; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 22px; }
+  .packages { display: grid; gap: 18px; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 22px; }
   .pkg { background: #fff; border: 1px solid var(--line); display: flex; flex-direction: column; min-width: 0; }
   .pkg-head { padding: 18px 18px 16px; color: #fff; text-align: center; }
   .pkg-head h3 { font-size: 16px; font-weight: 800; text-transform: uppercase; line-height: 1.25; }
@@ -245,11 +245,22 @@
   .pkg ul { list-style: none; margin: 0; padding: 16px 18px 20px; display: grid; gap: 10px; font-size: 13px; line-height: 1.5; }
   .pkg li { position: relative; padding-left: 16px; }
   .pkg li::before { content: ""; position: absolute; left: 0; top: .55em; width: 6px; height: 6px; background: currentColor; border-radius: 1px; }
-  .pkg.t1 .pkg-head { background: #7FCB55; } .pkg.t1 li { color: var(--ink); }
-  .pkg.t2 .pkg-head { background: #D2C25A; } .pkg.t2 .price { color: #3A3210; } .pkg.t2 li { color: var(--ink); }
-  .pkg.t3 .pkg-head { background: #D6A8E0; } .pkg.t3 .price { color: #3E2350; } .pkg.t3 li { color: var(--ink); }
-  .pkg.t4 .pkg-head { background: #F5B07C; } .pkg.t4 .price { color: #4A2A10; } .pkg.t4 li { color: var(--ink); }
-  .pkg.t5 .pkg-head { background: #EF4E63; } .pkg.t5 li { color: var(--ink); }
+  .pkg-intro { font-size: 14px; line-height: 1.6; color: var(--ink); max-width: 80ch; margin-top: 10px; }
+  .pkg .pkg-head { background: var(--hc, #7FCB55); color: var(--hf, #14301A); }
+  .pkg .pkg-head .price { color: var(--hf, #14301A); font-size: 17px; line-height: 1.3; }
+  .pkg li { color: var(--ink); }
+  .pkg.c1 .pkg-head .price { font-size: 14px; }
+  .pkg.c1 { --hc: #8CC6EE; } .pkg.c2 { --hc: #B4DE9B; } .pkg.c3 { --hc: #7FCB55; } .pkg.c4 { --hc: #6CCABA; }
+  .pkg.c5 { --hc: #D8C660; --hf: #2E280A; } .pkg.c6 { --hc: #D6A8E0; --hf: #3A1F4A; } .pkg.c7 { --hc: #F5B07C; --hf: #43240C; } .pkg.c8 { --hc: #EF4E63; --hf: #fff; }
+  .pkg-table-wrap { margin-top: 26px; overflow-x: auto; border: 1px solid var(--line); background: #fff; }
+  .pkg-table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 13px; }
+  .pkg-table caption { text-align: left; font-weight: 800; padding: 12px 14px; font-size: 14px; }
+  .pkg-table th, .pkg-table td { padding: 10px 14px; border-top: 1px solid var(--line); text-align: center; }
+  .pkg-table thead th { background: #F4F7EF; font-weight: 800; font-size: 12px; }
+  .pkg-table tbody th { text-align: left; font-weight: 700; border-left: 6px solid var(--hc, #7FCB55); }
+  .pkg-table td { font-family: "Montserrat", sans-serif; font-weight: 700; }
+  .pkg-table tr.c1 th { --hc: #8CC6EE; } .pkg-table tr.c2 th { --hc: #B4DE9B; } .pkg-table tr.c3 th { --hc: #7FCB55; } .pkg-table tr.c4 th { --hc: #6CCABA; }
+  .pkg-table tr.c5 th { --hc: #D8C660; } .pkg-table tr.c6 th { --hc: #D6A8E0; } .pkg-table tr.c7 th { --hc: #F5B07C; } .pkg-table tr.c8 th { --hc: #EF4E63; }
   .pkg-note { font-size: 12px; color: var(--muted); font-style: italic; margin-top: 18px; max-width: 80ch; }
 
   /* Tablet */
@@ -441,73 +452,104 @@
   <section class="block" id="goi-tai-tro">
     <div class="inner">
       <div class="sec-kicker">Gói tài trợ</div>
-      <h2 class="sec-title display-green">Gói tài trợ</h2>
+      <h2 class="sec-title display-green">Chính sách đồng hành, tài trợ và tham gia</h2>
+      <p class="pkg-intro">08 nhóm đồng hành, tài trợ và tham gia chuỗi 16 chương trình hưởng ứng Festival Hoa Đà Lạt lần thứ XI – 2026: nhóm 01 là phí dự Đêm hội, nhóm 02 là gói tự túc, nhóm 03–08 là sáu hạng tài trợ doanh nghiệp.</p>
       <div class="packages">
-        <article class="pkg t1">
-          <div class="pkg-head"><h3>01. Nhà tài trợ Đồng hành</h3><span class="price">10.000.000 VNĐ</span></div>
+        <article class="pkg c1">
+          <div class="pkg-head"><h3>01. Khách dự Đêm hội “Vũ điệu sắc hoa”</h3><span class="price">2.000.000 VNĐ/người lớn<br>1.000.000 VNĐ/trẻ em</span></div>
           <ul>
-            <li>Hiệp hội truyền thông, quảng bá nhà tài trợ trên các phương tiện truyền thông của Hiệp hội.</li>
-            <li>Logo xuất hiện trên bảng hoặc slide cảm ơn tại khu triển lãm không gian hoa bờ Hồ Xuân Hương và Trường Cao đẳng Đà Lạt.</li>
-            <li>Đặt brochure, leaflet, sản phẩm tại chương trình triển lãm Trường Cao đẳng Đà Lạt.</li>
-            <li>Được nhắc tên và cảm ơn trong đêm gala Festival DFA 18/12/2026.</li>
-            <li>01 suất tham dự đêm gala 18/12/2026, miễn đóng góp.</li>
+            <li>01 suất dự Đêm hội “Vũ điệu sắc hoa” tối 18/12/2026 tại Trường Cao đẳng Đà Lạt, giao lưu văn hóa – nghệ thuật hoa.</li>
+            <li>Đây là phí tham dự riêng. Không bao gồm xe đạp, diễu hành, lễ kỷ niệm 16/12, suất dự khai mạc 19/12, lưu trú, tour hay quyền lợi nhà tài trợ.</li>
+            <li>Độ tuổi trẻ em, quy định trẻ nhỏ và chỗ ngồi sẽ được Ban Tổ chức công bố trước khi nhận đăng ký.</li>
           </ul>
         </article>
-        <article class="pkg t2">
-          <div class="pkg-head"><h3>02. Nhà tài trợ Đồng</h3><span class="price">30.000.000 VNĐ</span></div>
+        <article class="pkg c2">
+          <div class="pkg-head"><h3>02. Người làm hoa đồng hành – tự túc</h3><span class="price">8.000.000 VNĐ</span></div>
           <ul>
-            <li>Hiệp hội truyền thông, quảng bá nhà tài trợ trên các phương tiện truyền thông của Hiệp hội.</li>
-            <li>Logo xuất hiện trên bảng hoặc slide cảm ơn tại khu triển lãm không gian hoa bờ Hồ Xuân Hương và Trường Cao đẳng Đà Lạt.</li>
-            <li>Đặt brochure, leaflet, sản phẩm tại chương trình triển lãm Trường Cao đẳng Đà Lạt.</li>
-            <li>Được nhắc tên và cảm ơn trong đêm gala Festival DFA 18/12/2026.</li>
-            <li>Logo được phân cấp kích thước, vị trí rõ ràng so với nhà tài trợ đồng hành.</li>
-            <li>01 suất tham dự đêm gala 18/12/2026, miễn đóng góp.</li>
-            <li>01 suất tham dự Đêm Khai mạc Festival Hoa Đà Lạt 2026 (UBND tỉnh Lâm Đồng tổ chức) ngày 19/12/2026.</li>
+            <li>Dành cho người hoạt động thực tế trong ngành hoa, có thông tin kinh doanh xác minh được; tự túc đi lại, lưu trú và chi phí ngoài chương trình.</li>
+            <li>Đóng góp 01 xe đạp chất lượng thống nhất, trang trí hoa tươi, có bảng logo, địa chỉ và mã QR của đơn vị; xe được trao tặng học sinh sau chương trình.</li>
+            <li>01 đại diện tham gia diễu hành sáng 18/12 quanh Hồ Xuân Hương.</li>
+            <li>01 suất lễ kỷ niệm 20 năm Hiệp hội ngày 16/12 tại Dalat Palace; 01 suất Gala “Vũ điệu sắc hoa” tối 18/12.</li>
+            <li>Đề cử tối đa 01 đại biểu ngành hoa dự khai mạc 19/12; có tên/logo trong danh bạ QR và bảng tri ân chung.</li>
           </ul>
         </article>
-        <article class="pkg t3">
-          <div class="pkg-head"><h3>03. Nhà tài trợ Bạc</h3><span class="price">50.000.000 VNĐ</span></div>
+        <article class="pkg c3">
+          <div class="pkg-head"><h3>03. Nhà tài trợ Đồng hành</h3><span class="price">10.000.000 VNĐ</span></div>
           <ul>
-            <li>Hiệp hội truyền thông, quảng bá nhà tài trợ trên tất cả các phương tiện truyền thông của Hiệp hội.</li>
-            <li>Logo xuất hiện trên bảng hoặc slide cảm ơn tại khu triển lãm không gian hoa bờ Hồ Xuân Hương và Trường Cao đẳng Đà Lạt.</li>
-            <li>Phối hợp thực hiện clip 2–5 phút giới thiệu doanh nghiệp, trình chiếu trên các kênh truyền thông của Hiệp hội.</li>
-            <li>01 gian hàng tiêu chuẩn 3m × 3m miễn phí để trưng bày sản phẩm, đặt brochure tại Trường Cao đẳng Đà Lạt.</li>
-            <li>Được nhắc tên và cảm ơn trong đêm gala Festival DFA 18/12/2026.</li>
-            <li>Logo có mức ưu tiên về kích thước, vị trí cao hơn nhà tài trợ Đồng.</li>
-            <li>02 suất tham dự đêm gala 18/12/2026, miễn đóng góp.</li>
-            <li>02 suất tham dự Đêm Khai mạc 19/12/2026.</li>
+            <li>Đối tượng trọng tâm: chủ shop hoa và đơn vị kinh doanh hoa.</li>
+            <li>01 xe đạp hoa, 01 đại diện diễu hành, 01 suất ngày 16/12, 01 suất Gala 18/12 và tối đa 01 đại biểu đề cử dự khai mạc.</li>
+            <li>Logo trong bảng tri ân chung tại các không gian được cho phép, danh bạ QR và bảng check-in theo thiết kế chung.</li>
+            <li>Được tiếp cận thông tin chương trình triển lãm, B2B và hoạt động giao lưu.</li>
           </ul>
         </article>
-        <article class="pkg t4">
-          <div class="pkg-head"><h3>04. Nhà tài trợ Vàng</h3><span class="price">100.000.000 VNĐ</span></div>
+        <article class="pkg c4">
+          <div class="pkg-head"><h3>04. Đối tác đồng hành thân thiết</h3><span class="price">20.000.000 VNĐ</span></div>
           <ul>
-            <li>Hiệp hội truyền thông, quảng bá nhà tài trợ trên tất cả các phương tiện truyền thông của Hiệp hội.</li>
-            <li>Logo xuất hiện trên bảng hoặc slide cảm ơn tại khu triển lãm không gian hoa bờ Hồ Xuân Hương và Trường Cao đẳng Đà Lạt.</li>
-            <li>Mức ưu tiên cao nhất về kích thước, vị trí logo, vị trí gian hàng và thứ tự nhận diện trong nhóm nhà tài trợ của Hiệp hội.</li>
-            <li>Phối hợp thực hiện clip 2–5 phút giới thiệu doanh nghiệp, trình chiếu trên các kênh truyền thông của Hiệp hội.</li>
-            <li>01 gian hàng tiêu chuẩn 3m × 3m miễn phí để trưng bày sản phẩm, đặt brochure tại Trường Cao đẳng Đà Lạt.</li>
-            <li>Được nhắc tên và cảm ơn trong đêm gala Festival DFA 18/12/2026.</li>
-            <li>03 suất tham dự đêm gala 18/12/2026, miễn đóng góp.</li>
-            <li>03 suất tham dự Đêm Khai mạc 19/12/2026.</li>
+            <li>Kế thừa quyền lợi hạng Đồng hành: 01 xe đạp, 01 suất ngày 16/12, 01 suất Gala 18/12, tối đa 01 đại biểu đề cử khai mạc.</li>
+            <li>01 nội dung giới thiệu doanh nghiệp riêng trên kênh truyền thông của Hiệp hội; vị trí logo phân biệt với hạng 10 triệu.</li>
+            <li>Brochure, leaflet tại điểm được duyệt; hỗ trợ sắp xếp tối đa 02 cuộc hẹn B2B.</li>
+            <li>Ưu tiên đăng ký giới thiệu sản phẩm, giống mới hoặc Open Day nếu phù hợp kế hoạch; dùng danh xưng “Đối tác đồng hành thân thiết – Festival DFA 2026”.</li>
           </ul>
         </article>
-        <article class="pkg t5">
-          <div class="pkg-head"><h3>05. Nhà tài trợ Kim cương</h3><span class="price">300.000.000 VNĐ</span></div>
+        <article class="pkg c5">
+          <div class="pkg-head"><h3>05. Nhà tài trợ Đồng</h3><span class="price">40.000.000 VNĐ</span></div>
           <ul>
-            <li>Hiệp hội truyền thông, quảng bá nhà tài trợ trên tất cả các phương tiện truyền thông của Hiệp hội.</li>
-            <li>Logo xuất hiện trên bảng hoặc slide cảm ơn tại khu triển lãm không gian hoa bờ Hồ Xuân Hương và Trường Cao đẳng Đà Lạt.</li>
-            <li>Mức ưu tiên cao nhất về kích thước, vị trí logo, vị trí gian hàng và thứ tự nhận diện trong nhóm nhà tài trợ của Hiệp hội.</li>
-            <li>Phối hợp thực hiện clip 2–5 phút giới thiệu doanh nghiệp, trình chiếu trên các kênh truyền thông của Hiệp hội.</li>
-            <li>02 gian hàng tiêu chuẩn 3m × 3m miễn phí để trưng bày sản phẩm, đặt brochure tại Trường Cao đẳng Đà Lạt.</li>
-            <li>Được nhắc tên và cảm ơn trong đêm gala Festival DFA 18/12/2026.</li>
-            <li>04 suất tham dự đêm gala 18/12/2026, miễn đóng góp.</li>
-            <li>04 suất tham dự Đêm Khai mạc 19/12/2026.</li>
+            <li>02 xe đạp, 02 suất ngày 16/12, 03 suất Gala 18/12, tối đa 02 đại biểu đề cử khai mạc.</li>
+            <li>Logo cấp Đồng, truyền thông theo nhóm; giới thiệu brochure, sản phẩm tại điểm được duyệt.</li>
+            <li>01 khu trưng bày tiểu cảnh hoa chậu hoặc 01 quầy giới thiệu sản phẩm (theo quỹ mặt bằng và duyệt thiết kế); hỗ trợ tối đa 03 lịch B2B.</li>
+            <li>Dùng danh xưng “Nhà tài trợ Đồng – Chuỗi chương trình Festival DFA 2026” theo bộ nhận diện được duyệt.</li>
+          </ul>
+        </article>
+        <article class="pkg c6">
+          <div class="pkg-head"><h3>06. Nhà tài trợ Bạc</h3><span class="price">80.000.000 VNĐ</span></div>
+          <ul>
+            <li>03 xe đạp, 02 suất ngày 16/12, 04 suất Gala 18/12, tối đa 03 đại biểu đề cử khai mạc.</li>
+            <li>01 gian hàng tiêu chuẩn dự kiến 3 × 3 m hoặc không gian trưng bày tương đương, tùy sản phẩm và diện tích được xác nhận.</li>
+            <li>01 bài giới thiệu riêng; 01 clip doanh nghiệp dự kiến 2–5 phút (phạm vi sản xuất, biên tập, phát sóng theo hợp đồng); logo cấp Bạc; hỗ trợ tối đa 05 lịch B2B.</li>
+            <li>Được nhắc tên, tri ân tại Gala theo kịch bản; đặt brochure, giới thiệu sản phẩm trong khu vực được duyệt.</li>
+          </ul>
+        </article>
+        <article class="pkg c7">
+          <div class="pkg-head"><h3>07. Nhà tài trợ Vàng</h3><span class="price">200.000.000 VNĐ</span></div>
+          <ul>
+            <li>05 xe đạp, 03 suất ngày 16/12, 06 suất Gala 18/12, tối đa 05 đại biểu đề cử khai mạc.</li>
+            <li>02 gian hàng tiêu chuẩn, hoặc 01 gian hàng và 01 khu tiểu cảnh trưng bày phù hợp, tùy phê duyệt mặt bằng.</li>
+            <li>Logo cấp Vàng với vị trí, diện tích ưu tiên hơn hạng Bạc; clip doanh nghiệp 2–5 phút; 02 nội dung giới thiệu riêng; hỗ trợ tối đa 10 lịch B2B.</li>
+            <li>Ưu tiên giới thiệu giống mới, sản phẩm công nghệ hoặc tham gia tọa đàm chuyên ngành theo nội dung được Ban Tổ chức duyệt; tri ân trên sân khấu theo kịch bản.</li>
+          </ul>
+        </article>
+        <article class="pkg c8">
+          <div class="pkg-head"><h3>08. Nhà tài trợ Kim cương</h3><span class="price">300.000.000 VNĐ</span></div>
+          <ul>
+            <li>08 xe đạp, 05 suất ngày 16/12, 10 suất Gala 18/12, tối đa 08 đại biểu đề cử khai mạc.</li>
+            <li>03 gian hàng tiêu chuẩn, hoặc 02 gian hàng và 01 khu trưng bày chuyên đề, tùy năng lực tổ chức và hợp đồng.</li>
+            <li>Logo lớn nhất trong hệ thống hạng tài trợ của Hiệp hội, vị trí ưu tiên tại các điểm được cho phép; 01 clip 2–5 phút, tối đa 03 bài giới thiệu riêng; hỗ trợ tối đa 20 lịch B2B.</li>
+            <li>Có thể đồng hành nội dung một tọa đàm hoặc hoạt động chuyên đề khi được chấp thuận; không tạo độc quyền mặc nhiên hay xung đột quyền lợi với nhà tài trợ khác.</li>
+            <li>Được tri ân nổi bật tại lễ kỷ niệm, Gala; dùng danh xưng “Nhà tài trợ Kim cương – Chuỗi chương trình Festival DFA 2026”.</li>
           </ul>
         </article>
       </div>
-      <p class="pkg-note">Quyền lợi nhận diện thương hiệu, vị trí gian hàng và suất tham dự chương trình được thực hiện theo điều kiện tổ chức thực tế và sự chấp thuận của các đơn vị có thẩm quyền. Nội dung, thời lượng và phương thức sản xuất video được thống nhất cụ thể trong thỏa thuận tài trợ.</p>
-<div class="pkg-note"><p><b>Hạn đăng ký và tiếp nhận tài trợ:</b> đến hết ngày 12/12/2026. Hiệp hội tiếp nhận tài trợ bằng tiền mặt hoặc chuyển khoản và xuất hóa đơn đầy đủ.</p><p><b>Thông tin chuyển khoản:</b> Tên tài khoản: Hiệp hội Hoa Đà Lạt · Số tài khoản: 5400201004297 · Ngân hàng: Agribank CN Lâm Đồng.</p><p><b>Liên hệ:</b> Anh Phan Thanh Sang, Chủ tịch Hiệp hội, 0907 352 111, sangdalat84@gmail.com.</p></div>
-            <a class="btn primary" style="margin-top:20px" href="docs/goi-tai-tro-festival-2026.pdf" target="_blank" rel="noopener">Tải hồ sơ gói tài trợ (PDF)</a>
+      <div class="pkg-table-wrap" tabindex="0" role="region" aria-label="Số lượng quyền lợi theo từng nhóm">
+        <table class="pkg-table">
+          <caption>Số lượng quyền lợi theo từng nhóm</caption>
+          <thead><tr><th scope="col">Nhóm</th><th scope="col">Xe đạp hoa</th><th scope="col">Lễ kỷ niệm 16/12</th><th scope="col">Gala 18/12</th><th scope="col">Đề cử dự khai mạc 19/12</th></tr></thead>
+          <tbody>
+            <tr class="c1"><th scope="row">01. Khách dự Đêm hội (2 triệu/người lớn; 1 triệu/trẻ em)</th><td>0</td><td>0</td><td>1*</td><td>0</td></tr>
+            <tr class="c2"><th scope="row">02. Tự túc – 8 triệu</th><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+            <tr class="c3"><th scope="row">03. Đồng hành – 10 triệu</th><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+            <tr class="c4"><th scope="row">04. Thân thiết – 20 triệu</th><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+            <tr class="c5"><th scope="row">05. Đồng – 40 triệu</th><td>2</td><td>2</td><td>3</td><td>2</td></tr>
+            <tr class="c6"><th scope="row">06. Bạc – 80 triệu</th><td>3</td><td>2</td><td>4</td><td>3</td></tr>
+            <tr class="c7"><th scope="row">07. Vàng – 200 triệu</th><td>5</td><td>3</td><td>6</td><td>5</td></tr>
+            <tr class="c8"><th scope="row">08. Kim cương – 300 triệu</th><td>8</td><td>5</td><td>10</td><td>8</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="pkg-note">* Nhóm 01: 01 suất cho mỗi người đăng ký. Cột cuối là số đại biểu được đề cử tối đa, không phải vé đã được cấp. Việc bố trí dự khai mạc 19/12/2026 phụ thuộc danh sách, điều kiện và số suất do Ban Tổ chức tỉnh xác nhận; suất đề cử không được bán, chuyển nhượng, quy đổi thành tiền hay dùng cho khách không thuộc chuỗi giá trị ngành hoa.</p>
+      <p class="pkg-note">Các suất Gala gồm quyền vào chương trình; phần tiệc, đồ ăn thức uống, chỗ ngồi và dịch vụ cụ thể được xác định trong phiếu đăng ký và hợp đồng.</p>
+      <p class="pkg-note">Mức đóng góp và quyền lợi chỉ có hiệu lực khi được Hiệp hội xác nhận bằng văn bản. Quyền lợi logo, gian hàng, clip, truyền thông, không gian trưng bày và hoạt động tại địa điểm công cộng được thực hiện theo khả năng tổ chức, giấy phép, chấp thuận và phụ lục quyền lợi đã ký; nếu không thể triển khai, hai bên thống nhất phương án thay thế có giá trị tương đương bằng văn bản.</p>
+      <div class="pkg-note"><p><b>Hạn đăng ký:</b> tiếp nhận đến hết ngày 10/12/2026, hoặc sớm hơn nếu đã đủ sức chứa của từng chương trình. Hiệp hội tiếp nhận bằng tiền mặt hoặc chuyển khoản; phiếu thu, biên bản tài trợ và hóa đơn (nếu thuộc trường hợp phải lập) được lập theo bản chất khoản đóng góp và quy định hiện hành.</p><p><b>Thông tin chuyển khoản:</b> Tên tài khoản: Hiệp hội Hoa Đà Lạt · Số tài khoản: 5400201004297 · Ngân hàng: Agribank CN Lâm Đồng.</p><p><b>Liên hệ:</b> Anh Phan Thanh Sang, Chủ tịch Hiệp hội, 0907 352 111, sangdalat84@gmail.com. Anh Hồ Anh Dũng, Phó Chủ tịch Hiệp hội, 0917 100 397, dungho@f1biotech.com.</p></div>
+      <a class="btn primary" style="margin-top:20px" href="docs/chinh-sach-tai-tro-festival-2026.pdf" target="_blank" rel="noopener">Tải chính sách đồng hành, tài trợ (PDF)</a>
     </div>
   </section>
 
@@ -848,18 +890,20 @@
 <a class="side-ad side-ad-left" href="#lien-he" aria-label="Quảng cáo">Quảng cáo tại đây</a>
 <a class="side-ad side-ad-right" href="#lien-he" aria-label="Quảng cáo">Quảng cáo tại đây</a>
 <div class="side-pkgs" aria-label="Sponsorship packages">
-  <a class="side-pkg" href="#goi-tai-tro" style="height:80px">Nhà tài trợ Kim cương<br>Quảng cáo tại đây</a>
-  <a class="side-pkg" href="#goi-tai-tro" style="height:70px">Nhà tài trợ Vàng<br>Quảng cáo tại đây</a>
-  <a class="side-pkg" href="#goi-tai-tro" style="height:62px">Nhà tài trợ Bạc<br>Quảng cáo tại đây</a>
-  <a class="side-pkg" href="#goi-tai-tro" style="height:56px">Nhà tài trợ Đồng<br>Quảng cáo tại đây</a>
-  <a class="side-pkg" href="#goi-tai-tro" style="height:50px">Nhà tài trợ Đồng hành<br>Quảng cáo tại đây</a>
+  <a class="side-pkg" href="#goi-tai-tro" style="height:74px">Nhà tài trợ Kim cương<br>Quảng cáo tại đây</a>
+  <a class="side-pkg" href="#goi-tai-tro" style="height:64px">Nhà tài trợ Vàng<br>Quảng cáo tại đây</a>
+  <a class="side-pkg" href="#goi-tai-tro" style="height:56px">Nhà tài trợ Bạc<br>Quảng cáo tại đây</a>
+  <a class="side-pkg" href="#goi-tai-tro" style="height:50px">Nhà tài trợ Đồng<br>Quảng cáo tại đây</a>
+  <a class="side-pkg" href="#goi-tai-tro" style="height:46px">Đối tác thân thiết<br>Quảng cáo tại đây</a>
+  <a class="side-pkg" href="#goi-tai-tro" style="height:42px">Nhà tài trợ Đồng hành<br>Quảng cáo tại đây</a>
 </div>
 <div class="side-pkgs side-pkgs-right" aria-label="Sponsorship packages">
-  <a class="side-pkg" href="#goi-tai-tro" style="height:80px">Nhà tài trợ Kim cương<br>Quảng cáo tại đây</a>
-  <a class="side-pkg" href="#goi-tai-tro" style="height:70px">Nhà tài trợ Vàng<br>Quảng cáo tại đây</a>
-  <a class="side-pkg" href="#goi-tai-tro" style="height:62px">Nhà tài trợ Bạc<br>Quảng cáo tại đây</a>
-  <a class="side-pkg" href="#goi-tai-tro" style="height:56px">Nhà tài trợ Đồng<br>Quảng cáo tại đây</a>
-  <a class="side-pkg" href="#goi-tai-tro" style="height:50px">Nhà tài trợ Đồng hành<br>Quảng cáo tại đây</a>
+  <a class="side-pkg" href="#goi-tai-tro" style="height:74px">Nhà tài trợ Kim cương<br>Quảng cáo tại đây</a>
+  <a class="side-pkg" href="#goi-tai-tro" style="height:64px">Nhà tài trợ Vàng<br>Quảng cáo tại đây</a>
+  <a class="side-pkg" href="#goi-tai-tro" style="height:56px">Nhà tài trợ Bạc<br>Quảng cáo tại đây</a>
+  <a class="side-pkg" href="#goi-tai-tro" style="height:50px">Nhà tài trợ Đồng<br>Quảng cáo tại đây</a>
+  <a class="side-pkg" href="#goi-tai-tro" style="height:46px">Đối tác thân thiết<br>Quảng cáo tại đây</a>
+  <a class="side-pkg" href="#goi-tai-tro" style="height:42px">Nhà tài trợ Đồng hành<br>Quảng cáo tại đây</a>
 </div>
 </body>
 </html>

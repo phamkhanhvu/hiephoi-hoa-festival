@@ -237,7 +237,7 @@
 
 
   /* Sponsor packages */
-  .packages { display: grid; gap: 18px; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 22px; }
+  .packages { display: grid; gap: 18px; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 22px; }
   .pkg { background: #fff; border: 1px solid var(--line); display: flex; flex-direction: column; min-width: 0; }
   .pkg-head { padding: 18px 18px 16px; color: #fff; text-align: center; }
   .pkg-head h3 { font-size: 16px; font-weight: 800; text-transform: uppercase; line-height: 1.25; }
@@ -245,11 +245,22 @@
   .pkg ul { list-style: none; margin: 0; padding: 16px 18px 20px; display: grid; gap: 10px; font-size: 13px; line-height: 1.5; }
   .pkg li { position: relative; padding-left: 16px; }
   .pkg li::before { content: ""; position: absolute; left: 0; top: .55em; width: 6px; height: 6px; background: currentColor; border-radius: 1px; }
-  .pkg.t1 .pkg-head { background: #7FCB55; } .pkg.t1 li { color: var(--ink); }
-  .pkg.t2 .pkg-head { background: #D2C25A; } .pkg.t2 .price { color: #3A3210; } .pkg.t2 li { color: var(--ink); }
-  .pkg.t3 .pkg-head { background: #D6A8E0; } .pkg.t3 .price { color: #3E2350; } .pkg.t3 li { color: var(--ink); }
-  .pkg.t4 .pkg-head { background: #F5B07C; } .pkg.t4 .price { color: #4A2A10; } .pkg.t4 li { color: var(--ink); }
-  .pkg.t5 .pkg-head { background: #EF4E63; } .pkg.t5 li { color: var(--ink); }
+  .pkg-intro { font-size: 14px; line-height: 1.6; color: var(--ink); max-width: 80ch; margin-top: 10px; }
+  .pkg .pkg-head { background: var(--hc, #7FCB55); color: var(--hf, #14301A); }
+  .pkg .pkg-head .price { color: var(--hf, #14301A); font-size: 17px; line-height: 1.3; }
+  .pkg li { color: var(--ink); }
+  .pkg.c1 .pkg-head .price { font-size: 14px; }
+  .pkg.c1 { --hc: #8CC6EE; } .pkg.c2 { --hc: #B4DE9B; } .pkg.c3 { --hc: #7FCB55; } .pkg.c4 { --hc: #6CCABA; }
+  .pkg.c5 { --hc: #D8C660; --hf: #2E280A; } .pkg.c6 { --hc: #D6A8E0; --hf: #3A1F4A; } .pkg.c7 { --hc: #F5B07C; --hf: #43240C; } .pkg.c8 { --hc: #EF4E63; --hf: #fff; }
+  .pkg-table-wrap { margin-top: 26px; overflow-x: auto; border: 1px solid var(--line); background: #fff; }
+  .pkg-table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 13px; }
+  .pkg-table caption { text-align: left; font-weight: 800; padding: 12px 14px; font-size: 14px; }
+  .pkg-table th, .pkg-table td { padding: 10px 14px; border-top: 1px solid var(--line); text-align: center; }
+  .pkg-table thead th { background: #F4F7EF; font-weight: 800; font-size: 12px; }
+  .pkg-table tbody th { text-align: left; font-weight: 700; border-left: 6px solid var(--hc, #7FCB55); }
+  .pkg-table td { font-family: "Montserrat", sans-serif; font-weight: 700; }
+  .pkg-table tr.c1 th { --hc: #8CC6EE; } .pkg-table tr.c2 th { --hc: #B4DE9B; } .pkg-table tr.c3 th { --hc: #7FCB55; } .pkg-table tr.c4 th { --hc: #6CCABA; }
+  .pkg-table tr.c5 th { --hc: #D8C660; } .pkg-table tr.c6 th { --hc: #D6A8E0; } .pkg-table tr.c7 th { --hc: #F5B07C; } .pkg-table tr.c8 th { --hc: #EF4E63; }
   .pkg-note { font-size: 12px; color: var(--muted); font-style: italic; margin-top: 18px; max-width: 80ch; }
 
   /* Tablet */
@@ -441,73 +452,104 @@
   <section class="block" id="goi-tai-tro">
     <div class="inner">
       <div class="sec-kicker">Sponsorship</div>
-      <h2 class="sec-title display-green">Sponsorship packages</h2>
+      <h2 class="sec-title display-green">Partnership, sponsorship and participation policy</h2>
+      <p class="pkg-intro">Eight groups for partnering with, sponsoring and joining the series of 16 programmes supporting the 11th Dalat Flower Festival 2026. Group 01 is the gala admission fee, group 02 is a self-funded participation package, and groups 03–08 are the six corporate sponsorship tiers.</p>
       <div class="packages">
-        <article class="pkg t1">
-          <div class="pkg-head"><h3>01. Companion sponsor</h3><span class="price">10.000.000 VNĐ</span></div>
+        <article class="pkg c1">
+          <div class="pkg-head"><h3>01. Guest at the “Dance of Flower Colours” night</h3><span class="price">2.000.000 VNĐ/adult<br>1.000.000 VNĐ/child</span></div>
           <ul>
-            <li>The Association promotes the sponsor across its media channels.</li>
-            <li>Logo on thank-you boards or slides at the Hồ Xuân Hương flower space and Đà Lạt College.</li>
-            <li>Brochures, leaflets or products displayed at the Đà Lạt College exhibition.</li>
-            <li>Named and thanked at the DFA Festival Gala on 18/12/2026.</li>
-            <li>1 gala seat on 18/12/2026, no contribution required.</li>
+            <li>1 seat at the “Dance of Flower Colours” night on 18/12/2026 at Đà Lạt College, a celebration of flower culture and art.</li>
+            <li>This is a separate admission fee. It does not include a bicycle, the parade, the 16/12 anniversary ceremony, an opening-night nomination on 19/12, accommodation, tours or sponsor benefits.</li>
+            <li>The age definition for children, rules for young children and seating will be announced by the Organising Committee before registration opens.</li>
           </ul>
         </article>
-        <article class="pkg t2">
-          <div class="pkg-head"><h3>02. Co-sponsor</h3><span class="price">30.000.000 VNĐ</span></div>
+        <article class="pkg c2">
+          <div class="pkg-head"><h3>02. Flower-trade companion (self-funded)</h3><span class="price">8.000.000 VNĐ</span></div>
           <ul>
-            <li>The Association promotes the sponsor across its media channels.</li>
-            <li>Logo on thank-you boards or slides at the Hồ Xuân Hương flower space and Đà Lạt College.</li>
-            <li>Brochures, leaflets or products displayed at the Đà Lạt College exhibition.</li>
-            <li>Named and thanked at the DFA Festival Gala on 18/12/2026.</li>
-            <li>Logo size and position clearly ranked above Companion sponsors.</li>
-            <li>1 gala seat on 18/12/2026, no contribution required.</li>
-            <li>1 seat at the Festival Hoa opening night on 19/12/2026, organised by the Lâm Đồng People's Committee.</li>
+            <li>For people genuinely working in the flower trade with verifiable business details; travel, accommodation and costs outside the programme are self-funded.</li>
+            <li>Contribute 1 standard-quality bicycle, decorated with fresh flowers and a board showing your logo, address and QR code; the bicycle is donated to a student after the programme.</li>
+            <li>1 representative in the 1,000-bicycle parade around Xuân Hương Lake on the morning of 18/12.</li>
+            <li>1 seat at the Association's 20th anniversary ceremony on 16/12 at Dalat Palace; 1 seat at the “Dance of Flower Colours” gala on the evening of 18/12.</li>
+            <li>Nominate up to 1 flower-industry delegate for the opening on 19/12; name/logo in the QR directory and the shared thank-you board.</li>
           </ul>
         </article>
-        <article class="pkg t3">
-          <div class="pkg-head"><h3>03. Silver sponsor</h3><span class="price">50.000.000 VNĐ</span></div>
+        <article class="pkg c3">
+          <div class="pkg-head"><h3>03. Companion sponsor</h3><span class="price">10.000.000 VNĐ</span></div>
           <ul>
-            <li>The Association promotes the sponsor across all its media channels.</li>
-            <li>Logo on thank-you boards or slides at the Hồ Xuân Hương flower space and Đà Lạt College.</li>
-            <li>Co-produce a 2–5 minute company introduction video for the Association's channels.</li>
-            <li>One standard 3m × 3m booth free of charge to display products, with brochures at the Đà Lạt College exhibition.</li>
-            <li>Named and thanked at the DFA Festival Gala on 18/12/2026.</li>
-            <li>Logo priority higher than Co-sponsors.</li>
-            <li>2 gala seats on 18/12/2026, no contribution required.</li>
-            <li>2 seats at the opening night on 19/12/2026.</li>
+            <li>Primarily for flower shop owners and flower businesses.</li>
+            <li>1 flower bicycle, 1 parade representative, 1 seat on 16/12, 1 gala seat on 18/12 and up to 1 delegate nominated for the opening.</li>
+            <li>Logo on the shared thank-you board in permitted spaces, in the QR directory and on the check-in board in the common design.</li>
+            <li>Access to information on the exhibitions, B2B and networking activities.</li>
           </ul>
         </article>
-        <article class="pkg t4">
-          <div class="pkg-head"><h3>04. Gold sponsor</h3><span class="price">100.000.000 VNĐ</span></div>
+        <article class="pkg c4">
+          <div class="pkg-head"><h3>04. Close companion partner</h3><span class="price">20.000.000 VNĐ</span></div>
           <ul>
-            <li>The Association promotes the sponsor across all its media channels.</li>
-            <li>Logo on thank-you boards or slides at the Hồ Xuân Hương flower space and Đà Lạt College.</li>
-            <li>Highest priority for logo size and position, booth location and brand order among the Association's sponsors.</li>
-            <li>Co-produce a 2–5 minute company introduction video for the Association's channels.</li>
-            <li>One standard 3m × 3m booth free of charge to display products, with brochures at the Đà Lạt College exhibition.</li>
-            <li>Named and thanked at the DFA Festival Gala on 18/12/2026.</li>
-            <li>3 gala seats on 18/12/2026, no contribution required.</li>
-            <li>3 seats at the opening night on 19/12/2026.</li>
+            <li>Includes all Companion sponsor benefits: 1 bicycle, 1 seat on 16/12, 1 gala seat on 18/12, up to 1 delegate nominated for the opening.</li>
+            <li>1 dedicated company feature on the Association's media channels; logo placement distinct from the 10-million tier.</li>
+            <li>Brochures and leaflets at an approved point; support arranging up to 2 B2B meetings.</li>
+            <li>Priority to apply to present products, new varieties or host an Open Day where it fits the plan; may use the title “Close companion partner – Festival DFA 2026”.</li>
           </ul>
         </article>
-        <article class="pkg t5">
-          <div class="pkg-head"><h3>05. Diamond sponsor</h3><span class="price">300.000.000 VNĐ</span></div>
+        <article class="pkg c5">
+          <div class="pkg-head"><h3>05. Bronze sponsor</h3><span class="price">40.000.000 VNĐ</span></div>
           <ul>
-            <li>The Association promotes the sponsor across all its media channels.</li>
-            <li>Logo on thank-you boards or slides at the Hồ Xuân Hương flower space and Đà Lạt College.</li>
-            <li>Highest priority for logo size and position, booth location and brand order among the Association's sponsors.</li>
-            <li>Co-produce a 2–5 minute company introduction video for the Association's channels.</li>
-            <li>2 standard 3m × 3m booths free of charge to display products, with brochures at the Đà Lạt College exhibition.</li>
-            <li>Named and thanked at the DFA Festival Gala on 18/12/2026.</li>
-            <li>4 gala seats on 18/12/2026, no contribution required.</li>
-            <li>4 seats at the opening night on 19/12/2026.</li>
+            <li>2 bicycles, 2 seats on 16/12, 3 gala seats on 18/12, up to 2 delegates nominated for the opening.</li>
+            <li>Bronze-tier logo and group media coverage; brochures and products presented at an approved point.</li>
+            <li>1 potted-flower display area or 1 product-showcase counter (subject to available space and design approval); support for up to 3 B2B meetings.</li>
+            <li>May use the title “Bronze sponsor – Festival DFA 2026 programme series” under the approved brand guidelines.</li>
+          </ul>
+        </article>
+        <article class="pkg c6">
+          <div class="pkg-head"><h3>06. Silver sponsor</h3><span class="price">80.000.000 VNĐ</span></div>
+          <ul>
+            <li>3 bicycles, 2 seats on 16/12, 4 gala seats on 18/12, up to 3 delegates nominated for the opening.</li>
+            <li>1 standard booth of about 3 × 3 m or an equivalent display space, depending on the product and the area confirmed.</li>
+            <li>1 dedicated feature article; 1 company clip of about 2–5 minutes (scope of production, editing and broadcast set by contract); Silver-tier logo; support for up to 5 B2B meetings.</li>
+            <li>Named and thanked at the gala per the script; brochures and product presentation in the approved area.</li>
+          </ul>
+        </article>
+        <article class="pkg c7">
+          <div class="pkg-head"><h3>07. Gold sponsor</h3><span class="price">200.000.000 VNĐ</span></div>
+          <ul>
+            <li>5 bicycles, 3 seats on 16/12, 6 gala seats on 18/12, up to 5 delegates nominated for the opening.</li>
+            <li>2 standard booths, or 1 booth and 1 suitable display scene, subject to floor-plan approval.</li>
+            <li>Gold-tier logo with higher priority in position and size than Silver; 2–5 minute company clip; 2 dedicated feature articles; support for up to 10 B2B meetings.</li>
+            <li>Priority to present new varieties or technology products, or join a specialist forum with content approved by the Organising Committee; thanked on stage per the script.</li>
+          </ul>
+        </article>
+        <article class="pkg c8">
+          <div class="pkg-head"><h3>08. Diamond sponsor</h3><span class="price">300.000.000 VNĐ</span></div>
+          <ul>
+            <li>8 bicycles, 5 seats on 16/12, 10 gala seats on 18/12, up to 8 delegates nominated for the opening.</li>
+            <li>3 standard booths, or 2 booths and 1 themed display area, depending on organising capacity and contract.</li>
+            <li>Largest logo among the Association's sponsorship tiers, with priority positions at permitted locations; 1 clip of 2–5 minutes, up to 3 dedicated feature articles; support for up to 20 B2B meetings.</li>
+            <li>May co-host the content of one forum or themed activity when approved; no automatic exclusivity and no conflict with other sponsors' benefits.</li>
+            <li>Prominently thanked at the anniversary ceremony and gala; may use the title “Diamond sponsor – Festival DFA 2026 programme series” under the brand guidelines.</li>
           </ul>
         </article>
       </div>
-      <p class="pkg-note">Brand recognition, booth location and programme seats are subject to actual organisation conditions and approval by the competent parties. The content, length and production method of videos are agreed in the sponsorship agreement.</p>
-<div class="pkg-note"><p><b>Registration and sponsorship deadline:</b> until 12/12/2026. The Association accepts sponsorship in cash or by bank transfer and issues full invoices.</p><p><b>Bank transfer details:</b> Account name: Dalat Flower Association · Account number: 5400201004297 · Bank: Agribank Lâm Đồng branch.</p><p><b>Contact:</b> Mr. Phan Thanh Sang, Chairman, +84 907 352 111, sangdalat84@gmail.com.</p></div>
-            <a class="btn primary" style="margin-top:20px" href="docs/goi-tai-tro-festival-2026.pdf" target="_blank" rel="noopener">Download sponsorship proposal (PDF)</a>
+      <div class="pkg-table-wrap" tabindex="0" role="region" aria-label="Number of benefits by group (M = million VNĐ)">
+        <table class="pkg-table">
+          <caption>Number of benefits by group (M = million VNĐ)</caption>
+          <thead><tr><th scope="col">Group</th><th scope="col">Flower bicycles</th><th scope="col">16/12 anniversary</th><th scope="col">18/12 gala</th><th scope="col">Delegates nominated for 19/12 opening</th></tr></thead>
+          <tbody>
+            <tr class="c1"><th scope="row">01. Night guest (2M/adult; 1M/child)</th><td>0</td><td>0</td><td>1*</td><td>0</td></tr>
+            <tr class="c2"><th scope="row">02. Self-funded – 8M</th><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+            <tr class="c3"><th scope="row">03. Companion – 10M</th><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+            <tr class="c4"><th scope="row">04. Close partner – 20M</th><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+            <tr class="c5"><th scope="row">05. Bronze – 40M</th><td>2</td><td>2</td><td>3</td><td>2</td></tr>
+            <tr class="c6"><th scope="row">06. Silver – 80M</th><td>3</td><td>2</td><td>4</td><td>3</td></tr>
+            <tr class="c7"><th scope="row">07. Gold – 200M</th><td>5</td><td>3</td><td>6</td><td>5</td></tr>
+            <tr class="c8"><th scope="row">08. Diamond – 300M</th><td>8</td><td>5</td><td>10</td><td>8</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="pkg-note">* Group 01: 1 seat per registered person. The last column is the maximum number of delegates that may be nominated, not tickets already issued. Attendance at the 19/12/2026 opening depends on the list, conditions and number of seats confirmed by the provincial Organising Committee; nominations may not be sold, transferred, exchanged for money or used for guests outside the flower value chain.</p>
+      <p class="pkg-note">Gala seats include entry to the programme; the meal, food and drink, seating and specific services are set out in the registration form and the contract.</p>
+      <p class="pkg-note">Contributions and benefits take effect only when confirmed in writing by the Association. Logo, booth, clip, media, display-space and public-venue benefits are delivered subject to organising capacity, permits, approvals and the signed benefits schedule; where a benefit cannot be delivered, both sides agree in writing on a replacement of equivalent value.</p>
+      <div class="pkg-note"><p><b>Registration deadline:</b> until 10/12/2026, or earlier once a programme reaches capacity. The Association accepts cash or bank transfer; receipts, sponsorship minutes and invoices (where required) are issued according to the nature of the contribution and applicable regulations.</p><p><b>Bank transfer details:</b> Account name: Dalat Flower Association · Account number: 5400201004297 · Bank: Agribank Lâm Đồng branch.</p><p><b>Contact:</b> Mr. Phan Thanh Sang, Chairman, +84 907 352 111, sangdalat84@gmail.com. Mr. Hồ Anh Dũng, Vice Chairman, +84 917 100 397, dungho@f1biotech.com.</p></div>
+      <a class="btn primary" style="margin-top:20px" href="docs/chinh-sach-tai-tro-festival-2026.pdf" target="_blank" rel="noopener">Download the partnership and sponsorship policy (PDF)</a>
     </div>
   </section>
 
@@ -848,18 +890,20 @@
 <a class="side-ad side-ad-left" href="#lien-he" aria-label="Advertisement">Advertise here</a>
 <a class="side-ad side-ad-right" href="#lien-he" aria-label="Advertisement">Advertise here</a>
 <div class="side-pkgs" aria-label="Sponsorship packages">
-  <a class="side-pkg" href="#goi-tai-tro" style="height:80px">Diamond sponsor<br>Advertise here</a>
-  <a class="side-pkg" href="#goi-tai-tro" style="height:70px">Gold sponsor<br>Advertise here</a>
-  <a class="side-pkg" href="#goi-tai-tro" style="height:62px">Silver sponsor<br>Advertise here</a>
-  <a class="side-pkg" href="#goi-tai-tro" style="height:56px">Co-sponsor<br>Advertise here</a>
-  <a class="side-pkg" href="#goi-tai-tro" style="height:50px">Companion sponsor<br>Advertise here</a>
+  <a class="side-pkg" href="#goi-tai-tro" style="height:74px">Diamond sponsor<br>Advertise here</a>
+  <a class="side-pkg" href="#goi-tai-tro" style="height:64px">Gold sponsor<br>Advertise here</a>
+  <a class="side-pkg" href="#goi-tai-tro" style="height:56px">Silver sponsor<br>Advertise here</a>
+  <a class="side-pkg" href="#goi-tai-tro" style="height:50px">Bronze sponsor<br>Advertise here</a>
+  <a class="side-pkg" href="#goi-tai-tro" style="height:46px">Close companion partner<br>Advertise here</a>
+  <a class="side-pkg" href="#goi-tai-tro" style="height:42px">Companion sponsor<br>Advertise here</a>
 </div>
 <div class="side-pkgs side-pkgs-right" aria-label="Sponsorship packages">
-  <a class="side-pkg" href="#goi-tai-tro" style="height:80px">Diamond sponsor<br>Advertise here</a>
-  <a class="side-pkg" href="#goi-tai-tro" style="height:70px">Gold sponsor<br>Advertise here</a>
-  <a class="side-pkg" href="#goi-tai-tro" style="height:62px">Silver sponsor<br>Advertise here</a>
-  <a class="side-pkg" href="#goi-tai-tro" style="height:56px">Co-sponsor<br>Advertise here</a>
-  <a class="side-pkg" href="#goi-tai-tro" style="height:50px">Companion sponsor<br>Advertise here</a>
+  <a class="side-pkg" href="#goi-tai-tro" style="height:74px">Diamond sponsor<br>Advertise here</a>
+  <a class="side-pkg" href="#goi-tai-tro" style="height:64px">Gold sponsor<br>Advertise here</a>
+  <a class="side-pkg" href="#goi-tai-tro" style="height:56px">Silver sponsor<br>Advertise here</a>
+  <a class="side-pkg" href="#goi-tai-tro" style="height:50px">Bronze sponsor<br>Advertise here</a>
+  <a class="side-pkg" href="#goi-tai-tro" style="height:46px">Close companion partner<br>Advertise here</a>
+  <a class="side-pkg" href="#goi-tai-tro" style="height:42px">Companion sponsor<br>Advertise here</a>
 </div>
 </body>
 </html>
