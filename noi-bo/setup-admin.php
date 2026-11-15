@@ -4,7 +4,7 @@ declare(strict_types=1);
 header('Content-Type: text/html; charset=utf-8');
 header('X-Robots-Tag: noindex, nofollow');
 $cfgFile = __DIR__ . '/config.local.php';
-if (is_file($cfgFile)) { $self = __FILE__; echo '<p>Đã có tài khoản admin. Không thể tạo lại.</p>'; exit; }
+if (is_file($cfgFile)) { echo '<p>Đã có tài khoản admin. Không thể tạo lại.</p>'; exit; }
 $msg = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user = trim((string)($_POST['user'] ?? ''));

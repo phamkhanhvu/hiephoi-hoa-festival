@@ -326,7 +326,8 @@
   const PHASE_LABEL = { "Trước": "Trước Festival", "Trong": "Trong Festival", "Sau": "Sau Festival" };
   const START = new Date("2026-11-10T00:00:00"), END = new Date("2027-01-31T23:59:59");
   const TOTAL_MS = END - START;
-  const today = new Date(); today.setHours(0, 0, 0, 0);
+  let today = new Date(); today.setHours(0, 0, 0, 0);
+  const ymd = (x) => `${x.getFullYear()}-${String(x.getMonth() + 1).padStart(2, "0")}-${String(x.getDate()).padStart(2, "0")}`;
 
   let server = { loggedIn: false, csrf: null, data: { tasks: [], kpi: [], open: [], log: [] } };
   let work = null;          // bản đang sửa nội dung (sao chép sâu)
@@ -334,6 +335,7 @@
   let phase = "all";
   let view = "list";        // "list" | "board"
   let queue = Promise.resolve(); // xếp hàng các lần lưu để không ghi đè nhau
+  let lastLoad = 0;
 
   const $ = (id) => document.getElementById(id);
   const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -346,15 +348,12 @@
   const isDone = (t) => stOf(t) === "Hoàn tất";
   const isLate = (t) => !isDone(t) && day(t.end) < today;
   const isSoon = (t) => !isDone(t) && !isLate(t) && (day(t.end) - today) <= 3 * 864e5;
-  const isActive = (t) => stOf(t) === "Đang làm" || stOf(t) === "Chờ duyệt";
   const canEdit = () => server.loggedIn && !editing;
   const subs = (t) => (Array.isArray(t.subtasks) ? t.subtasks : []);
   const subStatus = (s) => (STATUSES.includes(s.status) ? s.status : (s.done ? "Hoàn tất" : "Chưa bắt đầu"));
   const subDone = (t) => subs(t).filter(s => subStatus(s) === "Hoàn tất").length;
-  const subLabel = (t) => (subs(t).length ? `${subDone(t)}/${subs(t).length} hoàn tất` : "Chưa có đầu mục");
   const numFields = ["fb", "short", "live"];
   const coerce = (f, v) => numFields.includes(f) ? Math.max(0, Math.min(999, parseInt(v, 10) || 0)) : v;
-  // ghi giá trị ô nhập vào bản đang sửa; đầu mục con (mỗi dòng) giữ nguyên trạng thái đã xong theo thứ tự
   function setField(i, f, v) { work.tasks[i][f] = coerce(f, v); }
 
   async function api(action, body) {
@@ -363,7 +362,11 @@
     const r = await fetch(`${API}?action=${action}`, opt);
     let j = {};
     try { j = await r.json(); } catch (e) {}
-    if (!r.ok || j.ok === false) throw new Error(j.error || "Lỗi kết nối.");
+    if (!r.ok || j.ok === false) {
+      const err = new Error(j.error || "Lỗi kết nối. Vui lòng thử lại.");
+      err.code = j.code || ""; err.data = j.data || null;
+      throw err;
+    }
     return j;
   }
 
@@ -377,56 +380,71 @@
       $("who").textContent = server.loggedIn ? "Admin" : "Chế độ xem";
       $("who").className = "who" + (server.loggedIn ? " admin" : "");
       $("kpiAdd").hidden = !editing;
+      lastLoad = Date.now();
       render();
     } catch (e) { msg("Không tải được dữ liệu: " + e.message, "err"); }
   }
 
-  // Lưu toàn bộ dữ liệu lên máy chủ (máy chủ tự ghi nhận thời điểm và nhật ký đổi trạng thái)
-  function persist(data) {
+  // Lưu lên máy chủ. "change" là hàm sửa trên bản mới nhất (đổi nhanh) hoặc bản đầy đủ (lưu form).
+  // Các lần lưu xếp hàng; mỗi lần gửi kèm mốc phiên bản để máy chủ từ chối nếu dữ liệu đã đổi ở nơi khác.
+  function persist(change, retry = true) {
     const run = async () => {
-      const r = await api("save", { csrf: server.csrf, data });
-      server.data = r.data;
-      return r.data;
+      const send = async () => {
+        let data = change;
+        if (typeof change === "function") { data = clone(server.data); if (change(data) === false) return server.data; }
+        const r = await api("save", { csrf: server.csrf, base: server.data.updatedAt || "", data });
+        server.data = r.data;
+        return r.data;
+      };
+      try { return await send(); }
+      catch (err) {
+        if (err.code === "conflict" && err.data) {
+          server.data = err.data;
+          if (typeof change === "function" && retry) return await send();
+        }
+        throw err;
+      }
     };
     const p = queue.then(run, run);
     queue = p.catch(() => {});
     return p;
   }
+  function saveFailed(err) {
+    msg(err.message, "err");
+    if (err.code === "auth") { askLogin("Phiên đăng nhập đã hết. Đăng nhập lại để tiếp tục."); load(); }
+    else render();
+  }
+  function askLogin(text) {
+    $("loginForm").hidden = false;
+    $("loginMsg").textContent = text || "";
+    $("loginForm").scrollIntoView({ block: "center" });
+    $("loginForm").user.focus();
+  }
 
   // Đổi trạng thái nhanh: lưu ngay, không cần mở form
   function quickStatus(code, status) {
     if (!canEdit()) return;
-    const next = clone(server.data);
-    const t = next.tasks.find(x => x.code === code);
-    if (!t || stOf(t) === status) return;
-    t.status = status;
+    const cur = server.data.tasks.find(x => x.code === code);
+    if (!cur || stOf(cur) === status) return;
     msg(`Đang lưu ${code} → ${status}...`, "");
     document.querySelectorAll("button[data-code], button[data-move]").forEach(b => b.disabled = true);
-    persist(next).then(() => {
-      msg(`Đã cập nhật ${code} → ${status}.`, "ok");
-      render();
-    }).catch(err => {
-      msg(err.message, "err");
-      if (/đăng nhập|hết hạn/i.test(err.message)) load();
-      else render();
-    });
+    persist(data => {
+      const t = data.tasks.find(x => x.code === code);
+      if (!t) return false;
+      t.status = status;
+    }).then(() => { msg(`Đã cập nhật ${code} → ${status}.`, "ok"); render(); }).catch(saveFailed);
   }
 
   // đổi trạng thái một đầu mục con (admin): lưu ngay
-  function setSubStatus(code, k, value) {
+  function setSubStatus(code, k, text, value) {
     if (!canEdit()) return;
-    const next = clone(server.data);
-    const t = next.tasks.find(x => x.code === code);
-    if (!t || !subs(t)[k]) return;
-    t.subtasks[k].status = value;
     msg(`Đang lưu đầu mục của ${code}...`, "");
-    persist(next).then(() => {
-      msg(`Đã cập nhật đầu mục của ${code}.`, "ok");
-      render();
-    }).catch(err => {
-      msg(err.message, "err");
-      if (/đăng nhập|hết hạn/i.test(err.message)) load(); else render();
-    });
+    persist(data => {
+      const t = data.tasks.find(x => x.code === code);
+      const sub = t && subs(t)[k];
+      if (!sub || sub.text !== text) return false; // danh sách đã đổi ở nơi khác
+      sub.status = value;
+    }).then(() => { msg(`Đã cập nhật đầu mục của ${code}.`, "ok"); render(); }).catch(saveFailed);
   }
   const ensureSubs = (i) => { if (!Array.isArray(work.tasks[i].subtasks)) work.tasks[i].subtasks = []; return work.tasks[i].subtasks; };
 
@@ -444,7 +462,8 @@
   }
   function cardView(t) {
     const st = stOf(t);
-    const a = (day(t.start) - START) / TOTAL_MS * 100, b = (day(t.end) - START) / TOTAL_MS * 100;
+    const clamp = (v) => Math.max(0, Math.min(100, v));
+    const a = clamp((day(t.start) - START) / TOTAL_MS * 100), b = clamp((day(t.end) - START + 864e5) / TOTAL_MS * 100);
     const tags = [];
     if (t.fb) tags.push(`<span class="tag">${t.fb} bài Facebook</span>`);
     if (t.short) tags.push(`<span class="tag gold">${t.short} short</span>`);
@@ -460,11 +479,11 @@
         <span class="dates">${d(t.start)} → <b>${d(t.end)}</b></span></div>
       <p class="title">${esc(t.task)}</p>
       <div class="meta">
-        <div><b>Chủ trì:</b> ${esc(t.owner)}</div>
+        <div><b>Chủ trì:</b> ${esc(t.owner || "Chưa giao")}</div>
         <div><b>Đầu ra:</b> ${esc(t.output)}</div>
         <div><b>Duyệt / phối hợp:</b> ${esc(t.approve)}</div>
       </div>
-      <div class="range" aria-hidden="true"><i style="left:${a.toFixed(2)}%;width:${Math.max(b - a, 1).toFixed(2)}%"></i></div>
+      <div class="range" aria-hidden="true"><i style="left:${Math.min(a, 99).toFixed(2)}%;width:${Math.max(b - a, 1).toFixed(2)}%"></i></div>
       <div class="tags">${tags.join("")}</div>
       ${quick}
       ${subPanel(t)}
@@ -480,7 +499,7 @@
     const rows = list.map((s, k) => {
       const st = subStatus(s);
       const ctl = canEdit()
-        ? `<select class="f subst" data-subst="${esc(t.code)}" data-k="${k}" aria-label="Trạng thái đầu mục">${STATUSES.map(x => `<option${x === st ? " selected" : ""}>${esc(x)}</option>`).join("")}</select>`
+        ? `<select class="f subst" data-subst="${esc(t.code)}" data-k="${k}" data-text="${esc(s.text)}" aria-label="Trạng thái đầu mục">${STATUSES.map(x => `<option${x === st ? " selected" : ""}>${esc(x)}</option>`).join("")}</select>`
         : `<span class="tag ${st === "Hoàn tất" ? "" : "gray"}">${esc(st)}</span>`;
       return `<li class="subrow${st === "Hoàn tất" ? " done" : ""}"><span class="stext">${esc(s.text)}</span><span class="sown">${esc(s.owner || "Chưa giao người")}</span>${ctl}</li>`;
     }).join("");
@@ -535,14 +554,14 @@
       const cards = items.map(({ t }) => {
         const prev = STATUSES[idx - 1], next = STATUSES[idx + 1];
         const mv = canEdit() ? `<div class="mv">
-            <button type="button" data-move="${esc(t.code)}" data-to="${esc(prev)}" ${prev ? "" : "disabled"} aria-label="Chuyển sang ${esc(prev)}">◀</button>
-            <button type="button" data-move="${esc(t.code)}" data-to="${esc(next)}" ${next ? "" : "disabled"} aria-label="Chuyển sang ${esc(next)}">▶</button>
+            <button type="button" data-move="${esc(t.code)}" data-to="${esc(prev || "")}" ${prev ? "" : "disabled"} aria-label="${prev ? "Chuyển sang " + esc(prev) : "Không có cột trước"}">◀</button>
+            <button type="button" data-move="${esc(t.code)}" data-to="${esc(next || "")}" ${next ? "" : "disabled"} aria-label="${next ? "Chuyển sang " + esc(next) : "Không có cột sau"}">▶</button>
           </div>` : "";
         return `<div class="kcard" data-code="${esc(t.code)}" ${canEdit() ? 'draggable="true"' : ""}>
           <span class="code">${esc(t.code)}</span>${isLate(t) ? ' <span class="tag red">Quá hạn</span>' : ""}
           <p>${esc(t.task)}</p>
           <div class="sm">${d(t.start)} → ${d(t.end)}</div>
-          <div class="sm">${esc(t.owner)}</div>${mv}</div>`;
+          <div class="sm">${esc(t.owner || "Chưa giao")}${subs(t).length ? ` · ${subDone(t)}/${subs(t).length} đầu mục` : ""}</div>${mv}</div>`;
       }).join("") || `<div class="sm" style="padding:6px">Chưa có đầu việc</div>`;
       return `<div class="col" data-status="${esc(s)}"><h3>${esc(s)} <span>${items.length}</span></h3>${cards}</div>`;
     }).join("")}</div>`;
@@ -550,6 +569,7 @@
 
   // ---------- hiển thị chính ----------
   function render() {
+    today = new Date(); today.setHours(0, 0, 0, 0);
     const data = editing ? work : server.data;
     const tasks = data.tasks || [];
     const saved = server.data.tasks || [];
@@ -559,11 +579,10 @@
     const curG = $("fGroup").value;
     $("fGroup").innerHTML = '<option value="">Mọi nhóm công việc</option>' + groups.map(g => `<option${g === curG ? " selected" : ""}>${esc(g)}</option>`).join("");
     $("groupList").innerHTML = groups.map(g => `<option value="${esc(g)}">`).join("");
-    const owners = [...new Set(tasks.map(t => (t.owner || "").trim()).filter(Boolean))].sort();
+    const owners = [...new Set(tasks.flatMap(t => [t.owner, ...subs(t).map(x => x.owner)]).map(x => (x || "").trim()).filter(Boolean))].sort();
     const curO = $("fOwner").value;
     $("fOwner").innerHTML = '<option value="">Mọi người phụ trách</option>' + owners.map(o => `<option${o === curO ? " selected" : ""}>${esc(o)}</option>`).join("");
-    const people = [...new Set([...owners, ...tasks.flatMap(t => subs(t).map(s => (s.owner || "").trim())).filter(Boolean)])].sort();
-    $("ownerList").innerHTML = people.map(o => `<option value="${esc(o)}">`).join("");
+    $("ownerList").innerHTML = owners.map(o => `<option value="${esc(o)}">`).join("");
     const curS = $("fStatus").value;
     $("fStatus").innerHTML = '<option value="">Mọi trạng thái</option>' + STATUSES.map(s => `<option${s === curS ? " selected" : ""}>${esc(s)}</option>`).join("") + `<option value="__late"${curS === "__late" ? " selected" : ""}>Quá hạn</option>`;
 
@@ -579,7 +598,7 @@
     $("sLate").textContent = late;
     $("sLateBox").classList.toggle("warn", late > 0);
     $("sSoon").textContent = saved.filter(isSoon).length;
-    $("sOpen").textContent = (server.data.kpi || []).filter(r => r[2] === "Chờ chốt").length;
+    $("sOpen").textContent = (server.data.open || []).length;
     $("pctText").textContent = Math.round(done / n * 100) + "%";
     $("lastUpd").textContent = server.data.updatedAt ? "Lưu lần cuối: " + stamp(server.data.updatedAt) : "";
     $("progress").innerHTML = STATUSES.map(s => `<i style="width:${(cnt(s) / n * 100).toFixed(2)}%;background:${COLORS[s]}" title="${esc(s)}"></i>`).join("");
@@ -592,11 +611,10 @@
     }).join("");
 
     // bảng điều khiển: biểu đồ 14 ngày, sắp đến hạn, khối lượng theo người
-    const ymd = (x) => `${x.getFullYear()}-${String(x.getMonth() + 1).padStart(2, "0")}-${String(x.getDate()).padStart(2, "0")}`;
     const dayKeys = [];
     for (let k = 13; k >= 0; k--) { const x = new Date(today); x.setDate(x.getDate() - k); dayKeys.push(x); }
     const doneBy = {};
-    (server.data.log || []).forEach(e => { if (e.to === "Hoàn tất" && e.at) { const k = ymd(new Date(e.at)); doneBy[k] = (doneBy[k] || 0) + 1; } });
+    saved.forEach(t => { if (isDone(t) && t.statusAt) { const x = new Date(t.statusAt); if (!isNaN(x)) { const k = ymd(x); doneBy[k] = (doneBy[k] || 0) + 1; } } });
     const cmax = Math.max(1, ...dayKeys.map(x => doneBy[ymd(x)] || 0));
     $("dChart").innerHTML = dayKeys.map(x => {
       const v = doneBy[ymd(x)] || 0;
@@ -629,10 +647,10 @@
       if (editing) return true;
       if (phase !== "all" && t.phase !== phase) return false;
       if (g && t.group !== g) return false;
-      if (o && (t.owner || "").trim() !== o) return false;
+      if (o && (t.owner || "").trim() !== o && !subs(t).some(x => (x.owner || "").trim() === o)) return false;
       if (s === "__late" && !isLate(t)) return false;
       if (s && s !== "__late" && stOf(t) !== s) return false;
-      if (q && !(t.task + " " + t.owner + " " + t.output + " " + t.note + " " + t.code).toLowerCase().includes(q)) return false;
+      if (q && ![t.task, t.owner, t.output, t.approve, t.group, t.note, t.code, ...subs(t).flatMap(x => [x.text, x.owner])].join(" ").toLowerCase().includes(q)) return false;
       return true;
     });
 
@@ -709,11 +727,12 @@
     if (!editing) return;
     const add = e.target.closest("[data-subadd]");
     if (add) {
-      ensureSubs(+add.dataset.subadd).push({ text: "", owner: "", status: "Chưa bắt đầu" });
+      const list = ensureSubs(+add.dataset.subadd);
+      if (list.length >= 50) { msg("Mỗi đầu việc tối đa 50 đầu mục.", "err"); return; }
+      list.push({ text: "", owner: "", status: "Chưa bắt đầu" });
       render();
-      const rows = document.querySelectorAll(`.subedit .subrow.edit`);
-      const last = rows[rows.length - 1];
-      if (last) last.querySelector("input").focus();
+      const inp = document.querySelector(`#list [data-i="${add.dataset.subadd}"][data-k="${list.length - 1}"][data-sf="text"]`);
+      if (inp) inp.focus();
       return;
     }
     const sd = e.target.closest("[data-subdel]");
@@ -768,7 +787,7 @@
   $("list").addEventListener("change", (e) => {
     const el = e.target;
     if (el.matches && el.matches("select[data-subst]")) {
-      setSubStatus(el.dataset.subst, +el.dataset.k, el.value);
+      setSubStatus(el.dataset.subst, +el.dataset.k, el.dataset.text, el.value);
       return;
     }
     if (!editing) return;
@@ -782,11 +801,12 @@
     if (!editing) return;
     const nums = work.tasks.map(t => parseInt(String(t.code).replace(/\D/g, ""), 10) || 0);
     const code = "TT" + String(Math.max(0, ...nums) + 1).padStart(2, "0");
-    const t0 = new Date().toISOString().slice(0, 10);
+    if (work.tasks.length >= 100) { msg("Tối đa 100 đầu việc.", "err"); return; }
+    const t0 = ymd(new Date());
     work.tasks.push({ code, phase: "Trước", start: t0, end: t0, task: "", owner: "", output: "", approve: "", note: "", fb: 0, short: 0, live: 0, group: "", status: "Chưa bắt đầu", statusAt: "" });
     render();
-    const last = document.querySelector("#list .task:last-of-type textarea");
-    if (last) last.focus();
+    const last = document.querySelector(`#list [data-i="${work.tasks.length - 1}"][data-f="task"]`);
+    if (last) { last.scrollIntoView({ block: "center" }); last.focus(); }
   });
   $("kpi").addEventListener("input", (e) => {
     if (!editing) return;
@@ -812,7 +832,8 @@
     btn.disabled = true;
     try {
       await api("login", { user: f.user.value, pass: f.pass.value });
-      f.reset(); f.hidden = true; msg("Đã đăng nhập.", "ok");
+      f.reset(); f.hidden = true;
+      msg(editing ? "Đã đăng nhập lại. Bấm Lưu để lưu các thay đổi đang sửa." : "Đã đăng nhập.", "ok");
       await load();
     } catch (err) { $("loginMsg").textContent = err.message; }
     finally { btn.disabled = false; }
@@ -820,28 +841,52 @@
   $("logout").addEventListener("click", async () => {
     if (editing && !confirm("Bỏ các thay đổi nội dung chưa lưu và đăng xuất?")) return;
     editing = false; $("editbar").hidden = true;
-    await api("logout", {}).catch(() => {});
-    msg("Đã đăng xuất.", "ok"); await load();
+    await queue;
+    try { await api("logout", {}); msg("Đã đăng xuất.", "ok"); }
+    catch (err) { msg("Chưa đăng xuất được: " + err.message, "err"); }
+    await load();
   });
   $("editOpen").addEventListener("click", () => { setEditing(true); msg("", ""); });
   $("cancelEdit").addEventListener("click", () => {
     if (!confirm("Hủy toàn bộ thay đổi nội dung chưa lưu?")) return;
     setEditing(false); msg("Đã hủy thay đổi.", "");
   });
+  function checkWork() {
+    const seen = new Set();
+    for (const t of work.tasks) {
+      const code = String(t.code || "").trim(), name = code || "Đầu việc chưa có mã";
+      if (!code) return "Mỗi đầu việc cần có mã.";
+      if (seen.has(code)) return `Mã ${code} bị trùng. Mỗi đầu việc cần một mã riêng.`;
+      seen.add(code);
+      if (!String(t.task || "").trim()) return `${name}: chưa có nội dung đầu việc.`;
+      if (!t.start || !t.end) return `${name}: cần đủ ngày bắt đầu và hạn.`;
+      if (t.start > t.end) return `${name}: ngày bắt đầu đang sau hạn.`;
+    }
+    return "";
+  }
   $("save").addEventListener("click", async () => {
     if (!$("openEdit").hidden) work.open = $("openText").value.split("\n").map(x => x.trim()).filter(Boolean);
-    const bad = work.tasks.find(t => !t.task || !t.start || !t.end || !t.code);
-    if (bad) { msg("Mỗi đầu việc cần có mã, nội dung và hai ngày.", "err"); return; }
+    const bad = checkWork();
+    if (bad) { msg(bad, "err"); return; }
     const btn = $("save"); btn.disabled = true; msg("Đang lưu...", "");
     try {
-      await persist(work);
+      await persist(work, false);
       editing = false; $("editbar").hidden = true;
       msg("Đã lưu.", "ok"); await load();
     } catch (err) {
-      msg(err.message, "err");
-      if (/đăng nhập|hết hạn/i.test(err.message)) { editing = false; $("editbar").hidden = true; await load(); }
+      // giữ nguyên nội dung đang sửa trong mọi trường hợp lỗi
+      if (err.code === "auth") { msg("Phiên đăng nhập đã hết. Nội dung đang sửa vẫn còn; đăng nhập lại rồi bấm Lưu.", "err"); askLogin(""); await load(); }
+      else if (err.code === "conflict") { msg("Dữ liệu đã được thay đổi ở nơi khác sau khi bạn mở chỉnh sửa. Bấm Lưu lần nữa để ghi đè bằng bản của bạn, hoặc Hủy thay đổi để xem bản mới.", "err"); }
+      else msg(err.message, "err");
     }
     finally { btn.disabled = false; }
+  });
+
+  // cảnh báo khi rời trang lúc đang sửa dở
+  window.addEventListener("beforeunload", (e) => { if (editing) { e.preventDefault(); e.returnValue = ""; } });
+  // tự cập nhật số liệu khi quay lại tab (chỉ khi không sửa dở)
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible" && !editing && Date.now() - lastLoad > 30000) { lastLoad = Date.now(); queue.then(load); }
   });
 
   load();
