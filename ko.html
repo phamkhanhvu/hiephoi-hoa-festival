@@ -249,10 +249,10 @@
   .pkg .pkg-head { background: var(--hc, #7FCB55); color: var(--hf, #14301A); }
   .pkg .pkg-head .price { color: var(--hf, #14301A); font-size: 17px; line-height: 1.3; }
   .pkg li { color: var(--ink); }
-  .pkg.c10 .pkg-head .price { font-size: 14px; }
-  .pkg.c1 { --hc: #A8D8F0; } .pkg.c2 { --hc: #C3E8A8; } .pkg.c3 { --hc: #B4DE9B; } .pkg.c4 { --hc: #7FCB55; } .pkg.c5 { --hc: #6CCABA; }
-  .pkg.c6 { --hc: #D8C660; --hf: #2E280A; } .pkg.c7 { --hc: #D6A8E0; --hf: #3A1F4A; } .pkg.c8 { --hc: #F5B07C; --hf: #43240C; }
-  .pkg.c9 { --hc: #EF4E63; --hf: #fff; } .pkg.c10 { --hc: #BFC6D1; }
+  .pkg.c9 .pkg-head .price { font-size: 14px; }
+  .pkg.c1 { --hc: #A8D8F0; } .pkg.c2 { --hc: #B4DE9B; } .pkg.c3 { --hc: #7FCB55; } .pkg.c4 { --hc: #6CCABA; }
+  .pkg.c5 { --hc: #D8C660; --hf: #2E280A; } .pkg.c6 { --hc: #D6A8E0; --hf: #3A1F4A; } .pkg.c7 { --hc: #F5B07C; --hf: #43240C; }
+  .pkg.c8 { --hc: #EF4E63; --hf: #fff; } .pkg.c9 { --hc: #BFC6D1; }
   .pkg-table-wrap { margin-top: 26px; overflow-x: auto; border: 1px solid var(--line); background: #fff; }
   .pkg-table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 13px; }
   .pkg-table caption { text-align: left; font-weight: 800; padding: 12px 14px; font-size: 14px; }
@@ -260,8 +260,8 @@
   .pkg-table thead th { background: #F4F7EF; font-weight: 800; font-size: 12px; }
   .pkg-table tbody th { text-align: left; font-weight: 700; border-left: 6px solid var(--hc, #7FCB55); }
   .pkg-table td { font-family: "Montserrat", sans-serif; font-weight: 700; }
-  .pkg-table tr.c1 th { --hc: #A8D8F0; } .pkg-table tr.c2 th { --hc: #C3E8A8; } .pkg-table tr.c3 th { --hc: #B4DE9B; } .pkg-table tr.c4 th { --hc: #7FCB55; } .pkg-table tr.c5 th { --hc: #6CCABA; }
-  .pkg-table tr.c6 th { --hc: #D8C660; } .pkg-table tr.c7 th { --hc: #D6A8E0; } .pkg-table tr.c8 th { --hc: #F5B07C; } .pkg-table tr.c9 th { --hc: #EF4E63; } .pkg-table tr.c10 th { --hc: #BFC6D1; }
+  .pkg-table tr.c1 th { --hc: #A8D8F0; } .pkg-table tr.c2 th { --hc: #B4DE9B; } .pkg-table tr.c3 th { --hc: #7FCB55; } .pkg-table tr.c4 th { --hc: #6CCABA; }
+  .pkg-table tr.c5 th { --hc: #D8C660; } .pkg-table tr.c6 th { --hc: #D6A8E0; } .pkg-table tr.c7 th { --hc: #F5B07C; } .pkg-table tr.c8 th { --hc: #EF4E63; } .pkg-table tr.c9 th { --hc: #BFC6D1; }
   .pkg-decal { margin-top: 22px; padding: 16px 20px; border-left: 6px solid #7FCB55; background: #F4F7EF; color: var(--ink); max-width: 80ch; font-size: 14px; line-height: 1.6; }
   .pkg-decal h3 { font-size: 15px; font-weight: 800; margin-bottom: 6px; }
   .pkg-note { font-size: 12px; color: var(--muted); font-style: italic; margin-top: 18px; max-width: 80ch; }
@@ -456,70 +456,65 @@
     <div class="inner">
       <div class="sec-kicker">후원 안내</div>
       <h2 class="sec-title display-green">동행·후원·참여 정책</h2>
-      <p class="pkg-intro">16개 행사를 지원하는 제11회 달랏 꽃 축제 2026의 10개 그룹입니다. 01~09군은 동행 및 후원 형식이며, 10군은 야간 공연 별도 입장권입니다.</p>
+      <p class="pkg-intro">16개 행사를 지원하는 제11회 달랏 꽃 축제 2026의 9개 그룹입니다. 01~08군은 동행 및 후원 형식이며, 09군은 갈라 별도 입장권입니다.</p>
       <div class="packages">
         <article class="pkg c1">
-          <div class="pkg-head"><h3>01. 사랑의 꽃 자전거</h3><span class="price">3.000.000 VNĐ</span></div>
-          <ul><li>시내에 직접 올 수 없지만 함께하고 싶은 상점, 도매상, 농원, 협동조합, 기업 또는 후원자를 위한 참여입니다.</li><li>통일 규격의 새 자전거 1대에 기여하며, 분리형 브랜드 안내판과 꽃 장식을 더해 어려운 학생에게 전달합니다.</li><li>직접 퍼레이드에 참여할 필요가 없으며, 자격을 갖춘 학생이나 자원봉사자가 대신 참여합니다.</li><li>갈라, 개막 추천 자리, 투어는 포함되지 않습니다.</li></ul>
+          <div class="pkg-head"><h3>01. 화훼 산업 연결 손님, 꽃 애호가</h3><span class="price">6.000.000 VNĐ</span></div>
+          <ul><li>2026년 12월 18일 저녁 달랏 대학에서 열리는 “꽃빛의 춤” 갈라 1석.</li><li>협회가 Vietravel과 협력하는 투어 프로그램으로 참여합니다.</li><li>꽃 자전거와 전시 부스는 포함되지 않으며, 자리가 있으면 별도 요금 정책으로 추가 신청할 수 있습니다.</li></ul>
         </article>
         <article class="pkg c2">
-          <div class="pkg-head"><h3>02. 화훼 산업 연결</h3><span class="price">6.000.000 VNĐ</span></div>
-          <ul><li>직접 참여하는 꽃 가게, 도매상, 농원 및 화훼 기업을 위한 패키지입니다. 교통, 숙박, 프로그램 외 식사는 자비 부담입니다.</li><li>꽃 자전거 1대 시연 및 기증, 퍼레이드 대표 1명, 자전거·감사판·안내 목록에 로고와 QR 게재.</li><li>16/12 갈라 좌석은 없으며, 18/12 야간 공연 좌석 1석, 12/12 개막식 추천 인원 최대 1명.</li><li>16/12 갈라는 포함되지 않습니다.</li></ul>
+          <div class="pkg-head"><h3>02. 화훼 가치사슬 동행자</h3><span class="price">8.000.000 VNĐ</span></div>
+          <ul><li>34개 성·시의 꽃 가게 1,000곳 이상을 초대해 교류하고 감사를 전하는 프로그램에 해당합니다.</li><li>2026년 12월 18일 갈라 1석, 그리고 12월 19일 저녁 달랏 대학에서 열리는 협회 창립 20주년 기념식(34개 성·시 꽃 종사자·애호가 클럽 발족 포함) 초대장 1장.</li><li>행사에 로고가 표시되고 모든 활동에 참여하며, Vietravel 투어 프로그램으로 참여합니다.</li><li>꽃 자전거와 전시 부스는 포함되지 않습니다.</li></ul>
         </article>
         <article class="pkg c3">
-          <div class="pkg-head"><h3>03. 자비 부담 꽃 종사자</h3><span class="price">8.000.000 VNĐ</span></div>
-          <ul><li>꽃 자전거 1대, 퍼레이드 대표 1명, 로고와 QR 표시. 자전거는 프로그램 종료 후 기증됩니다.</li><li>16/12 협회 창립 20주년 기념식 좌석 1석(Dalat Palace)과 18/12 갈라 좌석 1석.</li><li>배정되면 12/12 개막식 화훼업계 대표 1명을 추천할 수 있으며, 비즈니스 미팅 1회와 개방 농장 방문 1회를 우선 지원합니다.</li><li>숙박, 교통, 생활비는 자비 부담입니다.</li></ul>
+          <div class="pkg-head"><h3>03. 파트너·회원 동행</h3><span class="price">10.000.000 VNĐ</span></div>
+          <ul><li>전시용으로 장식하여 어려운 학생에게 기증하는 꽃 자전거 1대.</li><li>화훼 연결 QR 명부와 공동 감사판에 로고와 정보를 게재합니다.</li><li>18/12 갈라 귀빈석 1석과 달랏 대학에서 열리는 19/12 기념식 귀빈 초대장 1장.</li><li>운영 여건에 따라 B2B 미팅 1회와 무료 오픈데이 1회를 우선 신청할 수 있습니다.</li><li>숙박, 교통, 생활비는 자비 부담이며 전시 부스는 포함되지 않습니다.</li></ul>
         </article>
         <article class="pkg c4">
-          <div class="pkg-head"><h3>04. 동행 후원사</h3><span class="price">10.000.000 VNĐ</span></div>
-          <ul><li>화훼 상점 또는 화훼 기업을 위한 패키지로, 협회가 공개하는 기준에 따릅니다. 꽃 자전거 1대와 퍼레이드 대표 1명 포함.</li><li>16/12 기념식 좌석 1석, 18/12 갈라 좌석 1석, 12/12 개막식 대표 1명 추천.</li><li>체크인 보드, 승인된 장소의 감사판, QR 명부, 협회 채널에 로고 게재.</li><li>가능한 경우 비즈니스 미팅 1회 추가, 동행 등급 내 우선 배치.</li></ul>
+          <div class="pkg-head"><h3>04. 친밀 동행 파트너·회원</h3><span class="price">20.000.000 VNĐ</span></div>
+          <ul><li>꽃 자전거 1대. 승인된 배치도에 따른 3m×3m 표준 부스 1개 또는 화분 꽃 경연 전시 구역 1곳(둘 다 기본 제공 아님).</li><li>18/12 갈라 2석, 19/12 기념식 1석. 12/12 개막식 화훼업계 대표 1명 추천.</li><li>“달랏 꽃 축제 2026 친밀 동행 파트너” 명칭 사용, 기업 소개 글 1편, 홍보물, B2B 미팅 2회 지원.</li><li>등급에 따라 체크인 보드, 감사판, QR 명부에 로고 게재. 허가되지 않은 장소의 위치는 보장하지 않습니다.</li></ul>
         </article>
         <article class="pkg c5">
-          <div class="pkg-head"><h3>05. 친밀 동행 파트너</h3><span class="price">20.000.000 VNĐ</span></div>
-          <ul><li>꽃 자전거 1대. 16/12 갈라 좌석 1석, 18/12 갈라 좌석 1석, 개막식 대표 1명 추천.</li><li>“달랏 꽃 축제 2026 친밀 동행 파트너” 명칭을 사용할 수 있습니다.</li><li>협회 채널에 기업 소개 글 1편, 지정 장소에 홍보물 비치, 비즈니스 미팅 2회 지원.</li><li>1,000만 동 등급보다 로고가 우선 배치되며, 허가되지 않은 장소의 위치는 보장하지 않습니다.</li></ul>
+          <div class="pkg-head"><h3>05. 동 후원사</h3><span class="price">40.000.000 VNĐ</span></div>
+          <ul><li>로고를 단 꽃 자전거 2대를 전시장에 전시. 18/12 갈라 3석, 19/12 기념식 2석, 12/12 개막의 밤 대표 최대 2명 추천.</li><li>3m×3m 부스 1개 또는 우수 호접란 업체용 경연 전시 구역 1곳(둘 다 기본 제공 아님).</li><li>B2B 미팅 3회, 동 등급 로고, 그룹 미디어 소개, 홍보물 배치권, 갈라 감사 언급.</li></ul>
         </article>
         <article class="pkg c6">
-          <div class="pkg-head"><h3>06. 동 후원사</h3><span class="price">40.000.000 VNĐ</span></div>
-          <ul><li>꽃 자전거 2대. 16/12 갈라 좌석 2석, 18/12 갈라 좌석 3석, 개막식 대표 최대 2명 추천.</li><li>승인된 배치도에 따라 화분 꽃 전시 구역 1곳 또는 제품 진열대 1곳(둘 다 기본 제공 아님).</li><li>비즈니스 미팅 3회, 동 등급 로고, 그룹 미디어 소개, 홍보물 배치권, 갈라 감사 언급.</li></ul>
+          <div class="pkg-head"><h3>06. 은 후원사</h3><span class="price">80.000.000 VNĐ</span></div>
+          <ul><li>꽃 자전거 3대. 18/12 갈라 4석, 19/12 기념식 초대장 3장, 12/12 개막의 밤 대표 최대 3명 추천.</li><li>3m×3m 부스 2개, 또는 경연 전시 구역 1곳과 표준 부스 1개.</li><li>전용 소개 기사 1편과 제작 계획에 따른 2~5분 영상.</li><li>B2B 미팅 5회, 동 등급보다 큰 은 등급 로고, 승인된 체크인 구역 노출.</li></ul>
         </article>
         <article class="pkg c7">
-          <div class="pkg-head"><h3>07. 은 후원사</h3><span class="price">80.000.000 VNĐ</span></div>
-          <ul><li>꽃 자전거 3대. 16/12 갈라 좌석 2석, 18/12 갈라 좌석 4석, 개막식 대표 최대 3명 추천.</li><li>표준 3×3m 부스 1개 또는 승인된 배치에 따른 정원 전시 공간.</li><li>전용 소개 기사 1편과 제작 계획에 따른 2~5분 영상, 비즈니스 미팅 5회, 은 등급 로고.</li></ul>
+          <div class="pkg-head"><h3>07. 금 후원사</h3><span class="price">200.000.000 VNĐ</span></div>
+          <ul><li>꽃 자전거 5대. 18/12 갈라 6석, 19/12 기념식 초대장 4장, 개막식 대표 최대 6명 추천.</li><li>3m×3m 부스 3개, 또는 부스 2개와 정원 전시 공간 1곳(공간이 허용되는 경우).</li><li>B2B 미팅 10회, 전용 소개, 2~5분 영상, 신품종·제품 우선 소개, 금 등급 로고.</li><li>금 등급 안에서 우선 배치되며, 다이아몬드보다 높지 않고 별도 합의 없이는 독점권이 없습니다.</li></ul>
         </article>
         <article class="pkg c8">
-          <div class="pkg-head"><h3>08. 금 후원사</h3><span class="price">200.000.000 VNĐ</span></div>
-          <ul><li>꽃 자전거 5대. 16/12 갈라 좌석 3석, 18/12 갈라 좌석 6석, 개막식 대표 최대 5명 추천.</li><li>표준 3×3m 부스 2개, 또는 공간이 허용되면 부스 1개와 정원 전시 공간 1곳.</li><li>비즈니스 미팅 10회, 전용 소개, 2~5분 영상, 금 등급 로고.</li><li>금 등급 안에서 우선 배치되며, 다이아몬드보다 높지 않고 별도 합의 없이는 독점권이 없습니다.</li></ul>
+          <div class="pkg-head"><h3>08. 다이아몬드 후원사</h3><span class="price">300.000.000 VNĐ</span></div>
+          <ul><li>꽃 자전거 8대. 18/12 갈라 10석, 19/12 기념식 초대장 6장, 개막식 대표 최대 8명 추천.</li><li>3m×3m 부스 5개, 또는 부스 4개와 정원 전시 공간 1곳(승인된 배치도에 따름).</li><li>B2B 미팅 20회, 최고 등급 로고, 전용 소개, 2~5분 영상, 무대와 홍보 자료에서의 감사 언급.</li><li>별도 합의에 따라 업종 동행 및 세미나 공동 주최를 우선 검토하며, 축제 전체 독점권이 자동으로 부여되지는 않습니다.</li></ul>
         </article>
         <article class="pkg c9">
-          <div class="pkg-head"><h3>09. 다이아몬드 후원사</h3><span class="price">300.000.000 VNĐ</span></div>
-          <ul><li>꽃 자전거 8대. 16/12 갈라 좌석 5석, 18/12 갈라 좌석 10석, 개막식 대표 최대 8명 추천.</li><li>승인된 배치도에 따라 3×3m 부스 3개, 또는 부스 2개와 정원 전시 공간 1곳.</li><li>비즈니스 미팅 20회, 최고 등급 로고, 전용 소개, 2~5분 영상, 무대 감사 언급.</li><li>별도 합의에 따라 업종 동행 및 세미나 공동 주최를 우선 검토하며, 축제 전체 독점권이 자동으로 부여되지는 않습니다.</li></ul>
-        </article>
-        <article class="pkg c10">
-          <div class="pkg-head"><h3>10. 야간 공연 게스트</h3><span class="price">2,000,000 VNĐ/성인<br>1,000,000 VNĐ/어린이</span></div>
-          <ul><li>예상 요금: 성인 2,000,000 VNĐ, 어린이 1,000,000 VNĐ. 어린이 연령 기준, 식사 및 유아 정책은 판매 전에 공지됩니다.</li><li>18/12 저녁 Đà Lạt College에서 열리는 “꽃빛의 춤(Vũ Điệu Sắc Hoa)” 야간 공연 입장과 티켓에 명시된 서비스만 포함됩니다.</li><li>자전거, 홍보 로고, 16/12 갈라 좌석, 12/12 개막 좌석, 숙박, 투어는 포함되지 않습니다.</li></ul>
+          <div class="pkg-head"><h3>09. 갈라 별도 참석 손님</h3><span class="price">2,000,000 VNĐ/성인<br>1,000,000 VNĐ/어린이</span></div>
+          <ul><li>예상 요금: 성인 2,000,000 VNĐ, 어린이 1,000,000 VNĐ. 어린이 연령 기준, 식사 및 유아 정책은 판매 전에 공지됩니다.</li><li>18/12 저녁 달랏 대학에서 열리는 “꽃빛의 춤” 갈라 입장과 티켓에 명시된 서비스만 포함됩니다.</li><li>자전거, 부스, 홍보 로고, 19/12 기념식 좌석, 12/12 개막 좌석, 숙박, 투어는 포함되지 않습니다.</li></ul>
         </article>
       </div>
       <div class="pkg-table-wrap" tabindex="0" role="region" aria-label="그룹별 권리 수량">
         <table class="pkg-table">
           <caption>그룹별 권리 수량</caption>
-          <thead><tr><th scope="col">구분</th><th scope="col">꽃 자전거</th><th scope="col">16/12 갈라 (20주년)</th><th scope="col">18/12 갈라</th><th scope="col">12/12 개막식 추천 인원</th></tr></thead>
+          <thead><tr><th scope="col">구분</th><th scope="col">꽃 자전거</th><th scope="col">3×3m 부스</th><th scope="col">18/12 갈라</th><th scope="col">19/12 기념식</th><th scope="col">12/12 개막식 추천 인원</th></tr></thead>
           <tbody>
-            <tr class="c1"><th scope="row">01. 사랑의 꽃 자전거 – 300만</th><td>1</td><td>0</td><td>0</td><td>0</td></tr>
-            <tr class="c2"><th scope="row">02. 화훼 산업 연결 – 600만</th><td>1</td><td>0</td><td>1</td><td>1</td></tr>
-            <tr class="c3"><th scope="row">03. 자비 부담 – 800만</th><td>1</td><td>1</td><td>1</td><td>1</td></tr>
-            <tr class="c4"><th scope="row">04. 동행 – 1,000만</th><td>1</td><td>1</td><td>1</td><td>1</td></tr>
-            <tr class="c5"><th scope="row">05. 친밀 파트너 – 2,000만</th><td>1</td><td>1</td><td>1</td><td>1</td></tr>
-            <tr class="c6"><th scope="row">06. 동 – 4,000만</th><td>2</td><td>2</td><td>3</td><td>2</td></tr>
-            <tr class="c7"><th scope="row">07. 은 – 8,000만</th><td>3</td><td>2</td><td>4</td><td>3</td></tr>
-            <tr class="c8"><th scope="row">08. 금 – 2억</th><td>5</td><td>3</td><td>6</td><td>5</td></tr>
-            <tr class="c9"><th scope="row">09. 다이아몬드 – 3억</th><td>8</td><td>5</td><td>10</td><td>8</td></tr>
-            <tr class="c10"><th scope="row">10. 갈라 게스트 – 성인 200만</th><td>0</td><td>0</td><td>1인당 1석</td><td>0</td></tr>
+            <tr class="c1"><th scope="row">01. 손님 – 600만</th><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+            <tr class="c2"><th scope="row">02. 가치사슬 동행 – 800만</th><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+            <tr class="c3"><th scope="row">03. 동행 – 1,000만</th><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+            <tr class="c4"><th scope="row">04. 친밀 파트너 – 2,000만</th><td>1</td><td>1</td><td>2</td><td>1</td><td>1</td></tr>
+            <tr class="c5"><th scope="row">05. 동 – 4,000만</th><td>2</td><td>1*</td><td>3</td><td>2</td><td>2</td></tr>
+            <tr class="c6"><th scope="row">06. 은 – 8,000만</th><td>3</td><td>2*</td><td>4</td><td>3</td><td>3</td></tr>
+            <tr class="c7"><th scope="row">07. 금 – 2억</th><td>5</td><td>3*</td><td>6</td><td>4</td><td>6</td></tr>
+            <tr class="c8"><th scope="row">08. 다이아몬드 – 3억</th><td>8</td><td>5*</td><td>10</td><td>6</td><td>8</td></tr>
+            <tr class="c9"><th scope="row">09. 갈라 손님 – 성인 200만</th><td>0</td><td>0</td><td>1/*</td><td>0</td><td>0</td></tr>
           </tbody>
         </table>
       </div>
-      <p class="pkg-note">일반 혜택: 01~09군은 협회가 공동 운영하는 개방 전시, 세미나, 워크숍 및 오픈데이에 일정과 일반 조건에 따라 무료로 등록할 수 있습니다. 10군은 18/12 갈라와 공개 행사에만 해당합니다.</p>
-      <p class="pkg-note">* 10군: 등록자 1인당 1석. 마지막 열은 추천 가능한 최대 인원으로, 이미 발급된 티켓이 아닙니다. 12/12 개막식 참석은 성 조직위원회가 공식 배정한 명단과 좌석 수에 따르며, 판매·양도·현금 교환이 불가합니다.</p>
-      <p class="pkg-note">300만 등급은 꽃 자전거 프로그램에 대한 기여금으로, 자전거 구입과 관련 운영비를 포함하며 자전거 한 대의 가치가 아닙니다.</p>
+      <p class="pkg-note">일반 혜택: 03~08군은 등급에 따라 화훼 연결 QR 명부와 공동 감사판에 이름과 로고가 게재됩니다. 01~08군은 협회가 공동 운영하는 개방 전시, 세미나, 워크숍, 업계 교류, 오픈데이에 일정·수용 인원·생물 안전 요건에 따라 무료로 등록할 수 있으며, 셔틀·식사·상업 투어는 기본 포함이 아닙니다. 09군은 갈라와 공개 행사에만 해당합니다.</p>
+      <p class="pkg-note">12/12 개막식 좌석은 추천 가능한 최대 인원으로, 성 조직위원회가 공식 배정해야 효력이 생기며 판매·양도·현금 교환이 불가하고 좌석을 보장하지 않습니다. 추천 대상자는 실제로 화훼 가치사슬에서 활동해야 합니다. 09군: 등록자 1인당 1석.</p>
+      <p class="pkg-note">(*) 4,000만 동 이상 등급은 3m×3m 부스 혜택을 승인된 배치도에 따라 정원 전시 공간과 결합한 방식으로 바꿀 수 있습니다. 갈라 좌석은 수용 인원과 서비스 계약에 따라 확정되며, 사용하지 않은 혜택은 현금으로 환산되지 않습니다.</p>
       <p class="pkg-note">본 내용은 의견 수렴을 위한 초안입니다. 기여금과 혜택은 협회가 서면으로 확인한 후에만 효력이 생기며, 로고·부스·영상·공공장소 활동은 허가와 승인에 따릅니다.</p>
       <div class="pkg-decal"><h3>화훼 가치사슬 단위 차량 스티커</h3><p>꽃 가게 사장님, 도매상, 플로리스트 및 화훼 가치사슬 기업이 프로그램에 참여하면 다음 문구의 차량용 스티커를 받습니다: <b>“달랏 꽃 축제 – 꽃 가치사슬을 만드는 사람들을 기리는 곳”</b>. 행사 참여 단위의 이미지를 통일하기 위한 것이며, 각 스티커는 순번(STT)으로 등록됩니다.</p><p><a class="btn primary" href="dang-ky-decal.html">차량 스티커 신청 →</a></p></div>
       <div class="pkg-note"><p><b>참고 사항:</b></p><ul><li>2026년 12월 10일까지 후원 등록 및 접수를 진행합니다.</li><li>대엘랏 꽃협회는 현금 후원을 접수하며, 후원자에게 영수증 및 기타 유효 서류를 발급합니다.</li><li>제품·상품·서비스 형태의 후원은 발생 시점의 시장 도매가를 기준으로 가치를 정하며, 현금 환산 가치는 70%입니다. 가치 산정은 후원자와 접수 기관이 합의한 회의록으로 명시하고, 프로그램에서 제품·서비스가 사용되었다는 서면 확인을 첨부해야 합니다.</li></ul><p><b>계좌 정보:</b> 예금주: Hiệp hội Hoa Đà Lạt · 계좌번호: 5400201004297 · 은행: Agribank 람동(Lâm Đồng) 지점.</p><p><b>연락처:</b> 판 탄 상(Phan Thanh Sang) 회장, +84 907 352 111, sangdalat84@gmail.com. 호 안 중(Hồ Anh Dũng) 부회장, +84 917 100 397, dungho@f1biotech.com.</p></div>
@@ -647,22 +642,22 @@
   /* ===== CONFIG: sửa dữ liệu tại đây. Thứ tự mục là số thứ tự chương trình. ===== */
   const CONFIG = {
     events: [
-      { no: 1, type: "gala", title: "대엘랏 꽃협회 창립 20주년 기념식", desc: "협회의 20년 활동을 돌아보는 기념식과 환영 갈라.", place: "사이공-달랏 호텔", time: "16/12/2026" },
-      { no: 2, type: "exhibition", title: "관세음사 맞은편 꽃 공간", desc: "독특한 꽃과 장식 잎, 신품종 꽃으로 꾸민 예술 정원 공간으로 축제의 포인트가 됩니다.", place: "쑤언흐엉 호수 C구역", time: "17/12/2026 – 03/01/2027" },
-      { no: 3, type: "exhibition", title: "람동 호접란 국제 전시회", desc: "2,000㎡ 규모에 호접란 정원 20곳과 부대 부스 40개. 베트남, 대만, 네덜란드, 중국 기업이 참여하며 개막식, 수출 세미나, B2B 연결, 감사 갈라가 함께 열립니다.", place: "달랏 대학(Đà Lạt College)", time: "17/12/2026 – 23/12/2026" },
-      { no: 4, type: "exhibition", title: "국제 생화 예술 전시회", desc: "국제 플로리스트 14명과 베트남 최고 꽃꽂이 장인이 참여해 작품 시연, 꽃꽂이 워크숍, 비즈니스 토크, 시상 갈라를 진행합니다.", place: "달랏 대학(Đà Lạt College)", time: "16/12/2026 – 19/12/2026" },
-      { no: 5, type: "gala", title: "갈라 \"꽃빛의 춤(Vũ điệu sắc hoa)\"", desc: "꽃 재배자, 꽃 사업자, 장인, 국제 파트너를 기리고 감사하며 연결하는 밤.", place: "달랏 대학(Đà Lạt College)", time: "18/12/2026" },
-      { no: 6, type: "parade", title: "꽃 장식 자전거 퍼레이드", desc: "생화로 장식한 자전거와 함께하는 커뮤니티 활동으로, 화훼 사업자를 연결하고 나눔의 정신을 널리 알립니다.", place: "달랏", time: "2026년 12월 18일 오전 예정" },
-      { no: 7, type: "tour", title: "투어 \"다채로운 꽃의 달랏\"", desc: "첨단 기술 화훼 농장을 체험하며 생산 과정과 대표적인 화훼 산업 발전 모델을 알아봅니다.", place: "달랏", time: "10/12/2026 – 31/12/2026" },
-      { no: 8, type: "market", title: "채소·꽃 시장", desc: "생화, 장식 잎, 화훼 자재를 홍보·소개하고 기업과 생산자를 연결하는 공간.", place: "럼비엔 광장 일대", time: "24/12/2026 – 03/01/2027" },
-      { no: 9, type: "seminar", title: "화훼 과학기술 세미나", desc: "신품종, 과학기술 적용, 디지털 전환, 화훼 가치사슬의 지속 가능한 발전을 논의합니다.", place: "사이공-달랏 호텔", time: "2026년 12월 22일 예정" },
-      { no: 10, type: "tour", title: "축제 및 화훼 산지 체험 투어", desc: "2박 3일 일정으로 축제 활동 참여와 람동의 화훼 산지 견학을 결합합니다.", place: "달랏", time: "17/12/2026 – 19/12/2026" },
-      { no: 11, type: "ceremony", title: "축제 기념 벚나무(마이 안 다오) 34그루 식수", desc: "34그루는 34개 성·시의 화훼 사업자가 한자리에 모이는 것을 상징합니다.", place: "달랏", time: "12/12/2026" },
-      { no: 12, type: "parade", title: "개막의 밤 꽃 수레 퍼레이드", desc: "협회가 생화 수레 1대를 제작해 달랏 꽃 축제 2026 환영 퍼레이드에 참여합니다.", place: "럼비엔 광장", time: "12/12/2026" },
-      { no: 13, type: "seminar", title: "베트남–이스라엘 화훼·원예 세미나", desc: "주베트남 이스라엘 대사관과 협력하여 스마트 관개 기술과 첨단 재배 기술을 공유합니다.", place: "사이공-달랏 호텔", time: "04/11/2026" },
-      { no: 14, type: "openday", title: "Apollo Open Day Orchid 2026", desc: "Apollo 유한회사의 호응 프로그램으로, 기업 현장에서 호접란 품종을 소개하고 견학합니다.", place: "달랏", time: "17/12/2026 – 19/12/2026" },
-      { no: 15, type: "openday", title: "Hoa Chi An Open Day 2026", desc: "Hoa Chi An 유한회사의 호응 프로그램으로, 칼라 릴리, 백합, 안스리움, 달리아 등 신품종 꽃을 견학합니다.", place: "달랏", time: "17/12/2026 – 20/12/2026" },
-      { no: 16, type: "openday", title: "THT Open Day 2026", desc: "THT 농장 주식회사의 호응 프로그램으로, 호접란, 꽃 염색 기술, 농업 AI 활용을 소개합니다.", place: "달랏", time: "18/12/2026" }
+      { no: 1, type: "parade", title: "개막의 밤 꽃차 퍼레이드", desc: "달랏 생화 꽃차 1대가 개막의 밤 퍼레이드에 참여하며 VTV1로 방송됩니다.", place: "럼비엔 광장", time: "2026년 12월 12일 개막의 밤" },
+      { no: 2, type: "exhibition", title: "관세음사 맞은편 꽃 공간", desc: "1,000㎡ 규모의 예술 생화 소경관에 신품종 꽃과 새 장식 잎(아룸, 국화, 장미, 리시안셔스, 호접란, 베고니아 등)을 전시합니다. 생산 단위 꽃 공간 11곳과 경연용 화분 11개가 있습니다.", place: "쑤언흐엉 호수 C구역", time: "2026.12.12 – 2027.01.03" },
+      { no: 3, type: "exhibition", title: "럼동 국제 호접란 전시회", desc: "2,000㎡ 규모에 호접란 소경관 20개와 부대 부스. 베트남, 대만, 네덜란드, 중국 기업 참가. 개막, 최우수 소경관·부스 경연, 수출 세미나와 B2B, 난 증정, 감사 갈라, 우수 호접란 생산 기업 인증서 수여.", place: "달랏 대학", time: "2026.12.17 – 2026.12.23" },
+      { no: 4, type: "exhibition", title: "국제 예술 생화 전시회", desc: "국제 플로리스트 12명과 베트남 최고의 꽃꽂이 명인이 참여: 작품과 꽃 드레스 쇼(베트남 미스 참여), 꽃꽂이 워크숍, 꽃 사업 토크, 시상 갈라, 인증서 수여.", place: "달랏 대학", time: "2026.12.16 – 2026.12.23" },
+      { no: 5, type: "parade", title: "34개 성·시 꽃 가게·도매상 1,000곳 이상 감사 행사", desc: "꽃 자전거를 장식하고 방문객이 전시장에서 자전거를 타 볼 수 있습니다. 100대 이상을 계획하며, 이후 달랏 소재 대학과 교육청에 기증합니다(협회 회원 후원 단위 기증).", place: "달랏 대학", time: "2026.12.17 – 2026.12.23" },
+      { no: 6, type: "gala", title: "갈라의 밤 “꽃빛의 춤”", desc: "꽃 재배자와 애호가를 기리고 연결하는 밤: 대만·네덜란드 대형 호접란 농원 30곳, 협회와 국제 파트너, 꽃 가게·도매상·기업 1,000곳, 럼동 대형 호접란 농장, 국제 플로리스트 10여 명과 미스들의 생화 패션쇼.", place: "달랏 대학", time: "2026년 12월 18일 밤" },
+      { no: 7, type: "ceremony", title: "협회 창립 20주년 기념식", desc: "화훼 가치사슬에 기여한 분들께 감사드리고, 34개 성·시의 달랏 꽃 종사자·애호가 클럽을 발족합니다. 럼동 우수 호접란 생산 기업 인증서 수여.", place: "달랏 대학", time: "2026년 12월 19일 18:00" },
+      { no: 8, type: "tour", title: "투어 “달랏, 다채로운 꽃빛”", desc: "대표적인 첨단 꽃 농장(Dalat Evergreen, Trường Hoàng, Thanh Hà, THT Orchid, L'amour, Chi An, YSA, Doly Farm, LangBiang Farm)과 다육식물·화분 생산지 방문.", place: "달랏", time: "2026.12.10 – 2026.12.31 (3주)" },
+      { no: 9, type: "market", title: "꽃·채소 시장", desc: "무역·투자·관광 진흥센터와 협력하여 생화, 장식 잎, 농자재 부스 20개 운영(부스당 1,000만 동).", place: "럼비엔 광장 분수대", time: "2026.12.24 – 2027.01.03" },
+      { no: 10, type: "seminar", title: "화훼 과학기술 세미나", desc: "과학기술청과 공동 주관: 과학기술 적용, 신품종, 화훼 디지털 전환.", place: "사이공–달랏 호텔", time: "2026.12.22" },
+      { no: 11, type: "tour", title: "축제 체험 및 화훼 산지 투어", desc: "Vietravel과 협력: 2026 꽃 축제 프로그램 참여와 전국 최대 생화 산지인 럼동 방문.", place: "럼동성", time: "3박 4일 (2026.12.17 – 20)" },
+      { no: 12, type: "ceremony", title: "축제 환영 벚나무 34그루 식수", desc: "34그루는 제11회 달랏 꽃 축제에 모이는 34개 성·시 대표단을 상징합니다.", place: "쑤언흐엉 호숫가 꽃 공간 또는 럼비엔 동", time: "2026년 12월 19일 오전" },
+      { no: 13, type: "seminar", title: "베트남–이스라엘 화훼·원예 세미나", desc: "이스라엘 대사관과 협력: 이스라엘의 스마트 관개와 재배 기술 공유.", place: "사이공–달랏 호텔", time: "2026.11.04" },
+      { no: 14, type: "openday", title: "아폴로 오픈데이 오키드 2026", desc: "회원사 Apollo 유한회사의 참여 프로그램: 호접란 견학.", place: "Apollo 유한회사", time: "2026.12.17, 18, 19" },
+      { no: 15, type: "openday", title: "호아 찌 안 오픈데이 2026", desc: "회원사 Hoa Chi An 유한회사의 참여 프로그램: 칼라, 백합, 안수리움, 달리아 등 신품종 견학.", place: "Hoa Chi An 유한회사, 바이르엉 2 – 락즈엉", time: "2026.12.17, 18, 19, 20" },
+      { no: 16, type: "openday", title: "THT 오픈데이 2026", desc: "회원사 THT 농장 주식회사의 참여 프로그램: 호접란, 꽃 염색 기술, 농업 AI.", place: "THT 농장 주식회사", time: "2026.12.18" }
     ],
     news: [
       { title: "감을 활용한 다양한 제품 – 꽃 축제를 맞는 달랏의 가을 특산품", desc: "쑤언쯔엉, 쑤언선, 쑤언흐엉의 업체에서 만드는 곶감, 감 와인, 감 디저트.", tag: "달랏 꽃 축제", url: "news.html#tin-2", thumb: "news/thumb-2.jpg" },
