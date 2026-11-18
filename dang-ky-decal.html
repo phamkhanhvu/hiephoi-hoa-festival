@@ -31,15 +31,23 @@ button:disabled{opacity:.6;cursor:wait}
 .err{background:#fdecec;color:#8a1f1f;border:1px solid #f3b5b5}
 .hp{position:absolute;left:-9999px;height:0;overflow:hidden}
 .done{background:#fff;border:2px solid var(--green);padding:24px;text-align:center}
+.done{margin-bottom:18px}.done .tick{font:800 20px "Montserrat",sans-serif;color:var(--green-dark)}
 .done .no{font:800 44px/1.1 "Montserrat",sans-serif;color:var(--green-dark);margin:8px 0}
 .back{display:inline-block;margin-top:16px;color:var(--green-dark)}
 </style>
 </head>
 <body>
 <main>
-  <h1>Đăng ký decal dán xe</h1>
-  <p class="lead">Dành cho chủ shop hoa, vựa hoa, florist, công ty trong chuỗi giá trị ngành hoa và hội viên Hiệp hội Hoa Đà Lạt về tham gia Festival Hoa Đà Lạt 2026.</p>
-  <div class="deco">Nội dung decal: <b>“Festival Hoa Đà Lạt – nơi tôn vinh những người làm nên chuỗi giá trị ngành hoa”</b>. Mỗi xe đăng ký một lần, được cấp <b>số thứ tự (STT)</b> gắn với <b>biển số xe</b>. Ban Tổ chức chỉ cung cấp file in cho xe đã đăng ký, để hình ảnh đồng bộ và không bị in lẻ ngoài kiểm soát. Hạn đăng ký: 10/12/2026.</div>
+  <div id="ok" class="done" hidden>
+    <div class="tick">✓ Đăng ký thành công!</div>
+    <div>STT decal của bạn là</div>
+    <div class="no" id="no"></div>
+    <div id="okplate"></div>
+    <p>Vui lòng chụp lại màn hình này. Ban Tổ chức sẽ liên hệ qua số điện thoại đã đăng ký để gửi file decal.</p>
+  </div>
+  <h1 id="h1">Đăng ký decal dán xe</h1>
+  <p class="lead" id="lead">Dành cho chủ shop hoa, vựa hoa, florist, công ty trong chuỗi giá trị ngành hoa và hội viên Hiệp hội Hoa Đà Lạt về tham gia Festival Hoa Đà Lạt 2026.</p>
+  <div class="deco" id="deco">Nội dung decal: <b>“Festival Hoa Đà Lạt – nơi tôn vinh những người làm nên chuỗi giá trị ngành hoa”</b>. Mỗi xe đăng ký một lần, được cấp <b>số thứ tự (STT)</b> gắn với <b>biển số xe</b>. Ban Tổ chức chỉ cung cấp file in cho xe đã đăng ký, để hình ảnh đồng bộ và không bị in lẻ ngoài kiểm soát. Hạn đăng ký: 10/12/2026.</div>
   <form id="f" novalidate>
     <label>Bạn thuộc nhóm nào?
       <select name="type" required>
@@ -62,12 +70,6 @@ button:disabled{opacity:.6;cursor:wait}
     <div id="err" class="msg err" role="alert" hidden></div>
     <button id="go" type="submit">Gửi đăng ký</button>
   </form>
-  <div id="ok" class="done" hidden>
-    <div>Đăng ký thành công. STT decal của bạn là</div>
-    <div class="no" id="no"></div>
-    <div id="okplate"></div>
-    <p>Vui lòng chụp lại màn hình này. Ban Tổ chức sẽ liên hệ qua số điện thoại đã đăng ký để gửi file decal.</p>
-  </div>
   <a class="back" href="index.html#goi-tai-tro">← Về trang Festival Hoa 2026</a>
 </main>
 <script>
@@ -88,7 +90,7 @@ f.addEventListener("submit", async e => {
     const r = await fetch("decal/api.php?action=register", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(d) });
     const j = await r.json().catch(() => ({}));
     if (!j.ok) throw new Error(j.error || "Không gửi được, vui lòng thử lại.");
-    f.hidden = true; document.getElementById("ok").hidden = false;
+    f.hidden = true; ["h1","lead","deco"].forEach(id => document.getElementById(id).hidden = true); document.getElementById("ok").hidden = false;
     document.getElementById("no").textContent = "STT " + j.code;
     document.getElementById("okplate").textContent = "Biển số: " + d.plate.toUpperCase();
     window.scrollTo(0, 0);
