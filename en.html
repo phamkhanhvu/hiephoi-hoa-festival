@@ -330,6 +330,18 @@
     .side-pkg:hover, .side-pkg:focus-visible { background: var(--gold); color: var(--ink); }
     .side-pkgs-right { left: auto; right: 16px; }
   }
+
+  .vmap { display: grid; grid-template-columns: minmax(0,320px) minmax(0,1fr); gap: 18px; margin-top: 22px; }
+  .vmap-list { display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 0; list-style: none; min-width: 0; }
+  .vmap-list button { width: 100%; text-align: left; padding: 10px 12px; background: #fff; border: 1px solid var(--green); border-left-width: 6px; color: var(--ink); font: inherit; cursor: pointer; }
+  .vmap-list button[aria-pressed="true"] { background: var(--green); color: #fff; }
+  .vmap-list b { display: block; font-size: 14px; line-height: 1.3; }
+  .vmap-list span { display: block; font-size: 12.5px; line-height: 1.4; opacity: .85; margin-top: 2px; }
+  .vmap-frame { min-width: 0; }
+  .vmap-frame iframe { display: block; width: 100%; height: 420px; border: 1px solid var(--green); background: #eef2ea; }
+  .vmap-dir { display: inline-block; margin-top: 8px; font-weight: 700; color: var(--green-dark); }
+  .vmap-note { font-size: 12.5px; opacity: .8; margin-top: 10px; }
+  @media (max-width: 760px) { .vmap { grid-template-columns: minmax(0,1fr); } .vmap-frame iframe { height: 300px; } }
 </style>
 </head>
 <body>
@@ -369,6 +381,7 @@
       <nav class="nav" aria-label="Navigation">
         <a href="#gioi-thieu">Letter</a>
         <a href="#su-kien">Programme</a>
+        <a href="#ban-do">Map</a>
         <a href="#tai-lieu">Materials</a>
         <a href="news-en.html">News</a>
         <a href="#doi-tac">Partners</a>
@@ -437,6 +450,25 @@
       <div class="filters" id="event-filters" role="group" aria-label="Filter programmes"></div>
       <ol class="events" id="timeline"></ol>
     </div>
+  </section>
+
+  <section class="block" id="ban-do">
+    <div class="inner">
+      <div class="sec-kicker">Map</div>
+      <h2 class="sec-title display-green">Event venues map</h2>
+      <div class="vmap">
+        <ul class="vmap-list" role="group" aria-label="Choose a venue"><li><button type="button" data-q="Qu%E1%BA%A3ng%20tr%C6%B0%E1%BB%9Dng%20L%C3%A2m%20Vi%C3%AAn%2C%20%C4%90%C3%A0%20L%E1%BA%A1t" aria-pressed="true"><b>Lâm Viên Square</b><span>Opening, flower float parade, Flower & Vegetable Market</span></button></li><li><button type="button" data-q="H%E1%BB%93%20Xu%C3%A2n%20H%C6%B0%C6%A1ng%2C%20%C4%90%C3%A0%20L%E1%BA%A1t" aria-pressed="false"><b>Xuân Hương Lake – Zone C (flower space)</b><span>Flower space opposite Quan Thế Âm Pagoda</span></button></li><li><button type="button" data-q="Tr%C6%B0%E1%BB%9Dng%20Cao%20%C4%91%E1%BA%B3ng%20%C4%90%C3%A0%20L%E1%BA%A1t" aria-pressed="false"><b>Đà Lạt College</b><span>Phalaenopsis and fresh-flower exhibitions, gala 18/12, anniversary 19/12</span></button></li><li><button type="button" data-q="Kh%C3%A1ch%20s%E1%BA%A1n%20S%C3%A0i%20G%C3%B2n%20%C4%90%C3%A0%20L%E1%BA%A1t" aria-pressed="false"><b>Sài Gòn – Đà Lạt Hotel</b><span>Flower science & technology seminar</span></button></li></ul>
+        <div class="vmap-frame">
+          <iframe id="vmap-iframe" title="Event venues map" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Qu%E1%BA%A3ng%20tr%C6%B0%E1%BB%9Dng%20L%C3%A2m%20Vi%C3%AAn%2C%20%C4%90%C3%A0%20L%E1%BA%A1t&amp;output=embed"></iframe>
+          <a class="vmap-dir" id="vmap-dir" href="https://www.google.com/maps/dir/?api=1&amp;destination=Qu%E1%BA%A3ng%20tr%C6%B0%E1%BB%9Dng%20L%C3%A2m%20Vi%C3%AAn%2C%20%C4%90%C3%A0%20L%E1%BA%A1t" target="_blank" rel="noopener">Directions →</a>
+          <p class="vmap-note">Venues may change per the Organising Committee's latest confirmation.</p>
+        </div>
+      </div>
+    </div>
+    <script>
+      (function(){var f=document.getElementById("vmap-iframe"),a=document.getElementById("vmap-dir"),bs=document.querySelectorAll(".vmap-list button");
+      bs.forEach(function(b){b.addEventListener("click",function(){var q=b.getAttribute("data-q");f.src="https://www.google.com/maps?q="+q+"&output=embed";a.href="https://www.google.com/maps/dir/?api=1&destination="+q;bs.forEach(function(x){x.setAttribute("aria-pressed",x===b?"true":"false")});});});})();
+    </script>
   </section>
 
   <section class="block bg-values">
