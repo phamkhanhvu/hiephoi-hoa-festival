@@ -342,6 +342,10 @@
   .vmap-dir { display: inline-block; margin-top: 8px; font-weight: 700; color: var(--green-dark); }
   .vmap-note { font-size: 12.5px; opacity: .8; margin-top: 10px; }
   @media (max-width: 760px) { .vmap { grid-template-columns: minmax(0,1fr); } .vmap-frame iframe { height: 300px; } }
+
+  .vid-wrap { position: relative; width: 100%; max-width: 960px; aspect-ratio: 16 / 9; margin-top: 22px; border: 1px solid var(--green); background: #0e1a10; }
+  .vid-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .vid-link { display: inline-block; margin-top: 10px; font-weight: 700; color: var(--green-dark); }
 </style>
 </head>
 <body>
@@ -380,6 +384,7 @@
       <div class="langbar" aria-label="Language / Ngôn ngữ"><a href="index.html" lang="vi" hreflang="vi" aria-current="false"><svg viewBox="0 0 3 2" aria-hidden="true"><rect width="3" height="2" fill="#DA251D"/><polygon fill="#FFFF00" points="1.5,0.7 1.5705,0.903 1.785,0.907 1.614,1.037 1.676,1.243 1.5,1.12 1.324,1.243 1.386,1.037 1.215,0.907 1.4295,0.903"/></svg>Tiếng Việt</a><a href="en.html" lang="en" hreflang="en" aria-current="true"><svg viewBox="0 0 60 30" aria-hidden="true"><clipPath id="ukc"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath><path d="M0,0 v30 h60 v-30 z" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#ukc)" stroke="#C8102E" stroke-width="4"/><path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/></svg>English</a><a href="zh.html" lang="zh-CN" hreflang="zh-CN" aria-current="false"><svg viewBox="0 0 3 2" aria-hidden="true"><rect width="3" height="2" fill="#DE2910"/><polygon fill="#FFDE00" transform="translate(0.5 0.5) scale(0.6) translate(-1.5 -1)" points="1.5,0.7 1.5705,0.903 1.785,0.907 1.614,1.037 1.676,1.243 1.5,1.12 1.324,1.243 1.386,1.037 1.215,0.907 1.4295,0.903"/></svg>中文</a><a href="ko.html" lang="ko" hreflang="ko" aria-current="false">한국어</a></div>
       <nav class="nav" aria-label="Navigation">
         <a href="#gioi-thieu">Letter</a>
+        <a href="#video">Video</a>
         <a href="#su-kien">Programme</a>
         <a href="#ban-do">Map</a>
         <a href="#tai-lieu">Materials</a>
@@ -443,7 +448,16 @@
     </div>
   </section>
 
-  <section class="block bg-events" id="su-kien">
+    <section class="block" id="video">
+    <div class="inner">
+      <div class="sec-kicker">Video</div>
+      <h2 class="sec-title display-green">Dalat Flower Festival 2026 trailer</h2>
+      <div class="vid-wrap"><iframe src="https://drive.google.com/file/d/16jWh-FFXvv16NAekxRN__JEVcEp6Wg8p/preview" title="Dalat Flower Festival 2026 trailer" loading="lazy" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
+      <a class="vid-link" href="https://drive.google.com/file/d/16jWh-FFXvv16NAekxRN__JEVcEp6Wg8p/view" target="_blank" rel="noopener">Open in Google Drive →</a>
+    </div>
+  </section>
+
+<section class="block bg-events" id="su-kien">
     <div class="inner">
       <div class="sec-kicker">Programme</div>
       <h2 class="sec-title display-green">Key programmes</h2>
