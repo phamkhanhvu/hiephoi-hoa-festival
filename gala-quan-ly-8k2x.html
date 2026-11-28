@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive"><title>Danh sách đăng ký Gala</title>
+<style>body{font:14px/1.5 system-ui,sans-serif;margin:0;padding:16px;color:#242A26;background:#F8F6FB}h1{font-size:20px;margin:0 0 10px}
+.bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}input,a.b{padding:9px 12px;border:1px solid #b9b3c8;border-radius:6px;font:inherit}a.b{background:#2E9D47;color:#fff;text-decoration:none;border-color:#2E9D47}
+.w{overflow-x:auto;background:#fff;border:1px solid #DCD7E6}table{border-collapse:collapse;width:100%;min-width:1000px}th,td{padding:8px 10px;border-top:1px solid #eee;text-align:left}th{background:#F4F7EF}
+#m{padding:12px;background:#fff3cd;border:1px solid #e8d38a;border-radius:6px}</style></head><body>
+<h1>Danh sách đăng ký Gala 18/12</h1>
+<div class="bar"><input id="q" placeholder="Tìm tên, SĐT, email" type="search"><a class="b" href="gala/api.php?action=export">Tải CSV</a><span id="n"></span></div>
+<div id="m" hidden>Chưa đăng nhập. Hãy đăng nhập ở trang truyền thông nội bộ trước, rồi tải lại trang này.</div>
+<div class="w"><table><thead><tr><th>STT</th><th>Thời gian</th><th>Hình thức</th><th>Đơn vị</th><th>Liên hệ</th><th>SĐT / email</th><th>Người lớn</th><th>Trẻ em</th><th>Khách đi cùng</th><th>Ghi chú</th></tr></thead><tbody id="t"></tbody></table></div>
+<script>
+let rows=[];const t=document.getElementById("t");
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function draw(){const q=document.getElementById("q").value.toLowerCase().replace(/[^a-z0-9à-ỹ ]/g,"");
+const v=rows.filter(r=>!q||JSON.stringify(r).toLowerCase().replace(/[^a-z0-9à-ỹ ]/g,"").includes(q));
+document.getElementById("n").textContent=v.length+"/"+rows.length+" đăng ký";
+t.innerHTML=v.map(r=>`<tr><td><b>GALA${String(r.stt).padStart(4,"0")}</b></td><td>${esc(r.at)}</td><td>${esc(r.kind)}</td><td>${esc(r.org)}</td><td>${esc(r.contact)}</td><td>${esc(r.phone)}${r.email?"<br>"+esc(r.email):""}</td><td>${esc(r.adults)}</td><td>${esc(r.kids)}</td><td>${esc(r.guests)}</td><td>${esc(r.note)}</td></tr>`).join("")}
+document.getElementById("q").oninput=draw;
+fetch("gala/api.php?action=list").then(r=>r.json()).then(j=>{if(!j.ok){document.getElementById("m").hidden=false;return}rows=j.rows;draw()}).catch(()=>{document.getElementById("m").hidden=false});
+</script></body></html>

@@ -1,0 +1,3 @@
+<FilesMatch "\.(json|tmp|csv)$">
+  Require all denied
+</FilesMatch>
