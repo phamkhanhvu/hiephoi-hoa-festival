@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Đăng ký tham dự chương trình · Festival Hoa Đà Lạt 2026</title>
+<meta name="description" content="Đăng ký tham dự các chương trình của Hiệp hội Hoa Đà Lạt trong Festival Hoa Đà Lạt 2026.">
+<link rel="canonical" href="https://dalatevent.com/festivalhoadalat2026/dang-ky-chuong-trinh.html">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=Montserrat:wght@700;800&subset=vietnamese,latin&display=swap">
+<style>
+:root{--green:#2E9D47;--green-dark:#1E7A35;--ink:#242A26;--line:#DCD7E6;--mist:#F8F6FB;--lav:#8E6BC8}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--mist);color:var(--ink);font:15px/1.6 "Be Vietnam Pro",system-ui,sans-serif;padding-block:24px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+main{max-width:640px;margin:0 auto}
+h1{font:800 24px/1.3 "Montserrat",sans-serif;color:var(--green-dark);margin:0 0 8px;text-wrap:balance}
+.lead{margin:0 0 18px}
+.deco{background:#fff;border:1px solid var(--line);border-left:6px solid #7FCB55;padding:14px 16px;margin-bottom:18px}
+.deco b{color:var(--green-dark)}
+form{background:#fff;border:1px solid var(--line);padding:20px;display:grid;gap:16px}
+label{display:grid;gap:6px;font-weight:600;font-size:14px}
+label small{font-weight:400;color:#5b625d}
+input,select,textarea{font:inherit;padding:11px 12px;border:1px solid #b9b3c8;border-radius:6px;background:#fff;color:var(--ink);width:100%;min-width:0}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--green);outline-offset:1px}
+.plate{text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+.chk{display:flex;gap:10px;align-items:flex-start;font-weight:400}
+.chk input{width:auto;margin-top:4px}
+button{font:700 15px "Be Vietnam Pro",sans-serif;padding:13px 18px;border:0;border-radius:6px;background:var(--green);color:#fff;cursor:pointer}
+button:disabled{opacity:.6;cursor:wait}
+.msg{padding:12px 14px;border-radius:6px;font-size:14px}
+.err{background:#fdecec;color:#8a1f1f;border:1px solid #f3b5b5}
+.hp{position:absolute;left:-9999px;height:0;overflow:hidden}
+.done{background:#fff;border:2px solid var(--green);padding:24px;text-align:center}
+.done{margin-bottom:18px}.done .tick{font:800 20px "Montserrat",sans-serif;color:var(--green-dark)}
+.done .no{font:800 44px/1.1 "Montserrat",sans-serif;color:var(--green-dark);margin:8px 0}
+.back{display:inline-block;margin-top:16px;color:var(--green-dark)}
+.chk-list{display:grid;gap:8px;border:1px solid #b9b3c8;border-radius:6px;padding:12px;background:#fff}.chk-list legend{font-weight:600;font-size:14px;padding:0 6px}fieldset{margin:0;padding:0;border:0;min-width:0}
+</style>
+</head>
+<body>
+<main>
+  <div id="ok" class="done" hidden>
+    <div class="tick">✓ Đăng ký thành công!</div>
+    <div>Mã đăng ký của bạn là</div>
+    <div class="no" id="no"></div>
+    <p>Vui lòng chụp lại màn hình này. Ban Tổ chức sẽ liên hệ qua số điện thoại đã đăng ký để xác nhận chương trình, chỗ ngồi và hướng dẫn tham dự.</p>
+  </div>
+  <h1 id="h1">Đăng ký tham dự chương trình</h1>
+  <p class="lead" id="lead">Dành cho chủ shop hoa, vựa hoa, florist, nhà vườn, doanh nghiệp, hội viên và những người yêu hoa về tham gia các chương trình của Hiệp hội Hoa Đà Lạt trong Festival Hoa Đà Lạt 2026.</p>
+  <div class="deco" id="deco">Chọn các chương trình bạn muốn dự. Một số chương trình (gala, lễ kỷ niệm, khai mạc) phụ thuộc sức chứa và phân bổ của Ban Tổ chức, nên đăng ký <b>chưa phải xác nhận chỗ</b>. Hạn đăng ký: 10/12/2026.</div>
+  <form id="f" novalidate>
+    <label>Bạn thuộc nhóm nào?
+      <select name="group" required><option value="">Chọn nhóm</option><option>Chủ shop hoa</option><option>Vựa hoa</option><option>Florist</option><option>Nhà vườn / trang trại</option><option>Công ty / doanh nghiệp ngành hoa</option><option>Hội viên Hiệp hội</option><option>Người yêu hoa / du khách</option><option>Khác</option></select></label>
+    <label>Tên đơn vị / shop / họ tên<input name="org" maxlength="120" required autocomplete="organization"></label>
+    <label>Người liên hệ<input name="contact" maxlength="80" required autocomplete="name"></label>
+    <label>Số điện thoại<input name="phone" type="tel" inputmode="tel" maxlength="20" required autocomplete="tel" placeholder="0907 xxx xxx"></label>
+    <label>Email (không bắt buộc)<input name="email" type="email" maxlength="120" autocomplete="email"></label>
+    <label>Tỉnh / thành<input name="province" maxlength="60" required autocomplete="address-level1" placeholder="Ví dụ: Lâm Đồng, TP. Hồ Chí Minh"></label>
+    <label>Số người tham dự<input name="people" type="number" inputmode="numeric" min="1" max="200" value="1" required></label>
+    <fieldset class="chk-list"><legend>Chương trình muốn tham dự (chọn một hoặc nhiều)</legend>
+      <label class="chk"><input type="checkbox" name="progs" value="Đêm gala &quot;Vũ Điệu Sắc Hoa&quot; 18/12"><span>Đêm gala &quot;Vũ Điệu Sắc Hoa&quot; 18/12</span></label>
+      <label class="chk"><input type="checkbox" name="progs" value="Lễ kỷ niệm 20 năm Hiệp hội 19/12"><span>Lễ kỷ niệm 20 năm Hiệp hội 19/12</span></label>
+      <label class="chk"><input type="checkbox" name="progs" value="Lễ khai mạc Festival 20/12"><span>Lễ khai mạc Festival 20/12</span></label>
+      <label class="chk"><input type="checkbox" name="progs" value="Triển lãm quốc tế hoa Lan Hồ Điệp"><span>Triển lãm quốc tế hoa Lan Hồ Điệp</span></label>
+      <label class="chk"><input type="checkbox" name="progs" value="Triển lãm hoa tươi nghệ thuật quốc tế"><span>Triển lãm hoa tươi nghệ thuật quốc tế</span></label>
+      <label class="chk"><input type="checkbox" name="progs" value="Tour &quot;Đà Lạt muôn màu sắc hoa&quot;"><span>Tour &quot;Đà Lạt muôn màu sắc hoa&quot;</span></label>
+      <label class="chk"><input type="checkbox" name="progs" value="Tour trải nghiệm Festival cùng Vietravel (17–20/12)"><span>Tour trải nghiệm Festival cùng Vietravel (17–20/12)</span></label>
+      <label class="chk"><input type="checkbox" name="progs" value="Phiên chợ Rau Hoa"><span>Phiên chợ Rau Hoa</span></label>
+      <label class="chk"><input type="checkbox" name="progs" value="Hội thảo KH&amp;CN ngành hoa 22/12"><span>Hội thảo KH&amp;CN ngành hoa 22/12</span></label>
+      <label class="chk"><input type="checkbox" name="progs" value="Open Day Apollo / Hoa Chi An / THT"><span>Open Day Apollo / Hoa Chi An / THT</span></label>
+      <label class="chk"><input type="checkbox" name="progs" value="Trồng cây Mai Anh Đào 19/12"><span>Trồng cây Mai Anh Đào 19/12</span></label>
+    </fieldset>
+    <label>Ghi chú (không bắt buộc)<textarea name="note" rows="2" maxlength="300"></textarea></label>
+    <div class="hp" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
+    <label class="chk"><input type="checkbox" name="agree" required><span>Tôi xác nhận thông tin đã khai là đúng và đồng ý để Ban Tổ chức liên hệ qua số điện thoại, email đã cung cấp.</span></label>
+    <div id="err" class="msg err" role="alert" hidden></div>
+    <button id="go" type="submit">Gửi đăng ký</button>
+  </form>
+  <a class="back" href="index.html#dang-ky">← Về trang Festival Hoa 2026</a>
+</main>
+<script>
+const f = document.getElementById("f"), err = document.getElementById("err"), go = document.getElementById("go");
+function showErr(m){ err.textContent = m; err.hidden = false; err.scrollIntoView({block:"center"}); }
+f.addEventListener("submit", async e => {
+  e.preventDefault(); err.hidden = true;
+  const d = {}; for (const [k,v] of new FormData(f)) if (k !== "progs") d[k] = v;
+  d.progs = [...f.querySelectorAll('input[name="progs"]:checked')].map(i => i.value);
+  d.people = parseInt(d.people, 10); d.agree = f.agree.checked;
+  if (!d.group) return showErr("Vui lòng chọn nhóm đối tượng.");
+  if (!d.org.trim()) return showErr("Vui lòng nhập tên đơn vị hoặc họ tên.");
+  if (!d.contact.trim()) return showErr("Vui lòng nhập tên người liên hệ.");
+  if (!/^(\+?84|0)[0-9]{8,10}$/.test(d.phone.replace(/[^0-9+]/g, ""))) return showErr("Số điện thoại chưa đúng.");
+  if (!d.province.trim()) return showErr("Vui lòng nhập tỉnh / thành.");
+  if (!(d.people >= 1 && d.people <= 200)) return showErr("Số người tham dự từ 1 đến 200.");
+  if (!d.progs.length) return showErr("Vui lòng chọn ít nhất một chương trình.");
+  if (!d.agree) return showErr("Vui lòng xác nhận thông tin đã khai.");
+  go.disabled = true; go.textContent = "Đang gửi…";
+  try {
+    const r = await fetch("dky/api.php?action=register", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(d) });
+    const j = await r.json().catch(() => ({}));
+    if (!j.ok) throw new Error(j.error || "Không gửi được, vui lòng thử lại.");
+    f.hidden = true; ["h1","lead","deco"].forEach(id => document.getElementById(id).hidden = true); document.getElementById("ok").hidden = false;
+    document.getElementById("no").textContent = "DK" + j.code;
+    window.scrollTo(0, 0);
+  } catch (x) { showErr(x.message); go.disabled = false; go.textContent = "Gửi đăng ký"; }
+});
+</script>
+</body>
+</html>
