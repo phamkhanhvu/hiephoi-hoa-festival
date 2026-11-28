@@ -12,6 +12,10 @@ header('X-Content-Type-Options: nosniff');
 const MAX_ROWS = 3000;
 const MAX_SEATS = 20;
 const CLOSE_AT = '2026-12-10 23:59:59';
+const EARLY_END = '2026-12-05 23:59:59'; // hết giá early bird
+const PRICE_ADULT_EARLY = 2000000;
+const PRICE_ADULT = 2500000;
+const PRICE_KID = 1000000;
 $dataDir = __DIR__ . '/data';
 $file = $dataDir . '/registrations.json';
 $rateFile = $dataDir . '/rate.json';
@@ -28,7 +32,7 @@ if (!is_file($dataDir . '/.htaccess')) @file_put_contents($dataDir . '/.htaccess
 $action = $_GET['action'] ?? 'register';
 $isAdmin = !empty($_SESSION['admin']);
 
-if ($action === 'status') out(['ok' => true, 'count' => count(readRows($file)), 'open' => time() <= strtotime(CLOSE_AT)]);
+if ($action === 'status') out(['ok' => true, 'count' => count(readRows($file)), 'open' => time() <= strtotime(CLOSE_AT), 'early' => time() <= strtotime(EARLY_END)]);
 
 if ($action === 'list' || $action === 'export') {
     if (!$isAdmin) fail('Cần đăng nhập ở trang truyền thông nội bộ trước.', 401);
@@ -36,8 +40,8 @@ if ($action === 'list' || $action === 'export') {
     if ($action === 'list') out(['ok' => true, 'rows' => $rows]);
     header('Content-Type: text/csv; charset=utf-8');
     header('Content-Disposition: attachment; filename="dang-ky-gala-' . date('Ymd-His') . '.csv"');
-    echo "\xEF\xBB\xBF" . implode(',', ['STT', 'Thời gian', 'Hình thức', 'Đơn vị / họ tên', 'Người liên hệ', 'Điện thoại', 'Email', 'Người lớn', 'Trẻ em', 'Danh sách khách', 'Ghi chú']) . "\r\n";
-    foreach ($rows as $r) echo implode(',', array_map('csvCell', [(string)$r['stt'], $r['at'], $r['kind'], $r['org'], $r['contact'], $r['phone'], $r['email'], (string)$r['adults'], (string)$r['kids'], $r['guests'], $r['note']])) . "\r\n";
+    echo "\xEF\xBB\xBF" . implode(',', ['STT', 'Thời gian', 'Hình thức', 'Đơn vị / họ tên', 'Người liên hệ', 'Điện thoại', 'Email', 'Người lớn', 'Trẻ em', 'Danh sách khách', 'Ghi chú', 'Mức giá', 'Tạm tính (VNĐ)']) . "\r\n";
+    foreach ($rows as $r) echo implode(',', array_map('csvCell', [(string)$r['stt'], $r['at'], $r['kind'], $r['org'], $r['contact'], $r['phone'], $r['email'], (string)$r['adults'], (string)$r['kids'], $r['guests'], $r['note'], (string)($r['tier'] ?? ''), (string)($r['amount'] ?? 0)])) . "\r\n";
     exit;
 }
 
@@ -75,10 +79,14 @@ if (count($rate[$ip] ?? []) >= 10) { flock($fh, LOCK_UN); fail('Bạn gửi quá
 $rows = readRows($file);
 if (count($rows) >= MAX_ROWS) { flock($fh, LOCK_UN); fail('Đã đủ số lượng đăng ký.', 403); }
 $stt = $rows ? max(array_column($rows, 'stt')) + 1 : 1;
-$rows[] = ['stt' => $stt, 'at' => date('Y-m-d H:i:s'), 'kind' => $kind, 'org' => $org, 'contact' => $contact, 'phone' => $phone, 'email' => $email, 'adults' => $adults, 'kids' => $kids, 'guests' => $guests, 'note' => $note];
+$paying = $kind === $KINDS[1];
+$early = $now <= strtotime(EARLY_END);
+$tier = $paying ? ($early ? 'Early bird' : 'Giá thường') : 'Không thu phí';
+$amount = $paying ? $adults * ($early ? PRICE_ADULT_EARLY : PRICE_ADULT) + $kids * PRICE_KID : 0;
+$rows[] = ['stt' => $stt, 'at' => date('Y-m-d H:i:s'), 'kind' => $kind, 'org' => $org, 'contact' => $contact, 'phone' => $phone, 'email' => $email, 'adults' => $adults, 'kids' => $kids, 'guests' => $guests, 'note' => $note, 'tier' => $tier, 'amount' => $amount];
 $rate[$ip][] = $now;
 $ok = file_put_contents($file . '.tmp', json_encode($rows, JSON_UNESCAPED_UNICODE)) !== false && rename($file . '.tmp', $file);
 file_put_contents($rateFile, json_encode($rate));
 flock($fh, LOCK_UN);
 if (!$ok) fail('Không lưu được, vui lòng thử lại.', 500);
-out(['ok' => true, 'stt' => $stt, 'code' => str_pad((string)$stt, 4, '0', STR_PAD_LEFT)]);
+out(['ok' => true, 'stt' => $stt, 'code' => str_pad((string)$stt, 4, '0', STR_PAD_LEFT), 'tier' => $tier, 'amount' => $amount]);
