@@ -81,10 +81,53 @@ footer a{color:var(--green-dark)}
 body{padding-bottom:64px}
 @media (max-width:520px){.two{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.sticky{transition:none}}
+
+/* ===== Màu sắc hoa festival ===== */
+:root{--pink:#FF4F9A;--orange:#FF8A3D;--yellow:#FFD23F;--purple:#8E4DD8;--teal:#19B5A5;--sky:#3DA5FF}
+.rainbow{height:8px;background:linear-gradient(90deg,var(--pink),var(--orange),var(--yellow),var(--green),var(--teal),var(--sky),var(--purple),var(--pink))}
+.hero{position:relative;overflow:hidden;background:radial-gradient(900px 480px at 90% -10%,rgba(255,210,63,.55) 0,transparent 60%),radial-gradient(800px 520px at -5% 20%,rgba(255,79,154,.75) 0,transparent 60%),radial-gradient(900px 600px at 70% 120%,rgba(25,181,165,.7) 0,transparent 60%),linear-gradient(150deg,#5B2BA8,#9B3FC9 45%,#E0457B 80%,#FF8A3D)}
+.hero .w{position:relative;z-index:2}
+.fl{position:absolute;z-index:1;pointer-events:none;opacity:.9}
+.fl svg{display:block;width:100%;height:100%}
+.f1{width:150px;height:150px;right:-30px;top:-28px;animation:spin 40s linear infinite}
+.f2{width:96px;height:96px;right:18%;bottom:-24px;animation:spin 55s linear infinite reverse}
+.f3{width:70px;height:70px;left:-18px;bottom:40px;animation:spin 48s linear infinite}
+.pt{position:absolute;z-index:1;border-radius:60% 40% 60% 40%;opacity:.75;animation:fall linear infinite;pointer-events:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes fall{from{transform:translateY(-40px) rotate(0);}to{transform:translateY(560px) rotate(300deg);}}
+.hero h1 em{background:linear-gradient(90deg,#FFE066,#FFB347,#FF7BAC);-webkit-background-clip:text;background-clip:text;color:transparent}
+.kick{background:linear-gradient(90deg,var(--yellow),var(--orange));}
+.cta{background:linear-gradient(90deg,#FFD23F,#FF8A3D);box-shadow:0 10px 26px rgba(255,79,154,.45)}
+.cd div{background:rgba(255,255,255,.2)}
+.biz{background:linear-gradient(120deg,#0FA3A3,#2E9D47 45%,#9BD84A);box-shadow:inset 0 8px 0 var(--pink)}
+.bz li:nth-child(1){background:rgba(255,79,154,.35)}.bz li:nth-child(2){background:rgba(255,210,63,.28)}.bz li:nth-child(3){background:rgba(142,77,216,.38)}
+h2{background:linear-gradient(90deg,var(--purple),var(--pink) 60%,var(--orange));-webkit-background-clip:text;background-clip:text;color:transparent;display:inline-block}
+.biz h2{background:none;color:#fff}
+.price{border-width:3px}
+.price.on{border-color:transparent;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,var(--pink),var(--orange),var(--yellow)) border-box;box-shadow:0 14px 34px rgba(255,79,154,.28)}
+.price.on .n{background:linear-gradient(90deg,var(--pink),var(--orange));-webkit-background-clip:text;background-clip:text;color:transparent}
+.price.off{background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,var(--purple),var(--sky)) border-box;border-color:transparent}
+.badge{background:linear-gradient(90deg,var(--pink),var(--orange))}
+.hi li{border-top-width:6px;background:#fff}
+.hi li:nth-child(1){border-top-color:var(--pink);background:linear-gradient(#FFF1F7,#fff)}
+.hi li:nth-child(2){border-top-color:var(--orange);background:linear-gradient(#FFF4EA,#fff)}
+.hi li:nth-child(3){border-top-color:var(--purple);background:linear-gradient(#F5EEFF,#fff)}
+.hi li:nth-child(4){border-top-color:var(--teal);background:linear-gradient(#E9FBF8,#fff)}
+.hi li:nth-child(1) b{color:var(--pink)}.hi li:nth-child(2) b{color:var(--orange)}.hi li:nth-child(3) b{color:var(--purple)}.hi li:nth-child(4) b{color:var(--teal)}
+#dang-ky .box{border:3px solid transparent;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,var(--pink),var(--yellow),var(--teal),var(--purple)) border-box}
+button{background:linear-gradient(90deg,var(--pink),var(--orange))}
+.sticky{background:linear-gradient(90deg,#5B2BA8,#C2308A)}
+details{border-left:5px solid var(--pink)}details:nth-of-type(2){border-left-color:var(--orange)}details:nth-of-type(3){border-left-color:var(--teal)}details:nth-of-type(4){border-left-color:var(--purple)}
+body{background:linear-gradient(#FFF8FC,#F8F6FB 400px)}
+@media (prefers-reduced-motion:reduce){.fl,.pt{animation:none}}
 </style>
 </head>
 <body>
 <header class="hero">
+  <div class="fl f1"><svg viewBox="0 0 100 100" aria-hidden="true"><ellipse cx="50" cy="22" rx="13" ry="22" fill="#FF4F9A" transform="rotate(0 50 50)" opacity=".92"/><ellipse cx="50" cy="22" rx="13" ry="22" fill="#FFD23F" transform="rotate(45 50 50)" opacity=".92"/><ellipse cx="50" cy="22" rx="13" ry="22" fill="#FF8A3D" transform="rotate(90 50 50)" opacity=".92"/><ellipse cx="50" cy="22" rx="13" ry="22" fill="#FF4F9A" transform="rotate(135 50 50)" opacity=".92"/><ellipse cx="50" cy="22" rx="13" ry="22" fill="#FFD23F" transform="rotate(180 50 50)" opacity=".92"/><ellipse cx="50" cy="22" rx="13" ry="22" fill="#FF8A3D" transform="rotate(225 50 50)" opacity=".92"/><ellipse cx="50" cy="22" rx="13" ry="22" fill="#FF4F9A" transform="rotate(270 50 50)" opacity=".92"/><ellipse cx="50" cy="22" rx="13" ry="22" fill="#FFD23F" transform="rotate(315 50 50)" opacity=".92"/><circle cx="50" cy="50" r="11" fill="#FFE066"/></svg></div>
+  <div class="fl f2"><svg viewBox="0 0 100 100" aria-hidden="true"><ellipse cx="50" cy="22" rx="13" ry="22" fill="#7FE0D4" transform="rotate(0 50 50)" opacity=".92"/><ellipse cx="50" cy="22" rx="13" ry="22" fill="#FFFFFF" transform="rotate(45 50 50)" opacity=".92"/><ellipse cx="50" cy="22" rx="13" ry="22" fill="#7FE0D4" transform="rotate(90 50 50)" opacity=".92"/><ellipse cx="50" cy="22" rx="13" ry="22" fill="#FFFFFF" transform="rotate(135 50 50)" opacity=".92"/><ellipse cx="50" cy="22" rx="13" ry="22" fill="#7FE0D4" transform="rotate(180 50 50)" opacity=".92"/><ellipse cx="50" cy="22" rx="13" ry="22" fill="#FFFFFF" transform="rotate(225 50 50)" opacity=".92"/><ellipse cx="50" cy="22" rx="13" ry="22" fill="#7FE0D4" transform="rotate(270 50 50)" opacity=".92"/><ellipse cx="50" cy="22" rx="13" ry="22" fill="#FFFFFF" transform="rotate(315 50 50)" opacity=".92"/><circle cx="50" cy="50" r="11" fill="#FFE066"/></svg></div>
+  <div class="fl f3"><svg viewBox="0 0 100 100" aria-hidden="true"><ellipse cx="50" cy="22" rx="13" ry="22" fill="#FFD23F" transform="rotate(0 50 50)" opacity=".92"/><ellipse cx="50" cy="22" rx="13" ry="22" fill="#FF8A3D" transform="rotate(45 50 50)" opacity=".92"/><ellipse cx="50" cy="22" rx="13" ry="22" fill="#FFD23F" transform="rotate(90 50 50)" opacity=".92"/><ellipse cx="50" cy="22" rx="13" ry="22" fill="#FF8A3D" transform="rotate(135 50 50)" opacity=".92"/><ellipse cx="50" cy="22" rx="13" ry="22" fill="#FFD23F" transform="rotate(180 50 50)" opacity=".92"/><ellipse cx="50" cy="22" rx="13" ry="22" fill="#FF8A3D" transform="rotate(225 50 50)" opacity=".92"/><ellipse cx="50" cy="22" rx="13" ry="22" fill="#FFD23F" transform="rotate(270 50 50)" opacity=".92"/><ellipse cx="50" cy="22" rx="13" ry="22" fill="#FF8A3D" transform="rotate(315 50 50)" opacity=".92"/><circle cx="50" cy="50" r="11" fill="#FFE066"/></svg></div>
+  <i class="pt" style="left:8%;width:12px;height:17px;background:#FFB3D1;animation-duration:14s;animation-delay:-2s"></i><i class="pt" style="left:22%;width:9px;height:13px;background:#FFE066;animation-duration:17s;animation-delay:-7s"></i><i class="pt" style="left:38%;width:14px;height:20px;background:#FFC38A;animation-duration:12s;animation-delay:-4s"></i><i class="pt" style="left:55%;width:10px;height:14px;background:#C9A6FF;animation-duration:16s;animation-delay:-9s"></i><i class="pt" style="left:70%;width:13px;height:18px;background:#FF8FBF;animation-duration:13s;animation-delay:-1s"></i><i class="pt" style="left:84%;width:9px;height:13px;background:#9CF0E4;animation-duration:18s;animation-delay:-6s"></i><i class="pt" style="left:93%;width:11px;height:15px;background:#FFE066;animation-duration:15s;animation-delay:-11s"></i>
   <div class="w">
     <span class="kick">Festival Hoa Đà Lạt 2026</span>
     <h1>Gala <em>“Vũ Điệu Sắc Hoa”</em></h1>
@@ -96,6 +139,7 @@ body{padding-bottom:64px}
     <a class="cta" href="#dang-ky">Giữ chỗ ngay →</a>
   </div>
 </header>
+<div class="rainbow"></div>
 
 <section class="biz" aria-labelledby="biz-h">
   <div class="w">
