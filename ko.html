@@ -346,6 +346,11 @@
   .vid-wrap { position: relative; width: 100%; max-width: 960px; aspect-ratio: 16 / 9; margin-top: 22px; border: 1px solid var(--green); background: #000; }
   .vid-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
   .vid-link { display: inline-block; margin-top: 10px; font-weight: 700; color: var(--green-dark); }
+
+  .reg-wrap { width: 100%; max-width: 760px; margin-top: 18px; border: 1px solid var(--green); background: #fff; }
+  .reg-wrap iframe { display: block; width: 100%; height: 1100px; border: 0; }
+  .reg-note { font-size: 12.5px; opacity: .8; margin-top: 10px; }
+  @media (max-width: 760px) { .reg-wrap iframe { height: 1300px; } }
 </style>
 </head>
 <body>
@@ -386,6 +391,7 @@
         <a href="#gioi-thieu">인사말</a>
         <a href="#video">영상</a>
         <a href="#su-kien">프로그램</a>
+        <a href="#dang-ky">등록</a>
         <a href="#ban-do">지도</a>
         <a href="#tai-lieu">자료</a>
         <a href="news.html">뉴스</a>
@@ -466,7 +472,18 @@
     </div>
   </section>
 
-  <section class="block" id="ban-do">
+    <section class="block" id="dang-ky">
+    <div class="inner">
+      <div class="sec-kicker">등록</div>
+      <h2 class="sec-title display-green">행사 참가 등록</h2>
+      <p>아래 양식을 작성하여 2026 꽃 축제 기간 달랏 꽃협회 행사에 등록하세요.</p>
+      <a class="btn primary" style="margin-top:14px" href="https://forms.gle/vz5VfE8Crw25fggJ8" target="_blank" rel="noopener">새 탭에서 양식 열기</a>
+      <div class="reg-wrap"><iframe src="https://docs.google.com/forms/d/e/1FAIpQLSd6RZxFsuJTLTLnCoOE0x5yfrbBeyRoB1eyUJqemwXzX9ncHw/viewform?embedded=true" title="행사 참가 등록" loading="lazy">Loading…</iframe></div>
+      <p class="reg-note">양식이 보이지 않으면 위 버튼을 눌러 주세요.</p>
+    </div>
+  </section>
+
+<section class="block" id="ban-do">
     <div class="inner">
       <div class="sec-kicker">지도</div>
       <h2 class="sec-title display-green">행사 장소 지도</h2>

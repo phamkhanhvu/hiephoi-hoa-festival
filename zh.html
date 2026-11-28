@@ -348,6 +348,11 @@
   .vid-wrap { position: relative; width: 100%; max-width: 960px; aspect-ratio: 16 / 9; margin-top: 22px; border: 1px solid var(--green); background: #000; }
   .vid-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
   .vid-link { display: inline-block; margin-top: 10px; font-weight: 700; color: var(--green-dark); }
+
+  .reg-wrap { width: 100%; max-width: 760px; margin-top: 18px; border: 1px solid var(--green); background: #fff; }
+  .reg-wrap iframe { display: block; width: 100%; height: 1100px; border: 0; }
+  .reg-note { font-size: 12.5px; opacity: .8; margin-top: 10px; }
+  @media (max-width: 760px) { .reg-wrap iframe { height: 1300px; } }
 </style>
 </head>
 <body>
@@ -388,6 +393,7 @@
         <a href="#gioi-thieu">致辞</a>
         <a href="#video">视频</a>
         <a href="#su-kien">活动</a>
+        <a href="#dang-ky">报名</a>
         <a href="#ban-do">地图</a>
         <a href="#tai-lieu">宣传资料</a>
         <a href="news-zh.html">新闻</a>
@@ -468,7 +474,18 @@
     </div>
   </section>
 
-  <section class="block" id="ban-do">
+    <section class="block" id="dang-ky">
+    <div class="inner">
+      <div class="sec-kicker">报名</div>
+      <h2 class="sec-title display-green">报名参加活动</h2>
+      <p>请填写下方表格，报名参加大叻花卉协会在2026花卉节期间的活动。</p>
+      <a class="btn primary" style="margin-top:14px" href="https://forms.gle/vz5VfE8Crw25fggJ8" target="_blank" rel="noopener">在新标签页打开表格</a>
+      <div class="reg-wrap"><iframe src="https://docs.google.com/forms/d/e/1FAIpQLSd6RZxFsuJTLTLnCoOE0x5yfrbBeyRoB1eyUJqemwXzX9ncHw/viewform?embedded=true" title="报名参加活动" loading="lazy">Loading…</iframe></div>
+      <p class="reg-note">如果表格未显示，请点击上方按钮。</p>
+    </div>
+  </section>
+
+<section class="block" id="ban-do">
     <div class="inner">
       <div class="sec-kicker">地图</div>
       <h2 class="sec-title display-green">活动地点地图</h2>
